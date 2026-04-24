@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mockup 04 · Radio Dispatch</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="base.css">
+<style>
+  body {
+    background: var(--oy-ink);
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .console {
+    width: 100%;
+    max-width: 680px;
+    background: var(--oy-cream);
+    border: 2px solid var(--oy-ink);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 40px);
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
+  }
+
+  .dash {
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+    padding: 14px 20px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .dash .brand {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--oy-red);
+  }
+  .dash .channel { color: var(--oy-cream); opacity: 0.7; }
+  .dash .sig { display: flex; align-items: center; gap: 6px; }
+  .dash .led {
+    width: 8px; height: 8px;
+    background: var(--oy-red);
+    border-radius: 50%;
+    animation: pulse 1.4s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .dash a { color: var(--oy-cream); text-decoration: none; opacity: .6; }
+  .dash a:hover { opacity: 1; }
+
+  .log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--oy-cream),
+      var(--oy-cream) 22px,
+      rgba(200,188,163,0.2) 22px,
+      rgba(200,188,163,0.2) 23px
+    );
+  }
+  .log::-webkit-scrollbar { width: 8px; }
+  .log::-webkit-scrollbar-track { background: var(--oy-cream-soft); }
+  .log::-webkit-scrollbar-thumb { background: var(--oy-hairline); }
+
+  .msg {
+    max-width: 80%;
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: 2px;
+    position: relative;
+    animation: msgIn .2s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg.dispatcher {
+    background: var(--oy-cream-warm);
+    color: var(--oy-ink);
+    align-self: flex-start;
+  }
+  .msg.dispatcher::before {
+    content: "CH4 · DISPATCH";
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--oy-red);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .msg.me {
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    border-color: var(--oy-red);
+    align-self: flex-end;
+    text-transform: uppercase;
+  }
+  .msg.me::before {
+    content: "TRANSMISSION IN";
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    opacity: .8;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .msg.system {
+    align-self: center;
+    background: transparent;
+    border: 1px dashed var(--oy-hairline);
+    color: var(--oy-mute);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+  }
+
+  .typing {
+    display: inline-block;
+    color: var(--oy-ink);
+  }
+  .typing::after {
+    content: "▌";
+    display: inline-block;
+    color: var(--oy-red);
+    animation: blink .8s infinite;
+    margin-left: 2px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .input-row {
+    border-top: 2px solid var(--oy-ink);
+    padding: 14px 18px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: var(--oy-cream-soft);
+  }
+  .input-row input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--oy-cream);
+    border: 1.5px solid var(--oy-ink);
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    outline: none;
+    color: var(--oy-ink);
+    text-transform: uppercase;
+  }
+  .input-row input:focus { border-color: var(--oy-red); }
+  .input-row button {
+    padding: 10px 18px;
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    border: none;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .input-row button:hover { background: var(--oy-red-deep); }
+
+  .choice-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .choice-btn {
+    padding: 6px 12px;
+    background: var(--oy-cream);
+    border: 1.5px solid var(--oy-ink);
+    color: var(--oy-ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .choice-btn:hover { background: var(--oy-ink); color: var(--oy-cream); }
+
+  @media (max-width: 560px) {
+    body { padding: 0; }
+    .console { height: 100vh; border-radius: 0; border: none; }
+  }
+</style>
+</head>
+<body>
+<main class="console">
+  <div class="dash">
+    <div class="brand">TRAM · DISPATCH</div>
+    <div class="channel" style="justify-self:center;">CH 04 · 146.52 MHz · 2026-10-15</div>
+    <div class="sig"><span class="led"></span><a href="index.html">← Exit</a></div>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <form class="input-row" id="form">
+    <input id="inp" placeholder="Type your transmission…" autocomplete="off" />
+    <button type="submit">SEND ▸</button>
+  </form>
+</main>
+
+<script>
+  const log = document.getElementById('log');
+  const form = document.getElementById('form');
+  const inp = document.getElementById('inp');
+
+  // Script of the flow
+  const script = [
+    { type: 'system', text: 'CONNECTING TO TRAMOKYO DISPATCH…' },
+    { type: 'system', text: 'SIGNAL LOCKED · STAND BY' },
+    { type: 'dispatcher', text: "Copy, copy — glad you picked up. Let's get you on the roster. Start with your first name, over." },
+    { type: 'input' },
+    { type: 'dispatcher', text: "Good copy, {0}. And a last name for the clipboard?" },
+    { type: 'input' },
+    { type: 'dispatcher', text: "Email address where we can send logistics? Promise we use it three times, tops." },
+    { type: 'input' },
+    { type: 'dispatcher', text: "Phone number for day-of updates when the Wi-Fi gives up?" },
+    { type: 'input' },
+    { type: 'dispatcher', text: "What are you bringing — what's the experience called? A working title's fine." },
+    { type: 'input' },
+    { type: 'dispatcher', text: "Roughly when's it running? Even a rough window helps us cluster things nearby." },
+    { type: 'input' },
+    { type: 'dispatcher', text: "Everyone builds a small wooden sign for their experience — points to it, goes home with you. You in?", choices: ['Yes', "I'll need help"] },
+    { type: 'dispatcher', text: "Fee this year: $175/adult — covers food, firewood, the communal jug. Copy?", choices: ['Noted', "I have a question"] },
+    { type: 'dispatcher', text: "Bringing pets?", choices: ['No', 'One, friendly', 'Small pack'] },
+    { type: 'dispatcher', text: "Container room — extra fee for an insulated, locked, powered spot?", choices: ['Skip', 'Interested', 'Tell me more'] },
+    { type: 'dispatcher', text: "Interested in a Ranger or medical shift? WFR/EMT/RN especially welcome.", choices: ['Just a guest', 'Interested'] },
+    { type: 'dispatcher', text: "Art grant? Up to $500 for projects that stay visible after.", choices: ['Not this year', "I'm applying"] },
+    { type: 'dispatcher', text: "First time at a Tram event? If so, who's your sponsor? (Type 'returning' if you've been before.)" },
+    { type: 'input' },
+    { type: 'dispatcher', text: "Last one — any notes for us? Dietary, arrival window, a joke. Optional." },
+    { type: 'input' },
+    { type: 'system', text: "TRANSMISSION LOGGED · STAND BY" },
+    { type: 'dispatcher', text: "That's it, {0}. Confirmation's headed to your inbox and we'll follow up with an interview in the coming weeks. Welcome in. Out." },
+    { type: 'end' }
+  ];
+
+  let step = 0;
+  const answers = {};
+  let firstName = '';
+
+  function fmt(s) { return s.replace('{0}', firstName || 'friend'); }
+
+  function addSystem(text) {
+    const el = document.createElement('div');
+    el.className = 'msg system';
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function addMe(text) {
+    const el = document.createElement('div');
+    el.className = 'msg me';
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function typeDispatcher(text, choices) {
+    return new Promise(resolve => {
+      const el = document.createElement('div');
+      el.className = 'msg dispatcher';
+      const inner = document.createElement('span');
+      inner.className = 'typing';
+      el.appendChild(inner);
+      log.appendChild(el);
+      log.scrollTop = log.scrollHeight;
+
+      let i = 0;
+      const speed = 18;
+      const tick = setInterval(() => {
+        inner.textContent = text.slice(0, ++i);
+        log.scrollTop = log.scrollHeight;
+        if (i >= text.length) {
+          clearInterval(tick);
+          inner.classList.remove('typing');
+          if (choices && choices.length) {
+            const row = document.createElement('div');
+            row.className = 'choice-row';
+            choices.forEach(c => {
+              const b = document.createElement('button');
+              b.className = 'choice-btn';
+              b.textContent = c;
+              b.addEventListener('click', () => {
+                row.remove();
+                addMe(c);
+                resolve(c);
+              });
+              row.appendChild(b);
+            });
+            el.appendChild(row);
+            resolve('__choice__');
+          } else {
+            resolve();
+          }
+        }
+      }, speed);
+    });
+  }
+
+  async function run() {
+    while (step < script.length) {
+      const item = script[step];
+      if (item.type === 'system') {
+        addSystem(fmt(item.text));
+        step++;
+        await new Promise(r => setTimeout(r, 400));
+      } else if (item.type === 'dispatcher') {
+        const result = await typeDispatcher(fmt(item.text), item.choices);
+        step++;
+        if (result === '__choice__') {
+          // wait for user to click a choice
+          await new Promise(r => {
+            const int = setInterval(() => {
+              const rows = log.querySelectorAll('.choice-row');
+              if (rows.length === 0) { clearInterval(int); r(); }
+            }, 100);
+          });
+          await new Promise(r => setTimeout(r, 300));
+        } else {
+          await new Promise(r => setTimeout(r, 500));
+        }
+      } else if (item.type === 'input') {
+        inp.focus();
+        // wait for submit
+        await new Promise(r => {
+          form.addEventListener('submit', function h(e) {
+            e.preventDefault();
+            const v = inp.value.trim();
+            if (!v) return;
+            if (!firstName) firstName = v;
+            addMe(v);
+            answers[step] = v;
+            inp.value = '';
+            form.removeEventListener('submit', h);
+            r();
+          });
+        });
+        step++;
+        await new Promise(r => setTimeout(r, 300));
+      } else if (item.type === 'end') {
+        inp.disabled = true;
+        inp.placeholder = 'SESSION COMPLETE';
+        form.querySelector('button').disabled = true;
+        break;
+      }
+    }
+  }
+
+  run();
+</script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mockup 01 · Expedition Manifest</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { padding: 28px; display: flex; justify-content: center; }
+  .frame {
+    width: 100%;
+    max-width: 780px;
+    background: var(--oy-cream);
+    border-radius: 10px;
+    padding: 40px 54px 44px;
+    position: relative;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.35);
+  }
+  .frame::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1.5px solid var(--oy-red);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    text-decoration: none;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .back-link:hover { color: var(--oy-red); }
+
+  header.hero { text-align: center; margin-bottom: 36px; position: relative; z-index: 1; }
+  header.hero .oy-kana { font-size: 20px; }
+  header.hero h1 { font-family: var(--font-display); font-size: 54px; line-height: 1; text-transform: uppercase; letter-spacing: -1px; margin: 8px 0 12px; }
+  header.hero .stamp {
+    display: inline-block;
+    border: 1.5px solid var(--oy-ink);
+    padding: 4px 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  header.hero .sub { font-size: 15px; color: var(--oy-ink-soft); max-width: 520px; margin: 0 auto; font-style: italic; }
+
+  .section {
+    position: relative; z-index: 1;
+    margin: 24px 0 32px;
+  }
+  .section + .section { padding-top: 28px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px dashed var(--oy-hairline);
+  }
+  .section-head .letter {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--oy-red);
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .section-head .jp {
+    font-family: var(--font-jp);
+    font-weight: 700;
+    color: var(--oy-red);
+    letter-spacing: 3px;
+    font-size: 14px;
+  }
+
+  .row { display: grid; gap: 20px 24px; }
+  .row.two { grid-template-columns: 1fr 1fr; }
+  .field { display: block; }
+
+  .hint { font-size: 12px; color: var(--oy-mute); margin-top: 4px; font-style: italic; }
+
+  .sign-agree {
+    background: var(--oy-cream-warm);
+    border: 1.5px solid var(--oy-ink);
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .sign-agree .sign-art {
+    flex: 0 0 50px; padding-top: 2px;
+    font-size: 32px;
+    color: var(--oy-ink);
+  }
+  .sign-agree .body { flex: 1; font-size: 14px; line-height: 1.5; }
+  .sign-agree .body strong { font-family: var(--font-display); display: block; text-transform: uppercase; font-size: 16px; margin-bottom: 4px; }
+
+  .fee-note {
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    padding: 18px 22px;
+    border-radius: 2px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+  .fee-note .big {
+    font-family: var(--font-display);
+    font-size: 34px;
+    line-height: 1;
+  }
+  .fee-note p {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .perforation {
+    height: 8px;
+    margin: 32px -54px;
+    background-image: radial-gradient(circle, var(--oy-red) 2px, transparent 2.5px);
+    background-size: 10px 8px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+
+  textarea.oy-field { resize: vertical; min-height: 90px; padding: 10px 0; border-bottom: 1.5px solid var(--oy-ink); }
+
+  .submit-row {
+    margin-top: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--oy-red);
+    position: relative; z-index: 1;
+  }
+  .submit-row .left { font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--oy-mute); }
+
+  @media (max-width: 640px) {
+    body { padding: 12px; }
+    .frame { padding: 24px 22px 28px; }
+    .perforation { margin: 24px -22px; }
+    header.hero h1 { font-size: 40px; }
+    .row.two { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="frame">
+  <a class="back-link" href="index.html">← Back to Gallery</a>
+
+  <header class="hero">
+    <div class="stamp">Form A-01 · October 2026</div>
+    <div class="oy-kana">目録</div>
+    <h1>Expedition Manifest</h1>
+    <p class="sub">One form. Six sections. File it once and we'll loop you in within a week.</p>
+  </header>
+
+  <form id="manifest">
+
+    <!-- SECTION A -->
+    <section class="section">
+      <div class="section-head">
+        <div><span class="letter">A</span> <h2 style="display:inline;">Your Bearings</h2></div>
+        <span class="jp">名前</span>
+      </div>
+      <div class="row two">
+        <div class="field">
+          <label class="oy-label">First Name</label>
+          <input class="oy-field" placeholder="On the back of your badge" />
+        </div>
+        <div class="field">
+          <label class="oy-label">Last Name</label>
+          <input class="oy-field" placeholder="For lost-and-found" />
+        </div>
+      </div>
+      <div class="row two" style="margin-top:20px;">
+        <div class="field">
+          <label class="oy-label">Email</label>
+          <input class="oy-field" type="email" placeholder="where.logistics@go.here" />
+        </div>
+        <div class="field">
+          <label class="oy-label">Phone</label>
+          <input class="oy-field" type="tel" placeholder="(555) 010-4127" />
+        </div>
+      </div>
+    </section>
+
+    <div class="perforation"></div>
+
+    <!-- SECTION B -->
+    <section class="section">
+      <div class="section-head">
+        <div><span class="letter">B</span> <h2 style="display:inline;">Your Experience</h2></div>
+        <span class="jp">体験</span>
+      </div>
+      <div class="field" style="margin-bottom:20px;">
+        <label class="oy-label">Experience Name <span style="color:var(--oy-mute);text-transform:none;letter-spacing:0;">(you can change it later)</span></label>
+        <input class="oy-field" placeholder="e.g. The Lantern Library, Night-Swim Club, The Spot Where the Stories Happen" />
+      </div>
+      <div class="field">
+        <label class="oy-label">Approximate Schedule</label>
+        <textarea class="oy-field" rows="3" placeholder="What's going on, when? Even rough times help us cluster things nearby."></textarea>
+        <div class="hint">Opens Friday, runs through Tuesday morning.</div>
+      </div>
+    </section>
+
+    <div class="perforation"></div>
+
+    <!-- SECTION C — Commitments -->
+    <section class="section">
+      <div class="section-head">
+        <div><span class="letter">C</span> <h2 style="display:inline;">Commitments</h2></div>
+        <span class="jp">約束</span>
+      </div>
+
+      <div class="sign-agree" style="margin-bottom:18px;">
+        <div class="sign-art">🪧</div>
+        <div class="body">
+          <strong>Build a small wooden sign</strong>
+          Everyone makes one. It points to your experience, it goes home with you. Supplies are at the workbench by the fire pit.
+          <label class="oy-check" style="margin-top:10px;">
+            <input type="checkbox" />
+            <span class="box"></span>
+            <span>I agree to build a sign for my experience.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="fee-note" style="margin-bottom:18px;">
+        <div class="big">$175</div>
+        <p><strong>per adult.</strong> Covers food staples, firewood, the communal jug, and keeping the lights off the grid. Payment instructions follow after you file.</p>
+      </div>
+
+      <label class="oy-check">
+        <input type="checkbox" />
+        <span class="box"></span>
+        <span>I acknowledge the $175/adult contribution.</span>
+      </label>
+    </section>
+
+    <div class="perforation"></div>
+
+    <!-- SECTION D — Party & Extras -->
+    <section class="section">
+      <div class="section-head">
+        <div><span class="letter">D</span> <h2 style="display:inline;">Party &amp; Extras</h2></div>
+        <span class="jp">追加</span>
+      </div>
+
+      <div class="field" style="margin-bottom:22px;">
+        <label class="oy-label">Bringing Pets?</label>
+        <div class="oy-radio-row">
+          <label class="oy-radio"><input type="radio" name="pets" />No pets</label>
+          <label class="oy-radio on"><input type="radio" name="pets" checked />One friendly</label>
+          <label class="oy-radio"><input type="radio" name="pets" />Small pack</label>
+        </div>
+        <div class="hint">Dogs welcome on-leash; chickens on their own recognizance.</div>
+      </div>
+
+      <div class="field">
+        <label class="oy-label">Container Room <span style="color:var(--oy-mute);text-transform:none;letter-spacing:0;">(additional fee, if interested)</span></label>
+        <div class="oy-radio-row">
+          <label class="oy-radio on"><input type="radio" name="room" checked />Not for me</label>
+          <label class="oy-radio"><input type="radio" name="room" />Interested</label>
+          <label class="oy-radio"><input type="radio" name="room" />Tell me more</label>
+        </div>
+        <div class="hint">Insulated, locked, powered. Six available.</div>
+      </div>
+    </section>
+
+    <div class="perforation"></div>
+
+    <!-- SECTION E — Contributions -->
+    <section class="section">
+      <div class="section-head">
+        <div><span class="letter">E</span> <h2 style="display:inline;">Contributions</h2></div>
+        <span class="jp">協力</span>
+      </div>
+      <div class="row two">
+        <div class="field">
+          <label class="oy-label">Ranger / Medical?</label>
+          <div class="oy-radio-row">
+            <label class="oy-radio on"><input type="radio" name="ranger" checked />Just a guest</label>
+            <label class="oy-radio"><input type="radio" name="ranger" />Interested</label>
+          </div>
+          <div class="hint">WFR/EMT/RN backgrounds especially welcome.</div>
+        </div>
+        <div class="field">
+          <label class="oy-label">Art Grants?</label>
+          <div class="oy-radio-row">
+            <label class="oy-radio on"><input type="radio" name="art" checked />Not this year</label>
+            <label class="oy-radio"><input type="radio" name="art" />Applying</label>
+          </div>
+          <div class="hint">Up to $500 for projects that stay after.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="perforation"></div>
+
+    <!-- SECTION F — Sponsor + Notes -->
+    <section class="section">
+      <div class="section-head">
+        <div><span class="letter">F</span> <h2 style="display:inline;">Sign-off</h2></div>
+        <span class="jp">署名</span>
+      </div>
+      <div class="field" style="margin-bottom:22px;">
+        <label class="oy-label">First time at Tram? Who's your sponsor?</label>
+        <input class="oy-field" placeholder="Friend-of-a-friend's name — or 'returning'" />
+        <div class="hint">First-timers need one existing attendee to vouch.</div>
+      </div>
+      <div class="field">
+        <label class="oy-label">Anything we should know? <span style="color:var(--oy-mute);text-transform:none;letter-spacing:0;">(optional)</span></label>
+        <textarea class="oy-field" rows="4" placeholder="Dietary notes, arrival window, a joke, the name of your dog, etc."></textarea>
+      </div>
+    </section>
+
+    <div class="submit-row">
+      <span class="left">Form A-01 / 14 of 14</span>
+      <button type="submit" class="oy-btn">File My Manifest →</button>
+    </div>
+
+  </form>
+</main>
+<script>
+  // toggle radio buttons
+  document.querySelectorAll('.oy-radio').forEach(r => {
+    r.addEventListener('click', e => {
+      const name = r.querySelector('input')?.name;
+      if (!name) return;
+      document.querySelectorAll(`.oy-radio input[name="${name}"]`).forEach(i => i.closest('.oy-radio').classList.remove('on'));
+      r.classList.add('on');
+      r.querySelector('input').checked = true;
+    });
+  });
+  document.getElementById('manifest').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Mock — filed! (real flow would POST to Google Apps Script)');
+  });
+</script>
+</body>
+</html>

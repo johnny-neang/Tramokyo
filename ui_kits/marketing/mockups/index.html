@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tramokyo · Registration Mockups</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="base.css">
+<style>
+  body { padding: 32px; display: flex; justify-content: center; }
+  .wrap { width: 100%; max-width: 1200px; }
+  .frame {
+    background: var(--oy-cream);
+    border-radius: 10px;
+    padding: 36px 48px 40px;
+    position: relative;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.35);
+  }
+  .frame::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1.5px solid var(--oy-red);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+  header { position: relative; z-index: 1; margin-bottom: 32px; }
+  header .oy-kana { font-size: 22px; }
+  header h1 { font-family: var(--font-display); font-size: 48px; line-height: 1; margin-top: 8px; text-transform: uppercase; }
+  header .sub { font-size: 16px; color: var(--oy-ink-soft); max-width: 640px; margin-top: 10px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .card {
+    border: 1.5px solid var(--oy-ink);
+    padding: 22px 24px 20px;
+    background: var(--oy-cream-warm);
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .12s, background .2s;
+    position: relative;
+  }
+  .card:hover { transform: translate(-2px,-2px); background: var(--oy-cream-soft); }
+  .card:hover::after {
+    content: "";
+    position: absolute;
+    inset: 2px 2px -4px -4px;
+    border: 1.5px solid var(--oy-ink);
+    z-index: -1;
+  }
+  .card .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--oy-red);
+    font-weight: 700;
+  }
+  .card h2 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 6px 0 12px;
+  }
+  .card .jp {
+    font-family: var(--font-jp);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--oy-red);
+    letter-spacing: 3px;
+  }
+  .card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--oy-ink-soft);
+    margin: 10px 0 14px;
+    flex: 1;
+  }
+  .card .meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .card .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid var(--oy-hairline);
+    color: var(--oy-mute);
+  }
+  .card .cta {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--oy-red);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* mini visual per card */
+  .viz {
+    height: 60px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  /* #1 manifest — rows */
+  .viz-manifest { flex-direction: column; align-items: stretch; gap: 4px; justify-content: center; }
+  .viz-manifest .row { height: 4px; background: var(--oy-ink); opacity: .3; border-radius: 1px; }
+  .viz-manifest .row:nth-child(3) { background: var(--oy-red); opacity: .8; }
+  .viz-manifest .row:nth-child(5) { width: 60%; }
+  /* #2 trail — 5 campfires */
+  .viz-trail { justify-content: space-between; }
+  .viz-trail .dot {
+    width: 26px; height: 26px; border: 1.5px solid var(--oy-ink);
+    border-radius: 50%; display: grid; place-items: center;
+    font-family: var(--font-mono); font-weight: 700; font-size: 10px;
+  }
+  .viz-trail .dot.on { background: var(--oy-red); color: var(--oy-cream); border-color: var(--oy-red); }
+  .viz-trail .line { flex: 1; height: 1.5px; background: var(--oy-ink); opacity: .4; }
+  /* #3 campfire — big Q */
+  .viz-campfire { justify-content: flex-start; gap: 10px; }
+  .viz-campfire .q { font-family: var(--font-display); font-size: 22px; color: var(--oy-ink); line-height: 1; }
+  .viz-campfire .cursor { width: 2px; height: 22px; background: var(--oy-red); animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  /* #4 dispatch — chat bubbles */
+  .viz-dispatch { flex-direction: column; align-items: stretch; gap: 4px; justify-content: center; }
+  .viz-dispatch .bubble { padding: 4px 8px; font-family: var(--font-mono); font-size: 9px; color: var(--oy-ink); max-width: 75%; background: var(--oy-cream); border: 1px solid var(--oy-ink); }
+  .viz-dispatch .bubble.me { align-self: flex-end; background: var(--oy-red); color: var(--oy-cream); border-color: var(--oy-red); }
+  /* #5 postcard — stamp + address */
+  .viz-postcard {
+    justify-content: space-between;
+    padding: 8px; border: 1.5px dashed var(--oy-hairline); background: var(--oy-cream);
+  }
+  .viz-postcard .stamp { width: 36px; height: 44px; border: 1.5px solid var(--oy-red); background: repeating-linear-gradient(45deg, var(--oy-cream), var(--oy-cream) 4px, var(--oy-red) 4px, var(--oy-red) 5px); }
+  .viz-postcard .lines { flex: 1; padding: 0 10px; }
+  .viz-postcard .lines .l { height: 1.5px; background: var(--oy-ink); opacity: .5; margin: 4px 0; }
+  .viz-postcard .lines .l:nth-child(1) { width: 80%; }
+  .viz-postcard .lines .l:nth-child(2) { width: 65%; }
+  .viz-postcard .lines .l:nth-child(3) { width: 90%; }
+
+  footer.mockups-foot {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1.5px solid var(--oy-red);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 16px; }
+    .frame { padding: 24px 20px 28px; }
+    header h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main class="frame">
+    <header>
+      <div class="oy-kana">登録の道</div>
+      <h1>Five Ways to Register</h1>
+      <p class="sub">Each mockup captures the same fourteen-field registration in a different UX. Click through, feel the pace, pick a favorite. Field copy is intentionally playful — the park ranger voice stays across all five.</p>
+    </header>
+
+    <div class="grid">
+      <a class="card" href="1-manifest.html">
+        <div class="viz viz-manifest">
+          <div class="row"></div><div class="row"></div><div class="row"></div>
+          <div class="row"></div><div class="row"></div><div class="row"></div>
+        </div>
+        <div class="num">01 · SCROLL</div>
+        <div class="jp">目録</div>
+        <h2>Expedition Manifest</h2>
+        <p>One long paper-form scroll. All fourteen fields visible, grouped into six ticket-perforated sections. Familiar, fast, no surprises.</p>
+        <div class="meta">
+          <span class="tag">1 page</span>
+          <span class="tag">All visible</span>
+          <span class="tag">Highest completion</span>
+        </div>
+        <span class="cta">Open mockup →</span>
+      </a>
+
+      <a class="card" href="2-trail.html">
+        <div class="viz viz-trail">
+          <div class="dot on">1</div>
+          <div class="line"></div>
+          <div class="dot">2</div>
+          <div class="line"></div>
+          <div class="dot">3</div>
+          <div class="line"></div>
+          <div class="dot">4</div>
+          <div class="line"></div>
+          <div class="dot">5</div>
+        </div>
+        <div class="num">02 · WIZARD</div>
+        <div class="jp">道のり</div>
+        <h2>Trail Map Wizard</h2>
+        <p>Five steps along a trail. Campfire progress indicator at the top, back/next at the bottom. 2–3 fields per screen — feels like building an expedition.</p>
+        <div class="meta">
+          <span class="tag">5 steps</span>
+          <span class="tag">Clear progress</span>
+          <span class="tag">Great on mobile</span>
+        </div>
+        <span class="cta">Open mockup →</span>
+      </a>
+
+      <a class="card" href="3-campfire.html">
+        <div class="viz viz-campfire">
+          <div class="q">WHO ARE YOU?</div>
+          <div class="cursor"></div>
+        </div>
+        <div class="num">03 · TYPEFORM</div>
+        <div class="jp">一問一答</div>
+        <h2>Campfire Q&amp;A</h2>
+        <p>One question per screen. Park-ranger prose asks each field ("what should we holler across the fire?"). Enter advances. Focused, mobile-native.</p>
+        <div class="meta">
+          <span class="tag">14 screens</span>
+          <span class="tag">Conversational</span>
+          <span class="tag">Slower</span>
+        </div>
+        <span class="cta">Open mockup →</span>
+      </a>
+
+      <a class="card" href="4-dispatch.html">
+        <div class="viz viz-dispatch">
+          <div class="bubble">CH4 · NAME?</div>
+          <div class="bubble me">JOHNNY</div>
+          <div class="bubble">CH4 · GOOD</div>
+        </div>
+        <div class="num">04 · CHAT</div>
+        <div class="jp">無線</div>
+        <h2>Radio Dispatch</h2>
+        <p>A comms-log interface. The dispatcher types out each question like an old radio; your answers appear as "TRANSMISSION IN." Memorable, slower to build and fill.</p>
+        <div class="meta">
+          <span class="tag">Chat UI</span>
+          <span class="tag">Most vibe</span>
+          <span class="tag">Most novel</span>
+        </div>
+        <span class="cta">Open mockup →</span>
+      </a>
+
+      <a class="card" href="5-postcard.html">
+        <div class="viz viz-postcard">
+          <div class="stamp"></div>
+          <div class="lines">
+            <div class="l"></div>
+            <div class="l"></div>
+            <div class="l"></div>
+          </div>
+        </div>
+        <div class="num">05 · FLIP</div>
+        <div class="jp">葉書</div>
+        <h2>Back-of-Postcard</h2>
+        <p>A single postcard. Front: essentials. Flip for extras and sign-off. One button, short, theatrical. Great for brand moments, not the fastest to fill.</p>
+        <div class="meta">
+          <span class="tag">Modal</span>
+          <span class="tag">Flip animation</span>
+          <span class="tag">Shortest feel</span>
+        </div>
+        <span class="cta">Open mockup →</span>
+      </a>
+    </div>
+
+    <footer class="mockups-foot">
+      <span>Tramokyo · Registration · Vol. 01</span>
+      <span>All mockups share the same 14 fields</span>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

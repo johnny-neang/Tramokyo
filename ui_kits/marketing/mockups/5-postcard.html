@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mockup 05 · Back-of-Postcard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="base.css">
+<style>
+  body {
+    background: var(--oy-red);
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .bar {
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-cream);
+  }
+  .bar a { color: var(--oy-cream); text-decoration: none; opacity: .8; }
+  .bar a:hover { opacity: 1; }
+
+  /* flipping postcard */
+  .scene {
+    perspective: 2400px;
+    width: 100%;
+    max-width: 860px;
+  }
+  .postcard {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(.4,.05,.3,1);
+  }
+  .postcard.flipped { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    background: var(--oy-cream);
+    border: 2px solid var(--oy-ink);
+    display: flex;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,.4);
+  }
+  .face.back { transform: rotateY(180deg); }
+
+  /* FRONT layout: left image panel + right form panel */
+  .front .left-panel {
+    flex: 0 0 38%;
+    background: var(--oy-red);
+    padding: 28px 24px;
+    color: var(--oy-cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .front .left-panel .stamp {
+    align-self: flex-end;
+    width: 80px;
+    height: 100px;
+    border: 2px solid var(--oy-cream);
+    padding: 6px;
+    background: var(--oy-cream);
+    color: var(--oy-red);
+    font-family: var(--font-display);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+    line-height: 1.1;
+    position: relative;
+  }
+  .front .left-panel .stamp::before, .front .left-panel .stamp::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    background:
+      radial-gradient(circle, var(--oy-red) 2px, transparent 2.5px) 0 0 / 8px 8px;
+    z-index: -1;
+  }
+  .front .left-panel .stamp .big { font-size: 20px; margin: 4px 0; color: var(--oy-red); }
+  .front .left-panel h2 {
+    font-family: var(--font-display);
+    font-size: 40px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+  .front .left-panel h2 small {
+    display: block;
+    font-family: var(--font-jp);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-top: 8px;
+    opacity: .9;
+  }
+  .front .left-panel p {
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: .9;
+    font-style: italic;
+    margin-top: 10px;
+  }
+  .front .left-panel .meta {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: .85;
+  }
+
+  .front .right-panel {
+    flex: 1;
+    padding: 28px 28px 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .postmark {
+    position: absolute;
+    top: 14px; right: 18px;
+    width: 80px; height: 80px;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: var(--oy-ink);
+    text-transform: uppercase;
+    transform: rotate(-8deg);
+    opacity: 0.5;
+    line-height: 1.2;
+  }
+  .front .right-panel .addressee {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    margin-bottom: 14px;
+  }
+  .front .right-panel h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .row { display: grid; gap: 10px 16px; margin-bottom: 10px; }
+  .row.two { grid-template-columns: 1fr 1fr; }
+  .field { display: block; }
+  .field label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    margin-bottom: 2px;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--oy-ink);
+    padding: 4px 0;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+    color: var(--oy-ink);
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--oy-red); }
+  .field textarea { resize: none; }
+
+  .flip-btn {
+    align-self: flex-end;
+    margin-top: auto;
+    padding: 10px 20px;
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .flip-btn:hover { background: var(--oy-red); }
+
+  /* BACK layout */
+  .face.back {
+    flex-direction: column;
+    padding: 28px 32px 20px;
+  }
+  .back .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid var(--oy-red);
+  }
+  .back .head h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+  .back .head .jp {
+    font-family: var(--font-jp);
+    font-weight: 700;
+    color: var(--oy-red);
+    letter-spacing: 3px;
+  }
+
+  .back-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 28px;
+    flex: 1;
+  }
+  .back-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .back-item .q {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .back-item .opts {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .opt {
+    padding: 5px 10px;
+    border: 1px solid var(--oy-ink);
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: transparent;
+    color: var(--oy-ink);
+  }
+  .opt.on { background: var(--oy-red); color: var(--oy-cream); border-color: var(--oy-red); }
+
+  .back .sign-off {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    padding-top: 10px;
+  }
+  .back .sign-off .notes { flex: 1; }
+  .back .sign-off .notes textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--oy-ink);
+    padding: 4px 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+    background: transparent;
+    outline: none;
+    resize: none;
+  }
+  .back .sign-off .submit {
+    padding: 12px 26px;
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .back .sign-off .submit:hover { background: var(--oy-red-deep); }
+
+  .back .flip-btn { align-self: flex-start; margin-top: 10px; }
+
+  .fee-strip {
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .fee-strip strong { color: var(--oy-red); font-family: var(--font-display); }
+
+  /* DONE overlay */
+  .done-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--oy-cream);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+    padding: 40px;
+  }
+  .done-overlay.show { display: flex; animation: fadeIn .4s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .done-overlay .seal {
+    width: 140px; height: 140px;
+    border: 4px solid var(--oy-red);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    color: var(--oy-red);
+    font-size: 20px;
+    transform: rotate(-10deg);
+    margin-bottom: 20px;
+  }
+  .done-overlay h3 { font-family: var(--font-display); font-size: 42px; text-transform: uppercase; margin-bottom: 10px; }
+  .done-overlay p { font-size: 15px; color: var(--oy-ink-soft); max-width: 420px; font-style: italic; }
+
+  @media (max-width: 760px) {
+    body { padding: 16px 12px; }
+    .postcard { aspect-ratio: auto; min-height: 640px; }
+    .front { flex-direction: column; }
+    .front .left-panel { flex: 0 0 auto; }
+    .back-grid { grid-template-columns: 1fr; }
+    .front .right-panel { padding: 20px; }
+    .front .left-panel h2 { font-size: 30px; }
+    .postmark { display: none; }
+    .back .sign-off { flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="index.html">← Back to Gallery</a>
+  <span>TRAMOKYO · POSTCARD · 2026</span>
+</div>
+
+<div class="scene">
+  <div class="postcard" id="pc">
+    <!-- FRONT -->
+    <section class="face front">
+      <div class="left-panel">
+        <div>
+          <div class="meta">Vol. 01 · Issue 01</div>
+          <h2 style="margin-top:12px;">Register<br/>For Tram<small>登録</small></h2>
+          <p>One postcard. Front for essentials, flip for the rest.</p>
+        </div>
+        <div class="stamp">
+          FIRST CLASS<div class="big">$175</div>PER ADULT
+        </div>
+      </div>
+
+      <div class="right-panel">
+        <div class="postmark">TRAM<br/>DISPATCH<br/>★ ★ ★</div>
+        <div class="addressee">To: the Tram roster</div>
+        <h3>Your Details</h3>
+
+        <div class="row two">
+          <div class="field"><label>First Name</label><input /></div>
+          <div class="field"><label>Last Name</label><input /></div>
+        </div>
+        <div class="row two">
+          <div class="field"><label>Email</label><input type="email" /></div>
+          <div class="field"><label>Phone</label><input type="tel" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Experience Name <span style="text-transform:none;letter-spacing:0;">(you can change it later)</span></label><input /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Approximate Schedule</label><textarea rows="2"></textarea></div>
+        </div>
+
+        <button class="flip-btn" onclick="document.getElementById('pc').classList.add('flipped')">Flip for extras →</button>
+      </div>
+    </section>
+
+    <!-- BACK -->
+    <section class="face back">
+      <div class="head">
+        <h2>Commitments &amp; Extras</h2>
+        <span class="jp">追加</span>
+      </div>
+
+      <div class="fee-strip">
+        <strong>$175</strong> per adult · covers food · firewood · jug · lights off-grid
+      </div>
+
+      <div class="back-grid">
+        <div class="back-item">
+          <span class="q">Build a small wooden sign?</span>
+          <div class="opts">
+            <button class="opt on" onclick="pick(this)">Yes, I'll build one</button>
+            <button class="opt" onclick="pick(this)">Need a hand</button>
+          </div>
+        </div>
+        <div class="back-item">
+          <span class="q">Acknowledge $175/adult fee</span>
+          <div class="opts">
+            <button class="opt on" onclick="pick(this)">Noted</button>
+            <button class="opt" onclick="pick(this)">I have a question</button>
+          </div>
+        </div>
+        <div class="back-item">
+          <span class="q">Bringing pets?</span>
+          <div class="opts">
+            <button class="opt on" onclick="pick(this)">No</button>
+            <button class="opt" onclick="pick(this)">One friendly</button>
+            <button class="opt" onclick="pick(this)">Small pack</button>
+          </div>
+        </div>
+        <div class="back-item">
+          <span class="q">Container room? (extra fee)</span>
+          <div class="opts">
+            <button class="opt on" onclick="pick(this)">Skip</button>
+            <button class="opt" onclick="pick(this)">Interested</button>
+            <button class="opt" onclick="pick(this)">Tell me more</button>
+          </div>
+        </div>
+        <div class="back-item">
+          <span class="q">Ranger / Medical?</span>
+          <div class="opts">
+            <button class="opt on" onclick="pick(this)">Just a guest</button>
+            <button class="opt" onclick="pick(this)">Interested</button>
+          </div>
+        </div>
+        <div class="back-item">
+          <span class="q">Art grant?</span>
+          <div class="opts">
+            <button class="opt on" onclick="pick(this)">Not this year</button>
+            <button class="opt" onclick="pick(this)">Applying</button>
+          </div>
+        </div>
+        <div class="back-item" style="grid-column:1/-1;">
+          <span class="q">First time? Who's your sponsor?</span>
+          <div class="field" style="margin-top:-4px;"><input placeholder="Name — or 'returning'" /></div>
+        </div>
+        <div class="sign-off">
+          <div class="notes">
+            <span class="q">Notes (optional)</span>
+            <textarea rows="1" placeholder="Dietary, arrival window, a joke, the name of your dog…"></textarea>
+          </div>
+          <button class="submit" id="submit">Post It ▸</button>
+        </div>
+      </div>
+
+      <button class="flip-btn" onclick="document.getElementById('pc').classList.remove('flipped')">← Back to front</button>
+    </section>
+
+    <!-- DONE -->
+    <div class="done-overlay" id="done">
+      <div class="seal">APPROVED<br/><small style="font-size:10px;font-family:var(--font-mono);letter-spacing:2px;">TRAM · 2026</small></div>
+      <h3>You're In.</h3>
+      <p>Confirmation on the way — an interview will follow in the coming weeks to catch the rest.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function pick(el) {
+    const parent = el.parentElement;
+    parent.querySelectorAll('.opt').forEach(o => o.classList.remove('on'));
+    el.classList.add('on');
+  }
+  document.getElementById('submit').addEventListener('click', () => {
+    document.getElementById('done').classList.add('show');
+  });
+</script>
+</body>
+</html>
