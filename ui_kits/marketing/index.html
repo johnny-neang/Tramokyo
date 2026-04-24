@@ -148,16 +148,20 @@
   .oy-btn, .oy-btn--ghost { white-space: nowrap; }
 
   .oy-btn--ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: transparent;
     color: var(--oy-ink);
-    border-bottom: 1.5px solid var(--oy-ink);
-    border-radius: 0;
-    padding: 6px 0;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    padding: 14px 34px;
     font-family: var(--oy-font-body);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease);
+    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease), background 200ms var(--oy-ease);
   }
   .oy-btn--ghost:hover { color: var(--oy-red); border-color: var(--oy-red); }
 
@@ -197,19 +201,19 @@
     padding: 4px 12px 0;
   }
   .oy-logo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    width: 58px; height: 58px;
-    border: 1.5px solid var(--oy-ink);
-    font-family: var(--oy-font-display);
-    font-size: 12px;
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
     background: transparent;
+    border: none;
     padding: 0;
+    cursor: pointer;
+    line-height: 1;
   }
-  .oy-logo span { display: flex; align-items: center; justify-content: center; }
-  .oy-logo span:nth-child(2), .oy-logo span:nth-child(3) { color: var(--oy-red); }
+  .oy-logo img {
+    display: block;
+    height: clamp(28px, 2.8vw, 40px);
+    width: auto;
+  }
 
   .oy-nav-links {
     display: flex;
@@ -264,6 +268,7 @@
     place-items: center;
   }
   .oy-bowl { width: 100%; height: 100%; overflow: visible; }
+  .oy-scene { width: 100%; height: 100%; object-fit: contain; display: block; }
 
   .oy-spice-chip {
     position: absolute;
@@ -452,7 +457,7 @@
   <!-- ============ NAV ============ -->
   <nav class="oy-nav">
     <button class="oy-logo" data-route="Home" aria-label="Tramokyo home">
-      <span>T</span><span>R</span><span>M</span><span>K</span>
+      <img src="assets/logo.png" alt="Tramokyo" />
     </button>
     <ul class="oy-nav-links" id="navLinks">
       <li data-route="Home" class="on"><a>Home</a></li>
@@ -468,19 +473,18 @@
   <!-- ============ HOME ============ -->
   <section class="oy-hero oy-route active" data-view="Home">
     <div class="oy-hero-copy">
-      <div class="oy-kana" style="font-size:38px">野営</div>
+      <div class="oy-kana" style="font-size:38px">十月 15-19</div>
       <svg class="oy-wavy" width="90" height="10" viewBox="0 0 90 10" fill="none">
         <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       </svg>
       <h1 class="oy-h1 oy-hero-headline">
-        Old forest, cold stream,<br>
-        <span class="accent">one long table,</span>
-        under the stars.
+        Welcome to the Sun &amp; Moon,<br>
+        <span class="accent">deepening connection with our gifts,</span>
+        in celebration and ceremonies.
       </h1>
       <p class="oy-lede" style="margin-top:20px; max-width:440px">
-        A three&#8209;night gathering in the cedar hills. Cast&#8209;iron
-        dinners, pre&#8209;dawn hikes, a hot spring up the path, and a
-        firepit that doesn't go out until we all say so.
+        A four&#8209;night gathering in Landers, California among
+        the Joshua Trees and stars.
       </p>
       <div class="oy-cta-row">
         <button class="oy-btn" id="orderBtn">Reserve a Spot</button>
@@ -488,66 +492,7 @@
       </div>
     </div>
     <div class="oy-art-wrap">
-      <span class="oy-chip oy-spice-chip">NABE · ★★</span>
-      <span class="oy-umai">美味い!</span>
-      <svg viewBox="0 0 560 560" class="oy-bowl" aria-label="Cast-iron pot over a campfire">
-        <defs>
-          <clipPath id="oyClip"><ellipse cx="280" cy="360" rx="190" ry="32"/></clipPath>
-          <pattern id="oyWave" width="18" height="8" patternUnits="userSpaceOnUse">
-            <path d="M0 4 Q4.5 0 9 4 T18 4" stroke="#E8412A" stroke-width="1.3" fill="none"/>
-          </pattern>
-        </defs>
-        <!-- ladles coming in from top -->
-        <g>
-          <g transform="rotate(-12 420 150)">
-            <rect x="140" y="130" width="340" height="8" fill="#1C1917"/>
-            <circle cx="150" cy="134" r="18" fill="none" stroke="#1C1917" stroke-width="4"/>
-            <rect x="440" y="124" width="42" height="20" fill="#E8412A"/>
-          </g>
-          <g transform="rotate(-8 420 190)">
-            <rect x="150" y="180" width="330" height="8" fill="#1C1917"/>
-            <rect x="150" y="172" width="26" height="24" fill="#1C1917"/>
-            <rect x="440" y="174" width="42" height="20" fill="#E8412A"/>
-          </g>
-        </g>
-        <!-- steam -->
-        <g class="oy-steam">
-          <path d="M245 170 C 230 200, 260 230, 245 260 C 230 290, 270 315, 255 345" stroke="#E8412A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <path d="M270 160 C 255 190, 285 220, 270 250 C 255 280, 295 305, 280 345" stroke="#E8412A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <path d="M295 170 C 280 200, 310 230, 295 260 C 280 290, 320 315, 305 345" stroke="#E8412A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-        </g>
-        <!-- pot body -->
-        <g>
-          <path d="M90 355 Q 280 560 470 355 Z" fill="#1C1917"/>
-          <ellipse cx="280" cy="355" rx="190" ry="30" fill="#1C1917"/>
-          <ellipse cx="280" cy="353" rx="182" ry="24" fill="#F2E8D5"/>
-          <ellipse cx="280" cy="355" rx="178" ry="22" fill="#E8412A" opacity="0.18"/>
-          <ellipse cx="280" cy="355" rx="178" ry="22" fill="url(#oyWave)"/>
-          <g clip-path="url(#oyClip)">
-            <!-- onigiri (rice ball) with nori band -->
-            <g transform="translate(200 350)">
-              <path d="M-20 18 L 0 -20 L 20 18 Z" fill="#F2E8D5" stroke="#1C1917" stroke-width="1.5"/>
-              <rect x="-16" y="6" width="32" height="8" fill="#1C1917"/>
-            </g>
-            <!-- soft-boiled egg -->
-            <g transform="translate(250 352)">
-              <ellipse rx="26" ry="22" fill="#F2E8D5" stroke="#1C1917" stroke-width="1.5"/>
-              <circle r="11" fill="#E8412A"/>
-              <circle r="5" fill="#C8341F"/>
-            </g>
-            <!-- log of mushroom / nori -->
-            <g transform="translate(330 340) rotate(18)">
-              <rect x="-20" y="-30" width="40" height="60" fill="#1C1917"/>
-            </g>
-          </g>
-          <!-- pot stand -->
-          <rect x="250" y="525" width="60" height="14" fill="#1C1917"/>
-          <!-- embers glow -->
-          <ellipse cx="280" cy="539" rx="30" ry="6" fill="#E8412A"/>
-          <!-- pot foot line -->
-          <path d="M120 395 Q 280 515 440 395" stroke="#E8412A" stroke-width="6" fill="none"/>
-        </g>
-      </svg>
+      <img class="oy-scene" src="assets/desert.jpg" alt="Joshua tree at dusk" />
     </div>
   </section>
 
