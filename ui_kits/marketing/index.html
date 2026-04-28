@@ -148,16 +148,20 @@
   .oy-btn, .oy-btn--ghost { white-space: nowrap; }
 
   .oy-btn--ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: transparent;
     color: var(--oy-ink);
-    border-bottom: 1.5px solid var(--oy-ink);
-    border-radius: 0;
-    padding: 6px 0;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    padding: 14px 34px;
     font-family: var(--oy-font-body);
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease);
+    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease), background 200ms var(--oy-ease);
   }
   .oy-btn--ghost:hover { color: var(--oy-red); border-color: var(--oy-red); }
 
@@ -165,7 +169,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 14px;
+    padding: 10px 18px;
     background: transparent;
     border: 1.5px solid var(--oy-ink);
     border-radius: var(--oy-radius-pill);
@@ -174,7 +178,10 @@
     font-weight: 600;
     color: var(--oy-ink);
     cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
   }
+  .oy-pill--cta { background: var(--oy-red); color: var(--oy-cream); border-color: var(--oy-red); }
+  .oy-pill--cta:hover { background: var(--oy-red-deep); border-color: var(--oy-red-deep); }
 
   .oy-chip {
     display: inline-block;
@@ -197,19 +204,19 @@
     padding: 4px 12px 0;
   }
   .oy-logo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    width: 58px; height: 58px;
-    border: 1.5px solid var(--oy-ink);
-    font-family: var(--oy-font-display);
-    font-size: 12px;
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
     background: transparent;
+    border: none;
     padding: 0;
+    cursor: pointer;
+    line-height: 1;
   }
-  .oy-logo span { display: flex; align-items: center; justify-content: center; }
-  .oy-logo span:nth-child(2), .oy-logo span:nth-child(3) { color: var(--oy-red); }
+  .oy-logo img {
+    display: block;
+    height: clamp(28px, 2.8vw, 40px);
+    width: auto;
+  }
 
   .oy-nav-links {
     display: flex;
@@ -231,13 +238,6 @@
   .oy-nav-links li.on a::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
     height: 1.5px; background: var(--oy-red);
-  }
-
-  .oy-pill-count {
-    width: 18px; height: 18px;
-    background: var(--oy-red); color: var(--oy-cream);
-    border-radius: 50%; font-size: 10px; font-weight: 700;
-    display: grid; place-items: center;
   }
 
   /* ============ Hero ============ */
@@ -264,6 +264,7 @@
     place-items: center;
   }
   .oy-bowl { width: 100%; height: 100%; overflow: visible; }
+  .oy-scene { width: 100%; height: 100%; object-fit: contain; display: block; }
 
   .oy-spice-chip {
     position: absolute;
@@ -294,13 +295,63 @@
   /* ============ Program ============ */
   .oy-menu { padding: 24px 12px; }
   .oy-section-head { margin-bottom: 32px; }
-  .oy-menu-grid {
+  .oy-day-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .oy-day-col { display: flex; flex-direction: column; gap: 14px; }
+  .oy-day-head {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    padding: 18px 14px 14px;
+    text-align: center;
+  }
+  .oy-day-num {
+    font-family: var(--oy-font-display);
+    font-size: 64px;
+    line-height: 0.9;
+    color: var(--oy-red);
+    letter-spacing: -2px;
+  }
+  .oy-day-meta {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .oy-day-meta .dow {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    font-weight: 700;
+  }
+  .oy-day-meta .jp {
+    font-family: var(--oy-font-jp);
+    font-weight: 700;
+    color: var(--oy-red);
+    font-size: 14px;
+  }
+  .oy-day-empty {
+    flex: 1;
+    border: 1.5px dashed var(--oy-hairline);
+    color: var(--oy-mute);
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 28px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
   }
   .oy-menu-card {
-    padding: 20px;
+    padding: 18px;
     background: var(--oy-cream-warm);
     border: 1.5px solid var(--oy-ink);
     position: relative;
@@ -318,9 +369,22 @@
     justify-content: space-between;
     align-items: center;
   }
-  .oy-spice { font-size: 14px; color: var(--oy-red); letter-spacing: 2px; }
-  .oy-spice span { opacity: 0.25; }
-  .oy-spice span.on { opacity: 1; }
+  .oy-location-label {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-red);
+    font-weight: 700;
+  }
+  .oy-location-name {
+    font-family: var(--oy-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--oy-ink);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
   .oy-btn-small {
     padding: 8px 14px;
     background: transparent;
@@ -359,6 +423,49 @@
     line-height: 1;
     color: var(--oy-red);
   }
+  .oy-yearlist {
+    list-style: none;
+    margin: 24px 0 0;
+    max-width: 460px;
+    border-top: 1.5px solid var(--oy-red);
+  }
+  .oy-yearlist li {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    align-items: baseline;
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--oy-hairline);
+  }
+  .oy-yearlist .year {
+    font-family: var(--oy-font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--oy-red);
+  }
+  .oy-yearlist .name {
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--oy-ink);
+  }
+  .oy-yearlist .name em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--oy-mute);
+  }
+  .oy-yearlist li.now {
+    background: var(--oy-cream-warm);
+    margin: 0 -4px;
+    padding: 12px 8px;
+  }
+  .oy-yearlist li.now .name {
+    font-family: var(--oy-font-display);
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--oy-red);
+  }
 
   /* ============ Where ============ */
   .oy-visit { padding: 24px 12px; }
@@ -367,6 +474,13 @@
     aspect-ratio: 1/1;
     border: 1.5px solid var(--oy-ink);
     overflow: hidden;
+    background: var(--oy-cream);
+  }
+  .oy-map-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .oy-dl { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
   .oy-dl > div { display: grid; grid-template-columns: 140px 1fr; border-bottom: 1px solid var(--oy-hairline); padding-bottom: 14px; }
@@ -380,36 +494,250 @@
   }
   .oy-dl dd { font-size: 15px; color: var(--oy-ink); }
 
-  /* ============ Plan ============ */
-  .oy-cart { padding: 24px 12px; max-width: 640px; }
-  .oy-cart-list {
+  /* ============ Register (Expedition Manifest) ============ */
+  .oy-register { padding: 12px 12px 32px; max-width: 820px; margin: 0 auto; }
+  .reg-hero-head { text-align: center; margin-bottom: 40px; }
+  .reg-hero-head .stamp {
+    display: inline-block; border: 1.5px solid var(--oy-ink);
+    padding: 4px 12px; font-family: var(--oy-font-mono);
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .reg-hero-head h2 { font-family: var(--oy-font-display); font-size: clamp(40px, 6vw, 58px); line-height: 1; letter-spacing: -1px; text-transform: uppercase; margin: 8px 0 12px; }
+  .reg-hero-head .intro { font-family: var(--oy-font-body); font-style: italic; font-size: 16px; color: var(--oy-ink-soft); max-width: 520px; margin: 0 auto; }
+
+  .reg-section { margin: 28px 0 36px; }
+  .reg-section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; margin-bottom: 18px; padding-bottom: 8px;
+    border-bottom: 1.5px dashed var(--oy-hairline);
+  }
+  .reg-section-head .ttl { display: flex; align-items: baseline; gap: 10px; }
+  .reg-section-head .letter { font-family: var(--oy-font-display); font-size: 22px; color: var(--oy-red); }
+  .reg-section-head h3 { font-family: var(--oy-font-display); font-size: 22px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .reg-section-head .jp { font-family: var(--oy-font-jp); font-weight: 700; color: var(--oy-red); letter-spacing: 3px; font-size: 14px; }
+
+  .reg-row { display: grid; gap: 18px 24px; }
+  .reg-row.two { grid-template-columns: 1fr 1fr; }
+  .reg-row + .reg-row { margin-top: 18px; }
+
+  .reg-field label {
+    display: block; font-family: var(--oy-font-mono); font-weight: 600;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--oy-mute); margin-bottom: 6px;
+  }
+  .reg-field label .hint-inline { color: var(--oy-mute); text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 11px; }
+  .reg-field input, .reg-field textarea {
+    width: 100%; padding: 10px 0 8px; border: none;
+    border-bottom: 1.5px solid var(--oy-ink);
+    background: transparent; font-family: var(--oy-font-body);
+    font-size: 16px; color: var(--oy-ink); outline: none;
+  }
+  .reg-field input:focus, .reg-field textarea:focus, .reg-field .reg-select:focus { border-color: var(--oy-red); }
+  .reg-field input::placeholder, .reg-field textarea::placeholder { color: var(--oy-mute); opacity: .6; }
+  .reg-field textarea { resize: vertical; min-height: 84px; }
+  .reg-field .reg-select {
+    width: 100%; padding: 10px 24px 8px 0; border: none;
+    border-bottom: 1.5px solid var(--oy-ink);
+    background: transparent; font-family: var(--oy-font-body);
+    font-size: 16px; color: var(--oy-ink); outline: none;
+    appearance: none; -webkit-appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M0 0l5 6 5-6' fill='%231C1917'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+  }
+  .reg-field .reg-select:invalid { color: var(--oy-mute); }
+
+  .reg-liability {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    margin-top: 4px;
+  }
+  .reg-liability summary {
     list-style: none;
-    margin-top: 24px;
-    border-top: 1.5px solid var(--oy-ink);
-  }
-  .oy-cart-list li {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-ink);
+    font-weight: 700;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--oy-hairline);
   }
-  .oy-cart-kana { font-family: var(--oy-font-jp); font-weight: 900; color: var(--oy-red); font-size: 14px; letter-spacing: 4px; width: 56px; }
-  .oy-cart-name { flex: 1; font-weight: 600; }
-  .oy-cart-price { font-family: var(--oy-font-mono); font-size: 14px; }
-  .oy-x {
-    background: none; border: none; cursor: pointer;
-    font-size: 20px; color: var(--oy-mute); padding: 0 8px;
+  .reg-liability summary::-webkit-details-marker { display: none; }
+  .reg-liability summary::after {
+    content: "+";
+    font-family: var(--oy-font-display);
+    font-size: 18px;
+    color: var(--oy-red);
   }
-  .oy-x:hover { color: var(--oy-red); }
-  .oy-cart-total {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1.5px solid var(--oy-red);
+  .reg-liability[open] summary::after { content: "–"; }
+  .reg-liability-hint { color: var(--oy-mute); text-transform: none; letter-spacing: 0; font-weight: 400; margin-left: 8px; }
+  .reg-liability-body {
+    padding: 10px 16px 18px;
+    border-top: 1.5px dashed var(--oy-hairline);
+    font-family: var(--oy-font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--oy-ink-soft);
+    max-height: 420px;
+    overflow-y: auto;
   }
-  .oy-cart-total-num { font-family: var(--oy-font-display); font-size: 32px; }
-  .oy-cart-empty-link { color: var(--oy-red); text-decoration: underline; cursor: pointer; }
+  .reg-liability-body p { margin-top: 12px; }
+  .reg-liability-body p:first-child { margin-top: 6px; }
+  .reg-liability-body ul { margin: 6px 0 10px 20px; }
+  .reg-liability-body li { margin: 4px 0; }
+  .reg-liability-body strong { color: var(--oy-ink); }
+
+  .reg-field .reg-consent, .reg-section .reg-consent {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-top: 14px; margin-bottom: 0;
+    padding: 16px 20px;
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    font-family: var(--oy-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--oy-ink);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .reg-field .reg-consent:hover, .reg-section .reg-consent:hover { background: var(--oy-cream); }
+  .reg-field .reg-consent input, .reg-section .reg-consent input { display: none; }
+  .reg-field .reg-consent .box, .reg-section .reg-consent .box {
+    flex: 0 0 26px;
+    width: 26px; height: 26px;
+    border: 2px solid var(--oy-ink);
+    border-radius: 3px;
+    position: relative;
+    margin-top: 1px;
+    background: var(--oy-cream);
+    box-shadow: 2px 2px 0 var(--oy-ink);
+  }
+  .reg-field .reg-consent input:checked ~ .box,
+  .reg-section .reg-consent input:checked ~ .box {
+    background: var(--oy-red); border-color: var(--oy-red);
+    box-shadow: 2px 2px 0 var(--oy-ink);
+  }
+  .reg-field .reg-consent input:checked ~ .box::after,
+  .reg-section .reg-consent input:checked ~ .box::after {
+    content: "✓"; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--oy-cream); font-weight: 700; font-size: 18px;
+  }
+  .reg-field .reg-consent .text, .reg-section .reg-consent .text {
+    flex: 1;
+    font-family: var(--oy-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--oy-ink);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .reg-field .reg-consent .text em, .reg-section .reg-consent .text em {
+    display: block;
+    font-family: var(--oy-font-mono);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-red);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .reg-field.err .reg-consent {
+    border-color: var(--oy-red);
+    background: rgba(232, 65, 42, 0.08);
+  }
+  .reg-hint { font-size: 12px; color: var(--oy-mute); margin-top: 4px; font-style: italic; }
+  .reg-field.err input, .reg-field.err textarea { border-color: var(--oy-red); }
+  .reg-field .err-msg { display: none; color: var(--oy-red); font-family: var(--oy-font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+  .reg-field.err .err-msg { display: block; }
+
+  .reg-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 14px; line-height: 1.4; }
+  .reg-check input { display: none; }
+  .reg-check .box {
+    flex: 0 0 20px; width: 20px; height: 20px;
+    border: 1.5px solid var(--oy-ink); border-radius: 2px;
+    position: relative; margin-top: 2px;
+  }
+  .reg-check input:checked ~ .box { background: var(--oy-red); border-color: var(--oy-red); }
+  .reg-check input:checked ~ .box::after {
+    content: "✓"; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--oy-cream); font-weight: 700; font-size: 14px;
+  }
+
+  .reg-radios { display: flex; gap: 10px; flex-wrap: wrap; }
+  .reg-radio {
+    flex: 1; min-width: 100px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--oy-ink); border-radius: 2px;
+    text-align: center; cursor: pointer;
+    font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    background: transparent; color: var(--oy-ink);
+    transition: all .15s;
+  }
+  .reg-radio input { display: none; }
+  .reg-radio.on { background: var(--oy-red); color: var(--oy-cream); border-color: var(--oy-red); }
+
+  .reg-sign-card {
+    background: var(--oy-cream-warm); border: 1.5px solid var(--oy-ink);
+    padding: 16px 20px; display: flex; gap: 16px; margin-bottom: 18px;
+  }
+  .reg-sign-card .icon { font-size: 28px; flex: 0 0 44px; padding-top: 2px; }
+  .reg-sign-card .body { flex: 1; font-size: 14px; line-height: 1.5; }
+  .reg-sign-card .body strong { font-family: var(--oy-font-display); display: block; text-transform: uppercase; font-size: 16px; margin-bottom: 4px; }
+
+  .reg-fee-note {
+    background: var(--oy-red); color: var(--oy-cream);
+    padding: 18px 22px; border-radius: 2px;
+    display: flex; gap: 18px; align-items: center; margin-bottom: 18px;
+  }
+  .reg-fee-note .big { font-family: var(--oy-font-display); font-size: 34px; line-height: 1; }
+  .reg-fee-note p { font-size: 14px; line-height: 1.4; }
+
+  .reg-perforation {
+    height: 8px; margin: 28px -8px;
+    background-image: radial-gradient(circle, var(--oy-red) 2px, transparent 2.5px);
+    background-size: 10px 8px; background-repeat: repeat-x; background-position: center;
+  }
+
+  .reg-submit-row {
+    margin-top: 36px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 18px; border-top: 1.5px solid var(--oy-red);
+    gap: 16px; flex-wrap: wrap;
+  }
+  .reg-submit-row .left { font-family: var(--oy-font-mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--oy-mute); }
+
+  .reg-confirm { text-align: center; padding: 60px 20px; animation: regPop .4s cubic-bezier(.2,1.4,.5,1); }
+  @keyframes regPop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+  .reg-confirm .stamp-svg {
+    width: 180px; height: 180px; margin: 0 auto 28px;
+    animation: regStamp .5s cubic-bezier(.2,1.6,.5,1) .2s both;
+  }
+  @keyframes regStamp {
+    0% { transform: scale(1.8) rotate(-20deg); opacity: 0; }
+    100% { transform: scale(1) rotate(-10deg); opacity: 1; }
+  }
+  .reg-confirm h3 { font-family: var(--oy-font-display); font-size: clamp(40px, 6vw, 56px); line-height: .9; text-transform: uppercase; margin-bottom: 14px; }
+  .reg-confirm p { font-family: var(--oy-font-body); font-style: italic; font-size: 18px; color: var(--oy-ink-soft); max-width: 480px; margin: 0 auto 22px; }
+  .reg-confirm .ticket {
+    display: inline-block; padding: 14px 24px;
+    border: 1.5px solid var(--oy-ink); background: var(--oy-cream-warm);
+    font-family: var(--oy-font-mono); font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .reg-confirm .ticket .n { font-family: var(--oy-font-display); font-size: 24px; color: var(--oy-red); letter-spacing: 1px; margin-left: 8px; }
 
   /* ============ Footer ============ */
   .oy-footer {
@@ -429,20 +757,26 @@
 
   @media (max-width: 1024px) {
     .oy-hero, .oy-story-grid, .oy-visit-grid { grid-template-columns: 1fr; gap: 32px; }
-    .oy-menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .oy-day-grid { grid-template-columns: repeat(2, 1fr); }
     .oy-art-wrap { margin: 0 auto; max-width: 420px; }
     .oy-umai { right: 4%; }
   }
   @media (max-width: 640px) {
     body { padding: 12px; }
     .oy-frame { padding: 20px 24px 20px; }
-    .oy-menu-grid { grid-template-columns: 1fr; }
+    .oy-day-grid { grid-template-columns: 1fr; }
     .oy-stats { grid-template-columns: repeat(2, 1fr); gap: 16px 24px; }
     .oy-nav { flex-wrap: wrap; gap: 16px; }
     .oy-nav-links { gap: 20px; flex-wrap: wrap; order: 3; width: 100%; }
     .oy-dl > div { grid-template-columns: 100px 1fr; }
     .oy-stat-num { font-size: 44px; }
     .oy-h1 { font-size: 36px; }
+    .reg-row.two { grid-template-columns: 1fr; }
+    .reg-fee-note { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .reg-sign-card { flex-direction: column; }
+    .reg-sign-card .icon { font-size: 32px; flex-basis: auto; }
+    .reg-submit-row { flex-direction: column; align-items: stretch; }
+    .reg-submit-row .oy-btn { width: 100%; }
   }
 </style>
 </head>
@@ -452,7 +786,7 @@
   <!-- ============ NAV ============ -->
   <nav class="oy-nav">
     <button class="oy-logo" data-route="Home" aria-label="Tramokyo home">
-      <span>T</span><span>R</span><span>M</span><span>K</span>
+      <img src="assets/logo.png" alt="Tramokyo" />
     </button>
     <ul class="oy-nav-links" id="navLinks">
       <li data-route="Home" class="on"><a>Home</a></li>
@@ -460,94 +794,32 @@
       <li data-route="Our Story"><a>Our Story</a></li>
       <li data-route="Where"><a>Where</a></li>
     </ul>
-    <button class="oy-pill" data-route="Plan">
-      Plan <span class="oy-pill-count" id="cartCount">0</span>
-    </button>
+    <button class="oy-btn" data-route="Register">Register</button>
   </nav>
 
   <!-- ============ HOME ============ -->
   <section class="oy-hero oy-route active" data-view="Home">
     <div class="oy-hero-copy">
-      <div class="oy-kana" style="font-size:38px">野営</div>
+      <div class="oy-kana" style="font-size:38px">十月 15-19</div>
       <svg class="oy-wavy" width="90" height="10" viewBox="0 0 90 10" fill="none">
         <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       </svg>
       <h1 class="oy-h1 oy-hero-headline">
-        Old forest, cold stream,<br>
-        <span class="accent">one long table,</span>
-        under the stars.
+        Welcome to the Sun &amp; Moon,<br>
+        <span class="accent">deepening connection with our gifts,</span>
+        in celebration and ceremonies.
       </h1>
       <p class="oy-lede" style="margin-top:20px; max-width:440px">
-        A three&#8209;night gathering in the cedar hills. Cast&#8209;iron
-        dinners, pre&#8209;dawn hikes, a hot spring up the path, and a
-        firepit that doesn't go out until we all say so.
+        A four&#8209;night gathering in Landers, California among
+        the Joshua Trees and stars.
       </p>
       <div class="oy-cta-row">
-        <button class="oy-btn" id="orderBtn">Reserve a Spot</button>
+        <button class="oy-btn" data-route="Register">Register</button>
         <button class="oy-btn--ghost" data-route="Where">See the map →</button>
       </div>
     </div>
     <div class="oy-art-wrap">
-      <span class="oy-chip oy-spice-chip">NABE · ★★</span>
-      <span class="oy-umai">美味い!</span>
-      <svg viewBox="0 0 560 560" class="oy-bowl" aria-label="Cast-iron pot over a campfire">
-        <defs>
-          <clipPath id="oyClip"><ellipse cx="280" cy="360" rx="190" ry="32"/></clipPath>
-          <pattern id="oyWave" width="18" height="8" patternUnits="userSpaceOnUse">
-            <path d="M0 4 Q4.5 0 9 4 T18 4" stroke="#E8412A" stroke-width="1.3" fill="none"/>
-          </pattern>
-        </defs>
-        <!-- ladles coming in from top -->
-        <g>
-          <g transform="rotate(-12 420 150)">
-            <rect x="140" y="130" width="340" height="8" fill="#1C1917"/>
-            <circle cx="150" cy="134" r="18" fill="none" stroke="#1C1917" stroke-width="4"/>
-            <rect x="440" y="124" width="42" height="20" fill="#E8412A"/>
-          </g>
-          <g transform="rotate(-8 420 190)">
-            <rect x="150" y="180" width="330" height="8" fill="#1C1917"/>
-            <rect x="150" y="172" width="26" height="24" fill="#1C1917"/>
-            <rect x="440" y="174" width="42" height="20" fill="#E8412A"/>
-          </g>
-        </g>
-        <!-- steam -->
-        <g class="oy-steam">
-          <path d="M245 170 C 230 200, 260 230, 245 260 C 230 290, 270 315, 255 345" stroke="#E8412A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <path d="M270 160 C 255 190, 285 220, 270 250 C 255 280, 295 305, 280 345" stroke="#E8412A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <path d="M295 170 C 280 200, 310 230, 295 260 C 280 290, 320 315, 305 345" stroke="#E8412A" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-        </g>
-        <!-- pot body -->
-        <g>
-          <path d="M90 355 Q 280 560 470 355 Z" fill="#1C1917"/>
-          <ellipse cx="280" cy="355" rx="190" ry="30" fill="#1C1917"/>
-          <ellipse cx="280" cy="353" rx="182" ry="24" fill="#F2E8D5"/>
-          <ellipse cx="280" cy="355" rx="178" ry="22" fill="#E8412A" opacity="0.18"/>
-          <ellipse cx="280" cy="355" rx="178" ry="22" fill="url(#oyWave)"/>
-          <g clip-path="url(#oyClip)">
-            <!-- onigiri (rice ball) with nori band -->
-            <g transform="translate(200 350)">
-              <path d="M-20 18 L 0 -20 L 20 18 Z" fill="#F2E8D5" stroke="#1C1917" stroke-width="1.5"/>
-              <rect x="-16" y="6" width="32" height="8" fill="#1C1917"/>
-            </g>
-            <!-- soft-boiled egg -->
-            <g transform="translate(250 352)">
-              <ellipse rx="26" ry="22" fill="#F2E8D5" stroke="#1C1917" stroke-width="1.5"/>
-              <circle r="11" fill="#E8412A"/>
-              <circle r="5" fill="#C8341F"/>
-            </g>
-            <!-- log of mushroom / nori -->
-            <g transform="translate(330 340) rotate(18)">
-              <rect x="-20" y="-30" width="40" height="60" fill="#1C1917"/>
-            </g>
-          </g>
-          <!-- pot stand -->
-          <rect x="250" y="525" width="60" height="14" fill="#1C1917"/>
-          <!-- embers glow -->
-          <ellipse cx="280" cy="539" rx="30" ry="6" fill="#E8412A"/>
-          <!-- pot foot line -->
-          <path d="M120 395 Q 280 515 440 395" stroke="#E8412A" stroke-width="6" fill="none"/>
-        </g>
-      </svg>
+      <img class="oy-scene" src="assets/desert.jpg" alt="Joshua tree at dusk" />
     </div>
   </section>
 
@@ -556,9 +828,9 @@
     <div class="oy-section-head">
       <div class="oy-kana" style="font-size:28px">プログラム</div>
       <h2 class="oy-h1" style="margin-top:8px">THE PROGRAM</h2>
-      <p class="oy-lede" style="max-width:520px; margin-top:12px">Six sessions across three days. Skip what you like — except supper. Supper is not optional.</p>
+      <p class="oy-lede" style="max-width:520px; margin-top:12px">This is a four day event, events here will be updated from time to time, yours will be posted when you're ready.</p>
     </div>
-    <div class="oy-menu-grid" id="menuGrid"></div>
+    <div class="oy-day-grid" id="dayGrid"></div>
   </section>
 
   <!-- ============ OUR STORY ============ -->
@@ -567,16 +839,24 @@
       <div>
         <div class="oy-kana" style="font-size:28px">私達について</div>
         <h2 class="oy-h1" style="margin-top:8px">
-          TWENTY FRIENDS,<br>
-          <span style="color:#E8412A">ONE FOREST,</span><br>
-          THREE NIGHTS.
+          THIRTY-ISH FRIENDS,<br>
+          <span style="color:#E8412A">ONE BIRTHDAY,</span><br>
+          FOUR NIGHTS.
         </h2>
         <p class="oy-body" style="margin-top:20px; max-width:460px">
-          Tramokyo began in 2019 after six of us decided we were spending too many weekends in cities. We drove up to the cedar hills with a tent and a cast-iron pot. It stuck.
+          It all began in 2018 with a desire to celebrate Tram&rsquo;s birthday and embodying some of the values and experiences we&rsquo;ve shared at Burning Man. Each &lsquo;camp&rsquo; has its own theme with one scheduled event that is gifted. With participants ranging from 14 to 50+ over the years, we&rsquo;ve continued to experience and aim to cultivate passion building and celebration &mdash; it is just as wholesome for the soul as well as trashing it. Join us on our 8th year celebrating Tram and yourselves.
         </p>
-        <p class="oy-body" style="margin-top:12px; max-width:460px">
-          We arrive Friday. We leave Monday. We cook together, sleep outside, and do not check our phones. Come for one year, come for all of them.
-        </p>
+        <ul class="oy-yearlist">
+          <li><span class="year">2018</span><span class="name">TramCon</span></li>
+          <li><span class="year">2019</span><span class="name">Detrampression</span></li>
+          <li><span class="year">2020</span><span class="name">Into the Tramverse</span></li>
+          <li><span class="year">2021</span><span class="name">Tramlympics</span></li>
+          <li><span class="year">2022</span><span class="name">Tramsformation Summit</span></li>
+          <li><span class="year">2023</span><span class="name">Tramchella</span></li>
+          <li><span class="year">2024</span><span class="name">A State of Tramce</span></li>
+          <li><span class="year">2025</span><span class="name"><em>Hiatus</em></span></li>
+          <li class="now"><span class="year">2026</span><span class="name">Tramokyo</span></li>
+        </ul>
       </div>
       <div class="oy-story-placeholder">
         <div style="font-family:JetBrains Mono, monospace; font-size:12px; color:#6B625B">cedar grove · 4:5</div>
@@ -597,143 +877,382 @@
         <div class="oy-kana" style="font-size:28px">場所</div>
         <h2 class="oy-h1" style="margin-top:8px">FIND US</h2>
         <dl class="oy-dl">
-          <div><dt>Address</dt><dd>Kawaguchi-chō · Yamanashi · Japan</dd></div>
-          <div><dt>Dates</dt><dd>Fri 16:00 check-in · Mon 11:00 out</dd></div>
-          <div><dt>Invites</dt><dd>Friends and a plus one</dd></div>
-          <div><dt>Phone</dt><dd>+81 55 555 0141</dd></div>
+          <div><dt>Address</dt><dd>Disclosed Privately</dd></div>
+          <div><dt>Dates</dt><dd>October 15 – October 19</dd></div>
+          <div><dt>Invites</dt><dd>Invitation Only</dd></div>
         </dl>
-        <button class="oy-btn" style="margin-top:22px">Get directions →</button>
       </div>
       <div class="oy-map-placeholder">
-        <svg viewBox="0 0 300 300" width="100%" height="100%">
-          <rect width="300" height="300" fill="#EADFC8"/>
-          <g stroke="#C8BCA3" stroke-width="1" fill="none">
-            <path d="M0 80 L300 90"/>
-            <path d="M0 160 L300 170"/>
-            <path d="M0 240 L300 230"/>
-            <path d="M90 0 L85 300"/>
-            <path d="M200 0 L210 300"/>
-          </g>
-          <!-- pine silhouettes -->
-          <g fill="#1C1917" opacity="0.5">
-            <polygon points="50,60 56,70 44,70"/>
-            <polygon points="220,60 226,70 214,70"/>
-            <polygon points="70,200 76,210 64,210"/>
-            <polygon points="240,220 246,230 234,230"/>
-          </g>
-          <circle cx="150" cy="150" r="8" fill="#E8412A"/>
-          <circle cx="150" cy="150" r="16" fill="none" stroke="#E8412A" stroke-width="1.5" opacity="0.5"/>
-          <text x="160" y="142" font-family="JetBrains Mono" font-size="10" fill="#1C1917">Tramokyo</text>
-        </svg>
+        <img src="assets/map.jpg" alt="Tramokyo site map" />
       </div>
     </div>
   </section>
 
-  <!-- ============ PLAN ============ -->
-  <section class="oy-cart oy-route" data-view="Plan">
-    <div class="oy-kana" style="font-size:28px">予定</div>
-    <h2 class="oy-h1" style="margin-top:8px">YOUR PLAN</h2>
-    <div id="cartBody"></div>
+  <!-- ============ REGISTER (EXPEDITION MANIFEST) ============ -->
+  <section class="oy-register oy-route" data-view="Register">
+    <div class="reg-hero-head">
+      <div class="stamp">Form A-01 · October 2026</div>
+      <div class="oy-kana" style="font-size:20px;">目録</div>
+      <h2>Expedition Manifest</h2>
+      <p class="intro">One form. Six sections. File it once and we'll loop you in within a week.</p>
+    </div>
+
+    <div id="regFormView">
+      <form id="regForm" novalidate>
+
+        <!-- SECTION A — Bearings -->
+        <section class="reg-section">
+          <div class="reg-section-head">
+            <div class="ttl"><span class="letter">A</span><h3>Your Bearings</h3></div>
+            <span class="jp">名前</span>
+          </div>
+          <div class="reg-row two">
+            <div class="reg-field" data-field="firstName">
+              <label>First Name <span style="color:var(--oy-red);">✱</span></label>
+              <input name="firstName" placeholder="What you want us to call you" />
+              <div class="err-msg">↑ Required</div>
+            </div>
+            <div class="reg-field" data-field="lastName">
+              <label>Last Name <span style="color:var(--oy-red);">✱</span></label>
+              <input name="lastName" placeholder="For lost-and-found" />
+              <div class="err-msg">↑ Required</div>
+            </div>
+          </div>
+          <div class="reg-row two">
+            <div class="reg-field" data-field="email">
+              <label>Email <span style="color:var(--oy-red);">✱</span></label>
+              <input name="email" type="email" placeholder="where.logistics@go.here" />
+              <div class="err-msg">↑ A working email, please</div>
+            </div>
+            <div class="reg-field" data-field="phone">
+              <label>Phone <span style="color:var(--oy-red);">✱</span></label>
+              <input name="phone" type="tel" placeholder="(555) 010-4127" />
+              <div class="err-msg">↑ Required</div>
+            </div>
+          </div>
+          <div class="reg-row two">
+            <div class="reg-field">
+              <label>Pronouns</label>
+              <select name="pronouns" class="reg-select">
+                <option value="" disabled selected>Choose…</option>
+                <option>she / her</option>
+                <option>he / him</option>
+                <option>they / them</option>
+                <option>she / they</option>
+                <option>he / they</option>
+                <option>another</option>
+                <option>prefer not to say</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <div class="reg-perforation"></div>
+
+        <!-- SECTION B — Experience -->
+        <section class="reg-section">
+          <div class="reg-section-head">
+            <div class="ttl"><span class="letter">B</span><h3>Your Experience</h3></div>
+            <span class="jp">体験</span>
+          </div>
+          <div class="reg-row">
+            <div class="reg-field">
+              <label>Experience Name <span class="hint-inline">(you can change it later)</span></label>
+              <input name="experienceName" placeholder="e.g. The Lantern Library, Night-Swim Club" />
+            </div>
+          </div>
+          <div class="reg-row">
+            <div class="reg-field">
+              <label>Approximate Schedule</label>
+              <textarea name="schedule" rows="3" placeholder="What's going on, when? Even a rough window helps us cluster nearby things."></textarea>
+              <div class="reg-hint">Opens Thursday, runs through Sunday Night.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="reg-perforation"></div>
+
+        <!-- SECTION C — Commitments -->
+        <section class="reg-section">
+          <div class="reg-section-head">
+            <div class="ttl"><span class="letter">C</span><h3>Commitments</h3></div>
+            <span class="jp">約束</span>
+          </div>
+
+          <div class="reg-sign-card">
+            <div class="icon">🪧</div>
+            <div class="body">
+              <strong>Build a small wooden sign</strong>
+              Everyone makes one. This establishes you physically and will become apart of our ceremony in the end.
+            </div>
+          </div>
+          <label class="reg-consent" style="margin-bottom:18px;">
+            <input type="checkbox" name="buildSign" />
+            <span class="box"></span>
+            <span class="text">
+              <em>Agreement</em>
+              I'll build a sign for my experience.
+            </span>
+          </label>
+
+          <div class="reg-fee-note">
+            <div class="big">$175</div>
+            <p><strong>per adult.</strong> Covers food staples, firewood, the communal jug, and keeping the lights off the grid. Payment instructions follow after you file.</p>
+          </div>
+          <label class="reg-consent">
+            <input type="checkbox" name="feeAck" />
+            <span class="box"></span>
+            <span class="text">
+              <em>Acknowledgement</em>
+              I acknowledge the $175/adult contribution.
+            </span>
+          </label>
+        </section>
+
+        <div class="reg-perforation"></div>
+
+        <!-- SECTION D — Party & Extras -->
+        <section class="reg-section">
+          <div class="reg-section-head">
+            <div class="ttl"><span class="letter">D</span><h3>Party &amp; Extras</h3></div>
+            <span class="jp">追加</span>
+          </div>
+          <div class="reg-field" style="margin-bottom:22px;">
+            <label>Bringing Pets?</label>
+            <div class="reg-radios" data-group="pets">
+              <label class="reg-radio on"><input type="radio" name="pets" value="none" checked />No pets</label>
+              <label class="reg-radio"><input type="radio" name="pets" value="one" />One friendly</label>
+              <label class="reg-radio"><input type="radio" name="pets" value="pack" />Small pack</label>
+            </div>
+            <div class="reg-hint">Dogs welcome on-leash; chickens on their own recognizance.</div>
+          </div>
+          <div class="reg-field" style="margin-bottom:22px;">
+            <label>Container Room <span class="hint-inline">(additional fee, if interested)</span></label>
+            <div class="reg-radios" data-group="containerRoom">
+              <label class="reg-radio on"><input type="radio" name="containerRoom" value="skip" checked />Not for me</label>
+              <label class="reg-radio"><input type="radio" name="containerRoom" value="yes" />Interested</label>
+              <label class="reg-radio"><input type="radio" name="containerRoom" value="more" />Tell me more</label>
+            </div>
+            <div class="reg-hint">Insulated, locked, powered. Six available.</div>
+          </div>
+          <div class="reg-field">
+            <label>Would You Like to Order from the Sandman?</label>
+            <div class="reg-radios" data-group="sandman">
+              <label class="reg-radio on"><input type="radio" name="sandman" value="no" checked />No thanks</label>
+              <label class="reg-radio"><input type="radio" name="sandman" value="yes" />Yes, please</label>
+              <label class="reg-radio"><input type="radio" name="sandman" value="tell" />Tell me more</label>
+            </div>
+            <div class="reg-hint">The Sandman delivers. Ask fewer questions.</div>
+          </div>
+        </section>
+
+        <div class="reg-perforation"></div>
+
+        <!-- SECTION E — Contributions -->
+        <section class="reg-section">
+          <div class="reg-section-head">
+            <div class="ttl"><span class="letter">E</span><h3>Contributions</h3></div>
+            <span class="jp">協力</span>
+          </div>
+          <div class="reg-row two">
+            <div class="reg-field">
+              <label>Ranger / Medical?</label>
+              <div class="reg-radios" data-group="ranger">
+                <label class="reg-radio on"><input type="radio" name="ranger" value="no" checked />Just a guest</label>
+                <label class="reg-radio"><input type="radio" name="ranger" value="yes" />Interested</label>
+              </div>
+              <div class="reg-hint">WFR/EMT/RN backgrounds welcome.</div>
+            </div>
+            <div class="reg-field">
+              <label>Art Grants?</label>
+              <div class="reg-radios" data-group="artGrant">
+                <label class="reg-radio on"><input type="radio" name="artGrant" value="no" checked />Not this year</label>
+                <label class="reg-radio"><input type="radio" name="artGrant" value="yes" />Applying</label>
+              </div>
+              <div class="reg-hint">Up to $175 for projects that stay after.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="reg-perforation"></div>
+
+        <!-- SECTION F — Sign-off -->
+        <section class="reg-section">
+          <div class="reg-section-head">
+            <div class="ttl"><span class="letter">F</span><h3>Sign-off</h3></div>
+            <span class="jp">署名</span>
+          </div>
+          <div class="reg-row" style="margin-bottom:20px;">
+            <div class="reg-field">
+              <label>First time at Tram? Who's your sponsor?</label>
+              <input name="sponsor" placeholder="Friend-of-a-friend's name — or 'returning'" />
+              <div class="reg-hint">First-timers need one existing attendee to vouch.</div>
+            </div>
+          </div>
+          <div class="reg-row" style="margin-bottom:22px;">
+            <div class="reg-field">
+              <label>Anything we should know? <span class="hint-inline">(optional)</span></label>
+              <textarea name="notes" rows="4" placeholder="Arrival window, a joke, the name of your dog, etc."></textarea>
+            </div>
+          </div>
+          <div class="reg-row">
+            <div class="reg-field" data-field="liability">
+              <label>Hold Harmless / Release of Liability <span style="color:var(--oy-red);">✱</span></label>
+              <details class="reg-liability">
+                <summary>Read the fine print <span class="reg-liability-hint">click to expand</span></summary>
+                <div class="reg-liability-body">
+                  <p><strong>You're coming to the desert. Reading the fine print.</strong></p>
+                  <p>By signing this, you acknowledge that Tramokyo is <em>not</em> a paved resort, a curated retreat, or a cruise ship. It's a friends-only gathering on BLM land in Landers, California, where the nearest urgent care is forty minutes away by a road that gets dusty, and the nearest coffee shop will judge you for asking what oat milk is.</p>
+                  <p><strong>The desert, by nature, contains:</strong></p>
+                  <ul>
+                    <li>Sharp plants that did not consent to being stepped on.</li>
+                    <li>Small mammals with reasonable trust issues.</li>
+                    <li>Larger mammals that appear at dusk to remind you that you are, in fact, a guest.</li>
+                    <li>Sand that will find its way into things you didn't think had openings.</li>
+                    <li>Weather that changes its mind without a press release. Bring layers.</li>
+                    <li>Fire. Fire is hot. Fire does not care.</li>
+                    <li>Stars. More than you were emotionally prepared for.</li>
+                  </ul>
+                  <p><strong>You agree that nobody is responsible for:</strong></p>
+                  <ul>
+                    <li>Cuts, scrapes, bruises, stubbed toes, existential stubbing, or the noise you'll make when you discover scorpions glow under UV.</li>
+                    <li>Sunburn incurred because you insisted the jacket was "too hot" at 11am.</li>
+                    <li>Dehydration from operating under the personal theory that "I drank yesterday" is how hydration works.</li>
+                    <li>Lost, stolen, or whimsically repurposed belongings.</li>
+                    <li>Emotional attachments to dogs, strangers, or fire formed around a pit that will not carry back to the city.</li>
+                    <li>Embarrassing camp singing recorded on someone else's phone.</li>
+                    <li>Anything you chose to eat out of a shared pot without asking what was in it.</li>
+                    <li>Your ego after the talent show.</li>
+                  </ul>
+                  <p><strong>You certify that you are of sound mind and sufficient body to:</strong></p>
+                  <ul>
+                    <li>Hike up to four miles over loose gravel without a formal complaint.</li>
+                    <li>Sleep outside in unheated accommodations.</li>
+                    <li>Carry your own water, and drink it.</li>
+                    <li>Clean up after yourself, including your own mess in the shared bathroom.</li>
+                    <li>Say a clear "no" to anything you don't want to participate in, and respect the "no" of others without a debate.</li>
+                  </ul>
+                  <p><strong>You agree to:</strong></p>
+                  <ul>
+                    <li>Leave no trace. If it wasn't here Friday, it goes home Monday.</li>
+                    <li>Stay within marked camp bounds without asking the desert for directions.</li>
+                    <li>Treat the site, its neighbors, and the jackrabbits with the respect they've earned by showing up consistently for longer than any of us.</li>
+                    <li>Not operate heavy machinery — including your own feelings — after the fourth round at the firepit.</li>
+                    <li>Not sue us, in any jurisdiction terrestrial or otherwise, for anything that can reasonably be chalked up to "the desert being the desert" or "you making the choices you made."</li>
+                  </ul>
+                  <p>By checking the box below, you confirm you've read this, you understand it, you are participating entirely at your own risk, and you agree that the desert is bigger than us and owes us nothing.</p>
+                </div>
+              </details>
+              <label class="reg-consent">
+                <input type="checkbox" name="liabilityAck" />
+                <span class="box"></span>
+                <span class="text">
+                  <em>Agreement</em>
+                  I've read it, I understand it, and I agree — the desert owes me nothing.
+                </span>
+              </label>
+              <div class="err-msg" style="margin-top:8px;">↑ Please agree before filing.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="reg-submit-row">
+          <span class="left">Form A-01 / 17 of 17</span>
+          <button type="submit" class="oy-btn" id="regSubmit">File My Manifest →</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="regConfirmView" style="display:none;">
+      <div class="reg-confirm">
+        <svg class="stamp-svg" viewBox="0 0 180 180">
+          <g transform="rotate(-10 90 90)">
+            <circle cx="90" cy="90" r="78" fill="none" stroke="#E8412A" stroke-width="4"/>
+            <circle cx="90" cy="90" r="70" fill="none" stroke="#E8412A" stroke-width="1.5" stroke-dasharray="2 3"/>
+            <text x="90" y="72" text-anchor="middle" fill="#E8412A" font-family="Archivo Black, sans-serif" font-weight="900" font-size="18" letter-spacing="2">APPROVED</text>
+            <line x1="40" y1="88" x2="140" y2="88" stroke="#E8412A" stroke-width="1.5"/>
+            <text x="90" y="108" text-anchor="middle" fill="#E8412A" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" letter-spacing="2">TRAM · 2026</text>
+            <text x="90" y="128" text-anchor="middle" fill="#E8412A" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="2">LANDERS CA</text>
+          </g>
+        </svg>
+        <h3>You're In.</h3>
+        <p>Confirmation's on the way. An interview will follow in the coming weeks so we can catch the rest of the details in person.</p>
+        <div class="ticket">Manifest filed<span class="n" id="regTicket">T-0000</span></div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ FOOTER ============ -->
   <footer class="oy-footer">
     <div class="rule"></div>
-    <div class="oy-meta">EST · 2019 · 山中湖</div>
+    <div class="oy-meta">EST · 2026 · 山中湖</div>
   </footer>
 </main>
 
 <script>
-  const PROGRAM = [
-    { id: 'walk',   name: 'Morning Walk',    jp: '朝歩き', desc: 'Four miles before sunrise. Coffee at the ridge. Back in time for miso.',        time: '05:30', intensity: 1 },
-    { id: 'onsen',  name: 'Hot Spring',      jp: '温泉',   desc: 'A steaming rock basin twenty minutes up the path. Cedar walls, no phones.',      time: '10:00', intensity: 0 },
-    { id: 'robata', name: 'Fireside Supper', jp: '炉端',   desc: 'Cast iron on coals. One long table. Potluck — bring something with a story.',   time: '18:00', intensity: 2 },
-    { id: 'tea',    name: 'Dawn Tea',        jp: '朝茶',   desc: 'Silent tea service at first light. Folded tatami, quiet hands, warm cups.',     time: '06:00', intensity: 0 },
-    { id: 'fish',   name: 'Night Fishing',   jp: '夜釣り', desc: 'Headlamps, hand lines, the stream. Release everything. Sashimi is not on the plan.', time: '22:00', intensity: 3 },
-    { id: 'stars',  name: 'Starlight Walk',  jp: '星空',   desc: 'No flashlights. Fifteen minutes down the old road. Eyes adjust. Mostly you listen.', time: '23:00', intensity: 1 },
+  const DAYS = [
+    { num: 15, dow: 'THU', jp: '木' },
+    { num: 16, dow: 'FRI', jp: '金' },
+    { num: 17, dow: 'SAT', jp: '土' },
+    { num: 18, dow: 'SUN', jp: '日' },
   ];
 
-  const state = {
-    route: 'Home',
-    plan: [],
-  };
+  const PROGRAM = [
+    { id: 'walk',   day: 15, name: 'Morning Walk',    jp: '朝歩き', desc: 'Four miles before sunrise. Coffee at the ridge. Back in time for miso.',        time: '05:30', location: 'Tokyo (Center Camp)' },
+    { id: 'onsen',  day: 15, name: 'Hot Spring',      jp: '温泉',   desc: 'A steaming rock basin twenty minutes up the path. Cedar walls, no phones.',      time: '10:00', location: 'Fukushima' },
+    { id: 'robata', day: 16, name: 'Fireside Supper', jp: '炉端',   desc: 'Cast iron on coals. One long table. Potluck — bring something with a story.',   time: '18:00', location: 'Tokyo (Center Camp)' },
+    { id: 'tea',    day: 17, name: 'Dawn Tea',        jp: '朝茶',   desc: 'Silent tea service at first light. Folded tatami, quiet hands, warm cups.',     time: '06:00', location: 'Wakayama' },
+    { id: 'fish',   day: 17, name: 'Night Fishing',   jp: '夜釣り', desc: 'Headlamps, hand lines, the stream. Release everything. Sashimi is not on the plan.', time: '22:00', location: 'Niigata' },
+    { id: 'stars',  day: 18, name: 'Starlight Walk',  jp: '星空',   desc: 'No flashlights. Fifteen minutes down the old road. Eyes adjust. Mostly you listen.', time: '23:00', location: 'Toyama' },
+  ];
+
+  // ===== Paste the Google Apps Script Web-App URL here once you've deployed it =====
+  // (See the README at ui_kits/marketing/REGISTRATION_SETUP.md for the 5-minute setup.)
+  const SHEET_ENDPOINT = ''; // e.g. 'https://script.google.com/macros/s/AKfycby.../exec'
+
+  const state = { route: 'Home' };
 
   function intensityDots(n) {
     return `<span class="oy-spice" aria-label="intensity ${n} of 3">${[0, 1, 2, 3].map(i => `<span class="${i < n ? 'on' : ''}">★</span>`).join('')}</span>`;
   }
 
   function renderProgram() {
-    const ids = new Set(state.plan.map(c => c.id));
-    const grid = document.getElementById('menuGrid');
-    grid.innerHTML = PROGRAM.map(item => `
-      <article class="oy-menu-card">
-        <div class="oy-menu-top">
-          <div>
-            <div class="oy-kana" style="font-size:16px">${item.jp}</div>
-            <h3 class="oy-h3" style="margin-top:6px">${item.name}</h3>
+    const grid = document.getElementById('dayGrid');
+    grid.innerHTML = DAYS.map(day => {
+      const items = PROGRAM.filter(p => p.day === day.num);
+      const cards = items.length
+        ? items.map(item => `
+            <article class="oy-menu-card">
+              <div class="oy-menu-top">
+                <div>
+                  <div class="oy-kana" style="font-size:14px">${item.jp}</div>
+                  <h3 class="oy-h3" style="margin-top:4px; font-size:18px;">${item.name}</h3>
+                </div>
+                <div class="oy-price" style="font-size:18px;">${item.time}</div>
+              </div>
+              <p class="oy-body" style="font-size:13px; margin-top:10px; line-height:1.5;">${item.desc}</p>
+              <div class="oy-menu-bot">
+                <div class="oy-location">
+                  <div class="oy-location-label">Location</div>
+                  <div class="oy-location-name">${item.location}</div>
+                </div>
+              </div>
+            </article>
+          `).join('')
+        : `<div class="oy-day-empty">More to come</div>`;
+      return `
+        <div class="oy-day-col">
+          <div class="oy-day-head">
+            <div class="oy-day-num">${day.num}</div>
+            <div class="oy-day-meta">
+              <span class="dow">${day.dow}</span>
+              <span class="jp">${day.jp}</span>
+            </div>
           </div>
-          <div class="oy-price">${item.time}</div>
+          ${cards}
         </div>
-        <p class="oy-body" style="font-size:13px; margin-top:10px">${item.desc}</p>
-        <div class="oy-menu-bot">
-          ${intensityDots(item.intensity)}
-          <button class="oy-btn-small ${ids.has(item.id) ? 'on' : ''}" data-add="${item.id}">
-            ${ids.has(item.id) ? '✓ Added' : 'Add to plan'}
-          </button>
-        </div>
-      </article>
-    `).join('');
-    grid.querySelectorAll('[data-add]').forEach(btn => {
-      btn.addEventListener('click', () => togglePlan(btn.dataset.add));
-    });
-  }
-
-  function renderPlan() {
-    const body = document.getElementById('cartBody');
-    const count = document.getElementById('cartCount');
-    count.textContent = state.plan.length;
-
-    if (state.plan.length === 0) {
-      body.innerHTML = `<p class="oy-body" style="margin-top:20px">Your plan is empty. Head to the <a class="oy-cart-empty-link" data-goto="Program">program</a> and pick what you'd like in.</p>`;
-      body.querySelector('[data-goto]')?.addEventListener('click', () => navigate('Program'));
-      return;
-    }
-    body.innerHTML = `
-      <ul class="oy-cart-list">
-        ${state.plan.map((item, i) => `
-          <li>
-            <span class="oy-cart-kana">${item.jp}</span>
-            <span class="oy-cart-name">${item.name}</span>
-            <span class="oy-cart-price">${item.time}</span>
-            <button class="oy-x" data-remove="${i}" aria-label="Remove">×</button>
-          </li>
-        `).join('')}
-      </ul>
-      <div class="oy-cart-total">
-        <span class="oy-eyebrow">Sessions</span>
-        <span class="oy-cart-total-num">${state.plan.length}</span>
-      </div>
-      <button class="oy-btn" style="margin-top:18px">Confirm my plan</button>
-    `;
-    body.querySelectorAll('[data-remove]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.dataset.remove, 10);
-        state.plan.splice(idx, 1);
-        renderPlan();
-        renderProgram();
-      });
-    });
-  }
-
-  function togglePlan(id) {
-    const idx = state.plan.findIndex(c => c.id === id);
-    if (idx >= 0) state.plan.splice(idx, 1);
-    else {
-      const item = PROGRAM.find(m => m.id === id);
-      if (item) state.plan.push(item);
-    }
-    renderProgram();
-    renderPlan();
+      `;
+    }).join('');
   }
 
   function navigate(route) {
@@ -744,6 +1263,7 @@
     document.querySelectorAll('.oy-nav-links li').forEach(li => {
       li.classList.toggle('on', li.dataset.route === route);
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   document.querySelectorAll('[data-route]').forEach(el => {
@@ -753,16 +1273,85 @@
     li.addEventListener('click', () => navigate(li.dataset.route));
   });
 
-  document.getElementById('orderBtn').addEventListener('click', () => {
-    const first = PROGRAM[2]; // Fireside Supper — the one that's not optional
-    if (!state.plan.find(c => c.id === first.id)) state.plan.push(first);
-    renderProgram();
-    renderPlan();
-    navigate('Plan');
+  // ===== REGISTRATION FORM =====
+  const regForm = document.getElementById('regForm');
+
+  // radio group visual toggling
+  document.querySelectorAll('.reg-radio').forEach(r => {
+    r.addEventListener('click', () => {
+      const input = r.querySelector('input');
+      if (!input) return;
+      document.querySelectorAll(`.reg-radio input[name="${input.name}"]`).forEach(i => i.closest('.reg-radio').classList.remove('on'));
+      r.classList.add('on');
+      input.checked = true;
+    });
+  });
+
+  function setFieldErr(fieldName, hasErr) {
+    const el = document.querySelector(`[data-field="${fieldName}"]`);
+    if (el) el.classList.toggle('err', hasErr);
+  }
+
+  function collectFormData() {
+    const fd = new FormData(regForm);
+    const data = {};
+    for (const [k, v] of fd.entries()) data[k] = v;
+    data.buildSign = regForm.querySelector('[name="buildSign"]').checked;
+    data.feeAck = regForm.querySelector('[name="feeAck"]').checked;
+    data.liabilityAck = regForm.querySelector('[name="liabilityAck"]').checked;
+    data.submittedAt = new Date().toISOString();
+    return data;
+  }
+
+  regForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = collectFormData();
+    let ok = true;
+    const required = ['firstName', 'lastName', 'email', 'phone'];
+    required.forEach(k => {
+      const v = (data[k] || '').trim();
+      const bad = !v || (k === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      setFieldErr(k, bad);
+      if (bad) ok = false;
+    });
+    if (!data.liabilityAck) { setFieldErr('liability', true); ok = false; }
+    else setFieldErr('liability', false);
+    if (!ok) {
+      const firstErr = document.querySelector('.reg-field.err');
+      firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('regSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Filing paperwork…';
+
+    try {
+      if (SHEET_ENDPOINT) {
+        await fetch(SHEET_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data)
+        });
+      } else {
+        // no endpoint configured yet — simulate network for preview
+        await new Promise(r => setTimeout(r, 700));
+        console.log('[Tramokyo] SHEET_ENDPOINT not set. Payload:', data);
+      }
+      const n = String(Math.floor(Math.random() * 999) + 1).padStart(4, '0');
+      document.getElementById('regTicket').textContent = 'T-' + n;
+      document.getElementById('regFormView').style.display = 'none';
+      document.getElementById('regConfirmView').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Try again →';
+      console.error(err);
+    }
   });
 
   renderProgram();
-  renderPlan();
 </script>
 
 </body>

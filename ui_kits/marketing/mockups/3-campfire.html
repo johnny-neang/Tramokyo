@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mockup 03 · Campfire Q&amp;A</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="base.css">
+<style>
+  body {
+    background: var(--oy-cream);
+    padding: 0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 28px;
+    z-index: 5;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .top .brand { color: var(--oy-ink); font-weight: 700; }
+  .top .counter { color: var(--oy-mute); }
+  .back-link { color: var(--oy-mute); text-decoration: none; }
+  .back-link:hover { color: var(--oy-red); }
+
+  .progress {
+    position: fixed;
+    top: 52px; left: 0; right: 0;
+    height: 2px;
+    background: var(--oy-hairline);
+    z-index: 4;
+  }
+  .progress .fill {
+    height: 100%;
+    background: var(--oy-red);
+    width: 7%;
+    transition: width .35s cubic-bezier(.2,.7,.2,1);
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 32px 60px;
+  }
+
+  .q {
+    width: 100%;
+    max-width: 640px;
+    display: none;
+    animation: qIn .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .q.active { display: block; }
+  @keyframes qIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .q .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; color: var(--oy-red); font-weight: 700; margin-bottom: 8px; }
+  .q h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 54px);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .q h1 .accent { color: var(--oy-red); }
+  .q .hint { font-family: var(--font-body); font-style: italic; color: var(--oy-ink-soft); font-size: 17px; margin-bottom: 28px; max-width: 560px; }
+
+  .q input.oy-field, .q textarea.oy-field {
+    border-bottom: 2px solid var(--oy-ink);
+    font-size: 24px;
+    padding: 14px 0;
+  }
+  .q textarea.oy-field { min-height: 100px; }
+
+  .q .choices { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+  .q .choice {
+    padding: 14px 22px;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    background: transparent;
+    color: var(--oy-ink);
+    transition: all .15s;
+    position: relative;
+  }
+  .q .choice:hover { background: var(--oy-ink); color: var(--oy-cream); }
+  .q .choice.on { background: var(--oy-red); color: var(--oy-cream); border-color: var(--oy-red); }
+  .q .choice .key {
+    display: inline-block;
+    margin-right: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 6px;
+    background: var(--oy-cream);
+    color: var(--oy-ink);
+    border-radius: 2px;
+  }
+  .q .choice.on .key { background: var(--oy-cream); color: var(--oy-red); }
+
+  .advance {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .advance .key { padding: 4px 8px; border: 1.5px solid var(--oy-ink); color: var(--oy-ink); font-weight: 700; border-radius: 2px; }
+
+  .fee-badge {
+    display: inline-block;
+    padding: 22px 28px;
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    font-family: var(--font-display);
+    font-size: 48px;
+    line-height: 1;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .done {
+    text-align: center;
+  }
+  .done .stamp {
+    width: 160px; height: 160px;
+    margin: 0 auto 24px;
+    border: 4px solid var(--oy-red);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    color: var(--oy-red);
+    font-size: 22px;
+    transform: rotate(-10deg);
+    animation: stamp 0.5s cubic-bezier(.2,1.6,.5,1) 0.2s both;
+  }
+  @keyframes stamp {
+    0% { transform: scale(1.8) rotate(-25deg); opacity: 0; }
+    100% { transform: scale(1) rotate(-10deg); opacity: 1; }
+  }
+
+  .skip-nav {
+    position: fixed;
+    bottom: 24px;
+    right: 28px;
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+  }
+  .skip-nav button {
+    background: var(--oy-cream);
+    border: 1.5px solid var(--oy-ink);
+    width: 40px;
+    height: 40px;
+    display: grid; place-items: center;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+  .skip-nav button:hover { background: var(--oy-ink); color: var(--oy-cream); }
+
+  @media (max-width: 560px) {
+    .stage { padding: 76px 20px 100px; }
+    .top { padding: 14px 18px; }
+    .top .brand { font-size: 10px; }
+    .fee-badge { font-size: 36px; padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="brand back-link" href="index.html">← TRAMOKYO · Q&amp;A</a>
+  <span class="counter"><span id="cur">1</span> / <span id="tot">14</span></span>
+</div>
+<div class="progress"><div class="fill" id="fill"></div></div>
+
+<main class="stage" id="stage">
+
+  <div class="q active" data-type="text">
+    <div class="num">Q · 01</div>
+    <h1>What should we <span class="accent">call you</span><br>when we holler across the fire?</h1>
+    <p class="hint">Just your first name for now — we'll grab the rest next.</p>
+    <input class="oy-field" placeholder="Type your first name" />
+    <div class="advance"><span class="key">↵</span> press enter to continue</div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 02</div>
+    <h1>And your <span class="accent">last name</span>,<br>for the clipboard?</h1>
+    <p class="hint">For lost & found, roll call, the inevitable shared spreadsheet.</p>
+    <input class="oy-field" placeholder="Last name" />
+    <div class="advance"><span class="key">↵</span> enter</div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 03</div>
+    <h1>Where should<br><span class="accent">the logistics emails</span> go?</h1>
+    <p class="hint">We promise to use it three times, max.</p>
+    <input class="oy-field" type="email" placeholder="you@example.com" />
+    <div class="advance"><span class="key">↵</span> enter</div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 04</div>
+    <h1>Phone number,<br><span class="accent">for when the Wi-Fi gives up?</span></h1>
+    <p class="hint">Used only for day-of updates.</p>
+    <input class="oy-field" type="tel" placeholder="(555) 010-4127" />
+    <div class="advance"><span class="key">↵</span> enter</div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 05</div>
+    <h1>What's your <span class="accent">experience</span> called?</h1>
+    <p class="hint">A working title is fine — you can change it later.</p>
+    <input class="oy-field" placeholder="e.g. The Lantern Library" />
+    <div class="advance"><span class="key">↵</span> enter</div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 06</div>
+    <h1>Rough <span class="accent">schedule?</span></h1>
+    <p class="hint">Even "probably Saturday afternoon" helps us cluster things nearby.</p>
+    <textarea class="oy-field" rows="3" placeholder="When it runs. Any time is fine."></textarea>
+    <div class="advance"><span class="key">⌘↵</span> continue</div>
+  </div>
+
+  <div class="q" data-type="choice">
+    <div class="num">Q · 07</div>
+    <h1>Will you <span class="accent">build the sign?</span></h1>
+    <p class="hint">Small wooden sign, points to your experience, goes home with you. Everyone makes one.</p>
+    <div class="choices">
+      <button class="choice" data-v="yes"><span class="key">Y</span>Yes, I'll build it</button>
+      <button class="choice" data-v="help"><span class="key">H</span>I'll need a hand</button>
+    </div>
+  </div>
+
+  <div class="q" data-type="ack">
+    <div class="num">Q · 08</div>
+    <div class="fee-badge">$175 / adult</div>
+    <h1><span class="accent">Noted?</span></h1>
+    <p class="hint">Covers food staples, firewood, a communal jug. Payment after we confirm.</p>
+    <div class="choices">
+      <button class="choice" data-v="ok"><span class="key">Y</span>Noted, I'm in</button>
+      <button class="choice" data-v="q"><span class="key">?</span>I have a question</button>
+    </div>
+  </div>
+
+  <div class="q" data-type="choice">
+    <div class="num">Q · 09</div>
+    <h1>Pets?</h1>
+    <p class="hint">Dogs welcome on-leash; chickens on their own recognizance.</p>
+    <div class="choices">
+      <button class="choice" data-v="none"><span class="key">1</span>No pets</button>
+      <button class="choice" data-v="one"><span class="key">2</span>One, friendly</button>
+      <button class="choice" data-v="pack"><span class="key">3</span>Small pack</button>
+    </div>
+  </div>
+
+  <div class="q" data-type="choice">
+    <div class="num">Q · 10</div>
+    <h1>Container room? <span class="accent">(extra fee)</span></h1>
+    <p class="hint">Insulated, locked, powered. Six available, first come.</p>
+    <div class="choices">
+      <button class="choice" data-v="skip"><span class="key">1</span>Not for me</button>
+      <button class="choice" data-v="yes"><span class="key">2</span>Interested</button>
+      <button class="choice" data-v="tell"><span class="key">3</span>Tell me more</button>
+    </div>
+  </div>
+
+  <div class="q" data-type="choice">
+    <div class="num">Q · 11</div>
+    <h1>Ranger / Medical?</h1>
+    <p class="hint">WFR/EMT/RN backgrounds especially welcome. We pair you with a shift.</p>
+    <div class="choices">
+      <button class="choice" data-v="no"><span class="key">1</span>Just a guest</button>
+      <button class="choice" data-v="yes"><span class="key">2</span>Interested</button>
+    </div>
+  </div>
+
+  <div class="q" data-type="choice">
+    <div class="num">Q · 12</div>
+    <h1>Art grant?</h1>
+    <p class="hint">Up to $500 for projects that stay visible after the event.</p>
+    <div class="choices">
+      <button class="choice" data-v="no"><span class="key">1</span>Not this year</button>
+      <button class="choice" data-v="yes"><span class="key">2</span>I'm applying</button>
+    </div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 13</div>
+    <h1>First time? <span class="accent">Who's your sponsor?</span></h1>
+    <p class="hint">First-timers need one existing attendee to vouch. If you're returning, just type "returning."</p>
+    <input class="oy-field" placeholder="Sponsor's name, or 'returning'" />
+    <div class="advance"><span class="key">↵</span> enter</div>
+  </div>
+
+  <div class="q" data-type="text">
+    <div class="num">Q · 14</div>
+    <h1>Anything <span class="accent">we should know?</span></h1>
+    <p class="hint">Dietary, arrival window, a joke, the name of your dog. Optional.</p>
+    <textarea class="oy-field" rows="3" placeholder="Or skip with ⌘↵"></textarea>
+    <div class="advance"><span class="key">⌘↵</span> file it</div>
+  </div>
+
+  <!-- DONE -->
+  <div class="q done">
+    <div class="stamp">APPROVED<br><small style="font-size:10px;font-family:var(--font-mono);letter-spacing:2px;">TRAM · 2026</small></div>
+    <h1 style="color:var(--oy-ink);">You're In.</h1>
+    <p class="hint">Confirmation on the way — an interview will follow in the coming weeks.</p>
+  </div>
+
+</main>
+
+<div class="skip-nav">
+  <button id="prev" title="Previous">↑</button>
+  <button id="next" title="Next">↓</button>
+</div>
+
+<script>
+  const questions = document.querySelectorAll('.q');
+  const cur = document.getElementById('cur');
+  const tot = document.getElementById('tot');
+  const fill = document.getElementById('fill');
+  const totalQ = questions.length - 1; // last is done
+  tot.textContent = totalQ;
+  let idx = 0;
+
+  function render() {
+    questions.forEach((q, i) => q.classList.toggle('active', i === idx));
+    const active = questions[idx];
+    const input = active.querySelector('input, textarea');
+    if (input) setTimeout(() => input.focus(), 100);
+    cur.textContent = Math.min(idx + 1, totalQ);
+    fill.style.width = ((idx / totalQ) * 100) + '%';
+  }
+
+  function advance() {
+    if (idx >= questions.length - 1) return;
+    idx++;
+    render();
+  }
+  function back() {
+    if (idx <= 0) return;
+    idx--;
+    render();
+  }
+
+  document.getElementById('next').addEventListener('click', advance);
+  document.getElementById('prev').addEventListener('click', back);
+
+  document.addEventListener('keydown', (e) => {
+    const active = questions[idx];
+    const input = active?.querySelector('input, textarea');
+    const type = active?.dataset.type;
+
+    if (e.key === 'Enter') {
+      // cmd/ctrl + enter in textareas advances; plain enter otherwise advances text inputs
+      const isTextarea = input?.tagName === 'TEXTAREA';
+      if (isTextarea && !(e.metaKey || e.ctrlKey)) return;
+      e.preventDefault();
+      advance();
+    } else if (type === 'choice' || type === 'ack') {
+      // number / letter keys pick choices
+      const choices = active.querySelectorAll('.choice');
+      choices.forEach(c => {
+        if (c.querySelector('.key')?.textContent.toLowerCase() === e.key.toLowerCase()) {
+          choices.forEach(x => x.classList.remove('on'));
+          c.classList.add('on');
+          setTimeout(advance, 220);
+        }
+      });
+    }
+  });
+
+  document.querySelectorAll('.choice').forEach(c => {
+    c.addEventListener('click', () => {
+      const parent = c.closest('.q');
+      parent.querySelectorAll('.choice').forEach(x => x.classList.remove('on'));
+      c.classList.add('on');
+      setTimeout(advance, 220);
+    });
+  });
+
+  render();
+</script>
+</body>
+</html>
