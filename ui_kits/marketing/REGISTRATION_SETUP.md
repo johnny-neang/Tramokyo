@@ -8,7 +8,7 @@ Five minutes. No backend, no hosting, free forever.
 - Put this header row in row 1 so the columns align with what the form sends:
 
 ```
-Submitted At | First Name | Last Name | Email | Phone | Experience Name | Schedule | Build Sign | Fee Acknowledged | Pets | Container Room | Ranger/Medical | Art Grant | Sponsor | Notes
+Submitted At | First Name | Last Name | Pronouns | Email | Phone | Experience Name | Schedule | Build Sign | Fee Acknowledged | Pets | Container Room | Sandman | Ranger/Medical | Art Grant | Sponsor | Notes | Liability Agreed
 ```
 
 ## 2. Add the Apps Script
@@ -21,13 +21,14 @@ function doPost(e) {
   const d = JSON.parse(e.postData.contents);
   sheet.appendRow([
     d.submittedAt || new Date(),
-    d.firstName, d.lastName, d.email, d.phone,
+    d.firstName, d.lastName, d.pronouns, d.email, d.phone,
     d.experienceName, d.schedule,
     d.buildSign ? 'YES' : 'NO',
     d.feeAck ? 'YES' : 'NO',
-    d.pets, d.containerRoom,
+    d.pets, d.containerRoom, d.sandman,
     d.ranger, d.artGrant,
-    d.sponsor, d.notes
+    d.sponsor, d.notes,
+    d.liabilityAck ? 'YES' : 'NO'
   ]);
   return ContentService.createTextOutput(JSON.stringify({ok: true}))
     .setMimeType(ContentService.MimeType.JSON);

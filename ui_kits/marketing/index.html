@@ -295,13 +295,63 @@
   /* ============ Program ============ */
   .oy-menu { padding: 24px 12px; }
   .oy-section-head { margin-bottom: 32px; }
-  .oy-menu-grid {
+  .oy-day-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .oy-day-col { display: flex; flex-direction: column; gap: 14px; }
+  .oy-day-head {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    padding: 18px 14px 14px;
+    text-align: center;
+  }
+  .oy-day-num {
+    font-family: var(--oy-font-display);
+    font-size: 64px;
+    line-height: 0.9;
+    color: var(--oy-red);
+    letter-spacing: -2px;
+  }
+  .oy-day-meta {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .oy-day-meta .dow {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    font-weight: 700;
+  }
+  .oy-day-meta .jp {
+    font-family: var(--oy-font-jp);
+    font-weight: 700;
+    color: var(--oy-red);
+    font-size: 14px;
+  }
+  .oy-day-empty {
+    flex: 1;
+    border: 1.5px dashed var(--oy-hairline);
+    color: var(--oy-mute);
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 28px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
   }
   .oy-menu-card {
-    padding: 20px;
+    padding: 18px;
     background: var(--oy-cream-warm);
     border: 1.5px solid var(--oy-ink);
     position: relative;
@@ -319,9 +369,22 @@
     justify-content: space-between;
     align-items: center;
   }
-  .oy-spice { font-size: 14px; color: var(--oy-red); letter-spacing: 2px; }
-  .oy-spice span { opacity: 0.25; }
-  .oy-spice span.on { opacity: 1; }
+  .oy-location-label {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-red);
+    font-weight: 700;
+  }
+  .oy-location-name {
+    font-family: var(--oy-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--oy-ink);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
   .oy-btn-small {
     padding: 8px 14px;
     background: transparent;
@@ -360,6 +423,49 @@
     line-height: 1;
     color: var(--oy-red);
   }
+  .oy-yearlist {
+    list-style: none;
+    margin: 24px 0 0;
+    max-width: 460px;
+    border-top: 1.5px solid var(--oy-red);
+  }
+  .oy-yearlist li {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    align-items: baseline;
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--oy-hairline);
+  }
+  .oy-yearlist .year {
+    font-family: var(--oy-font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--oy-red);
+  }
+  .oy-yearlist .name {
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--oy-ink);
+  }
+  .oy-yearlist .name em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--oy-mute);
+  }
+  .oy-yearlist li.now {
+    background: var(--oy-cream-warm);
+    margin: 0 -4px;
+    padding: 12px 8px;
+  }
+  .oy-yearlist li.now .name {
+    font-family: var(--oy-font-display);
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--oy-red);
+  }
 
   /* ============ Where ============ */
   .oy-visit { padding: 24px 12px; }
@@ -368,6 +474,13 @@
     aspect-ratio: 1/1;
     border: 1.5px solid var(--oy-ink);
     overflow: hidden;
+    background: var(--oy-cream);
+  }
+  .oy-map-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .oy-dl { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
   .oy-dl > div { display: grid; grid-template-columns: 140px 1fr; border-bottom: 1px solid var(--oy-hairline); padding-bottom: 14px; }
@@ -420,9 +533,129 @@
     background: transparent; font-family: var(--oy-font-body);
     font-size: 16px; color: var(--oy-ink); outline: none;
   }
-  .reg-field input:focus, .reg-field textarea:focus { border-color: var(--oy-red); }
+  .reg-field input:focus, .reg-field textarea:focus, .reg-field .reg-select:focus { border-color: var(--oy-red); }
   .reg-field input::placeholder, .reg-field textarea::placeholder { color: var(--oy-mute); opacity: .6; }
   .reg-field textarea { resize: vertical; min-height: 84px; }
+  .reg-field .reg-select {
+    width: 100%; padding: 10px 24px 8px 0; border: none;
+    border-bottom: 1.5px solid var(--oy-ink);
+    background: transparent; font-family: var(--oy-font-body);
+    font-size: 16px; color: var(--oy-ink); outline: none;
+    appearance: none; -webkit-appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M0 0l5 6 5-6' fill='%231C1917'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+  }
+  .reg-field .reg-select:invalid { color: var(--oy-mute); }
+
+  .reg-liability {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    margin-top: 4px;
+  }
+  .reg-liability summary {
+    list-style: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-ink);
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .reg-liability summary::-webkit-details-marker { display: none; }
+  .reg-liability summary::after {
+    content: "+";
+    font-family: var(--oy-font-display);
+    font-size: 18px;
+    color: var(--oy-red);
+  }
+  .reg-liability[open] summary::after { content: "–"; }
+  .reg-liability-hint { color: var(--oy-mute); text-transform: none; letter-spacing: 0; font-weight: 400; margin-left: 8px; }
+  .reg-liability-body {
+    padding: 10px 16px 18px;
+    border-top: 1.5px dashed var(--oy-hairline);
+    font-family: var(--oy-font-body);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--oy-ink-soft);
+    max-height: 420px;
+    overflow-y: auto;
+  }
+  .reg-liability-body p { margin-top: 12px; }
+  .reg-liability-body p:first-child { margin-top: 6px; }
+  .reg-liability-body ul { margin: 6px 0 10px 20px; }
+  .reg-liability-body li { margin: 4px 0; }
+  .reg-liability-body strong { color: var(--oy-ink); }
+
+  .reg-field .reg-consent, .reg-section .reg-consent {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-top: 14px; margin-bottom: 0;
+    padding: 16px 20px;
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    font-family: var(--oy-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--oy-ink);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .reg-field .reg-consent:hover, .reg-section .reg-consent:hover { background: var(--oy-cream); }
+  .reg-field .reg-consent input, .reg-section .reg-consent input { display: none; }
+  .reg-field .reg-consent .box, .reg-section .reg-consent .box {
+    flex: 0 0 26px;
+    width: 26px; height: 26px;
+    border: 2px solid var(--oy-ink);
+    border-radius: 3px;
+    position: relative;
+    margin-top: 1px;
+    background: var(--oy-cream);
+    box-shadow: 2px 2px 0 var(--oy-ink);
+  }
+  .reg-field .reg-consent input:checked ~ .box,
+  .reg-section .reg-consent input:checked ~ .box {
+    background: var(--oy-red); border-color: var(--oy-red);
+    box-shadow: 2px 2px 0 var(--oy-ink);
+  }
+  .reg-field .reg-consent input:checked ~ .box::after,
+  .reg-section .reg-consent input:checked ~ .box::after {
+    content: "✓"; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--oy-cream); font-weight: 700; font-size: 18px;
+  }
+  .reg-field .reg-consent .text, .reg-section .reg-consent .text {
+    flex: 1;
+    font-family: var(--oy-font-body);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--oy-ink);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .reg-field .reg-consent .text em, .reg-section .reg-consent .text em {
+    display: block;
+    font-family: var(--oy-font-mono);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-red);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .reg-field.err .reg-consent {
+    border-color: var(--oy-red);
+    background: rgba(232, 65, 42, 0.08);
+  }
   .reg-hint { font-size: 12px; color: var(--oy-mute); margin-top: 4px; font-style: italic; }
   .reg-field.err input, .reg-field.err textarea { border-color: var(--oy-red); }
   .reg-field .err-msg { display: none; color: var(--oy-red); font-family: var(--oy-font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
@@ -524,14 +757,14 @@
 
   @media (max-width: 1024px) {
     .oy-hero, .oy-story-grid, .oy-visit-grid { grid-template-columns: 1fr; gap: 32px; }
-    .oy-menu-grid { grid-template-columns: repeat(2, 1fr); }
+    .oy-day-grid { grid-template-columns: repeat(2, 1fr); }
     .oy-art-wrap { margin: 0 auto; max-width: 420px; }
     .oy-umai { right: 4%; }
   }
   @media (max-width: 640px) {
     body { padding: 12px; }
     .oy-frame { padding: 20px 24px 20px; }
-    .oy-menu-grid { grid-template-columns: 1fr; }
+    .oy-day-grid { grid-template-columns: 1fr; }
     .oy-stats { grid-template-columns: repeat(2, 1fr); gap: 16px 24px; }
     .oy-nav { flex-wrap: wrap; gap: 16px; }
     .oy-nav-links { gap: 20px; flex-wrap: wrap; order: 3; width: 100%; }
@@ -561,9 +794,7 @@
       <li data-route="Our Story"><a>Our Story</a></li>
       <li data-route="Where"><a>Where</a></li>
     </ul>
-    <button class="oy-pill oy-pill--cta" data-route="Register">
-      Register →
-    </button>
+    <button class="oy-btn" data-route="Register">Register</button>
   </nav>
 
   <!-- ============ HOME ============ -->
@@ -597,9 +828,9 @@
     <div class="oy-section-head">
       <div class="oy-kana" style="font-size:28px">プログラム</div>
       <h2 class="oy-h1" style="margin-top:8px">THE PROGRAM</h2>
-      <p class="oy-lede" style="max-width:520px; margin-top:12px">Six sessions across three days. Skip what you like — except supper. Supper is not optional.</p>
+      <p class="oy-lede" style="max-width:520px; margin-top:12px">This is a four day event, events here will be updated from time to time, yours will be posted when you're ready.</p>
     </div>
-    <div class="oy-menu-grid" id="menuGrid"></div>
+    <div class="oy-day-grid" id="dayGrid"></div>
   </section>
 
   <!-- ============ OUR STORY ============ -->
@@ -608,16 +839,24 @@
       <div>
         <div class="oy-kana" style="font-size:28px">私達について</div>
         <h2 class="oy-h1" style="margin-top:8px">
-          TWENTY FRIENDS,<br>
-          <span style="color:#E8412A">ONE FOREST,</span><br>
-          THREE NIGHTS.
+          THIRTY-ISH FRIENDS,<br>
+          <span style="color:#E8412A">ONE BIRTHDAY,</span><br>
+          FOUR NIGHTS.
         </h2>
         <p class="oy-body" style="margin-top:20px; max-width:460px">
-          Tramokyo began in 2019 after six of us decided we were spending too many weekends in cities. We drove up to the cedar hills with a tent and a cast-iron pot. It stuck.
+          It all began in 2018 with a desire to celebrate Tram&rsquo;s birthday and embodying some of the values and experiences we&rsquo;ve shared at Burning Man. Each &lsquo;camp&rsquo; has its own theme with one scheduled event that is gifted. With participants ranging from 14 to 50+ over the years, we&rsquo;ve continued to experience and aim to cultivate passion building and celebration &mdash; it is just as wholesome for the soul as well as trashing it. Join us on our 8th year celebrating Tram and yourselves.
         </p>
-        <p class="oy-body" style="margin-top:12px; max-width:460px">
-          We arrive Friday. We leave Monday. We cook together, sleep outside, and do not check our phones. Come for one year, come for all of them.
-        </p>
+        <ul class="oy-yearlist">
+          <li><span class="year">2018</span><span class="name">TramCon</span></li>
+          <li><span class="year">2019</span><span class="name">Detrampression</span></li>
+          <li><span class="year">2020</span><span class="name">Into the Tramverse</span></li>
+          <li><span class="year">2021</span><span class="name">Tramlympics</span></li>
+          <li><span class="year">2022</span><span class="name">Tramsformation Summit</span></li>
+          <li><span class="year">2023</span><span class="name">Tramchella</span></li>
+          <li><span class="year">2024</span><span class="name">A State of Tramce</span></li>
+          <li><span class="year">2025</span><span class="name"><em>Hiatus</em></span></li>
+          <li class="now"><span class="year">2026</span><span class="name">Tramokyo</span></li>
+        </ul>
       </div>
       <div class="oy-story-placeholder">
         <div style="font-family:JetBrains Mono, monospace; font-size:12px; color:#6B625B">cedar grove · 4:5</div>
@@ -638,34 +877,13 @@
         <div class="oy-kana" style="font-size:28px">場所</div>
         <h2 class="oy-h1" style="margin-top:8px">FIND US</h2>
         <dl class="oy-dl">
-          <div><dt>Address</dt><dd>Kawaguchi-chō · Yamanashi · Japan</dd></div>
-          <div><dt>Dates</dt><dd>Fri 16:00 check-in · Mon 11:00 out</dd></div>
-          <div><dt>Invites</dt><dd>Friends and a plus one</dd></div>
-          <div><dt>Phone</dt><dd>+81 55 555 0141</dd></div>
+          <div><dt>Address</dt><dd>Disclosed Privately</dd></div>
+          <div><dt>Dates</dt><dd>October 15 – October 19</dd></div>
+          <div><dt>Invites</dt><dd>Invitation Only</dd></div>
         </dl>
-        <button class="oy-btn" style="margin-top:22px">Get directions →</button>
       </div>
       <div class="oy-map-placeholder">
-        <svg viewBox="0 0 300 300" width="100%" height="100%">
-          <rect width="300" height="300" fill="#EADFC8"/>
-          <g stroke="#C8BCA3" stroke-width="1" fill="none">
-            <path d="M0 80 L300 90"/>
-            <path d="M0 160 L300 170"/>
-            <path d="M0 240 L300 230"/>
-            <path d="M90 0 L85 300"/>
-            <path d="M200 0 L210 300"/>
-          </g>
-          <!-- pine silhouettes -->
-          <g fill="#1C1917" opacity="0.5">
-            <polygon points="50,60 56,70 44,70"/>
-            <polygon points="220,60 226,70 214,70"/>
-            <polygon points="70,200 76,210 64,210"/>
-            <polygon points="240,220 246,230 234,230"/>
-          </g>
-          <circle cx="150" cy="150" r="8" fill="#E8412A"/>
-          <circle cx="150" cy="150" r="16" fill="none" stroke="#E8412A" stroke-width="1.5" opacity="0.5"/>
-          <text x="160" y="142" font-family="JetBrains Mono" font-size="10" fill="#1C1917">Tramokyo</text>
-        </svg>
+        <img src="assets/map.jpg" alt="Tramokyo site map" />
       </div>
     </div>
   </section>
@@ -691,7 +909,7 @@
           <div class="reg-row two">
             <div class="reg-field" data-field="firstName">
               <label>First Name <span style="color:var(--oy-red);">✱</span></label>
-              <input name="firstName" placeholder="On the back of your badge" />
+              <input name="firstName" placeholder="What you want us to call you" />
               <div class="err-msg">↑ Required</div>
             </div>
             <div class="reg-field" data-field="lastName">
@@ -710,6 +928,21 @@
               <label>Phone <span style="color:var(--oy-red);">✱</span></label>
               <input name="phone" type="tel" placeholder="(555) 010-4127" />
               <div class="err-msg">↑ Required</div>
+            </div>
+          </div>
+          <div class="reg-row two">
+            <div class="reg-field">
+              <label>Pronouns</label>
+              <select name="pronouns" class="reg-select">
+                <option value="" disabled selected>Choose…</option>
+                <option>she / her</option>
+                <option>he / him</option>
+                <option>they / them</option>
+                <option>she / they</option>
+                <option>he / they</option>
+                <option>another</option>
+                <option>prefer not to say</option>
+              </select>
             </div>
           </div>
         </section>
@@ -732,7 +965,7 @@
             <div class="reg-field">
               <label>Approximate Schedule</label>
               <textarea name="schedule" rows="3" placeholder="What's going on, when? Even a rough window helps us cluster nearby things."></textarea>
-              <div class="reg-hint">Opens Friday, runs through Tuesday morning.</div>
+              <div class="reg-hint">Opens Thursday, runs through Sunday Night.</div>
             </div>
           </div>
         </section>
@@ -750,24 +983,29 @@
             <div class="icon">🪧</div>
             <div class="body">
               <strong>Build a small wooden sign</strong>
-              Everyone makes one. Points to your experience, goes home with you. Supplies are at the workbench by the firepit.
-              <label class="reg-check" style="margin-top:10px;">
-                <input type="checkbox" name="buildSign" />
-                <span class="box"></span>
-                <span>I agree to build a sign for my experience.</span>
-              </label>
+              Everyone makes one. This establishes you physically and will become apart of our ceremony in the end.
             </div>
           </div>
+          <label class="reg-consent" style="margin-bottom:18px;">
+            <input type="checkbox" name="buildSign" />
+            <span class="box"></span>
+            <span class="text">
+              <em>Agreement</em>
+              I'll build a sign for my experience.
+            </span>
+          </label>
 
           <div class="reg-fee-note">
             <div class="big">$175</div>
             <p><strong>per adult.</strong> Covers food staples, firewood, the communal jug, and keeping the lights off the grid. Payment instructions follow after you file.</p>
           </div>
-
-          <label class="reg-check">
+          <label class="reg-consent">
             <input type="checkbox" name="feeAck" />
             <span class="box"></span>
-            <span>I acknowledge the $175/adult contribution.</span>
+            <span class="text">
+              <em>Acknowledgement</em>
+              I acknowledge the $175/adult contribution.
+            </span>
           </label>
         </section>
 
@@ -788,7 +1026,7 @@
             </div>
             <div class="reg-hint">Dogs welcome on-leash; chickens on their own recognizance.</div>
           </div>
-          <div class="reg-field">
+          <div class="reg-field" style="margin-bottom:22px;">
             <label>Container Room <span class="hint-inline">(additional fee, if interested)</span></label>
             <div class="reg-radios" data-group="containerRoom">
               <label class="reg-radio on"><input type="radio" name="containerRoom" value="skip" checked />Not for me</label>
@@ -796,6 +1034,15 @@
               <label class="reg-radio"><input type="radio" name="containerRoom" value="more" />Tell me more</label>
             </div>
             <div class="reg-hint">Insulated, locked, powered. Six available.</div>
+          </div>
+          <div class="reg-field">
+            <label>Would You Like to Order from the Sandman?</label>
+            <div class="reg-radios" data-group="sandman">
+              <label class="reg-radio on"><input type="radio" name="sandman" value="no" checked />No thanks</label>
+              <label class="reg-radio"><input type="radio" name="sandman" value="yes" />Yes, please</label>
+              <label class="reg-radio"><input type="radio" name="sandman" value="tell" />Tell me more</label>
+            </div>
+            <div class="reg-hint">The Sandman delivers. Ask fewer questions.</div>
           </div>
         </section>
 
@@ -822,7 +1069,7 @@
                 <label class="reg-radio on"><input type="radio" name="artGrant" value="no" checked />Not this year</label>
                 <label class="reg-radio"><input type="radio" name="artGrant" value="yes" />Applying</label>
               </div>
-              <div class="reg-hint">Up to $500 for projects that stay after.</div>
+              <div class="reg-hint">Up to $175 for projects that stay after.</div>
             </div>
           </div>
         </section>
@@ -842,16 +1089,75 @@
               <div class="reg-hint">First-timers need one existing attendee to vouch.</div>
             </div>
           </div>
-          <div class="reg-row">
+          <div class="reg-row" style="margin-bottom:22px;">
             <div class="reg-field">
               <label>Anything we should know? <span class="hint-inline">(optional)</span></label>
-              <textarea name="notes" rows="4" placeholder="Dietary notes, arrival window, a joke, the name of your dog, etc."></textarea>
+              <textarea name="notes" rows="4" placeholder="Arrival window, a joke, the name of your dog, etc."></textarea>
+            </div>
+          </div>
+          <div class="reg-row">
+            <div class="reg-field" data-field="liability">
+              <label>Hold Harmless / Release of Liability <span style="color:var(--oy-red);">✱</span></label>
+              <details class="reg-liability">
+                <summary>Read the fine print <span class="reg-liability-hint">click to expand</span></summary>
+                <div class="reg-liability-body">
+                  <p><strong>You're coming to the desert. Reading the fine print.</strong></p>
+                  <p>By signing this, you acknowledge that Tramokyo is <em>not</em> a paved resort, a curated retreat, or a cruise ship. It's a friends-only gathering on BLM land in Landers, California, where the nearest urgent care is forty minutes away by a road that gets dusty, and the nearest coffee shop will judge you for asking what oat milk is.</p>
+                  <p><strong>The desert, by nature, contains:</strong></p>
+                  <ul>
+                    <li>Sharp plants that did not consent to being stepped on.</li>
+                    <li>Small mammals with reasonable trust issues.</li>
+                    <li>Larger mammals that appear at dusk to remind you that you are, in fact, a guest.</li>
+                    <li>Sand that will find its way into things you didn't think had openings.</li>
+                    <li>Weather that changes its mind without a press release. Bring layers.</li>
+                    <li>Fire. Fire is hot. Fire does not care.</li>
+                    <li>Stars. More than you were emotionally prepared for.</li>
+                  </ul>
+                  <p><strong>You agree that nobody is responsible for:</strong></p>
+                  <ul>
+                    <li>Cuts, scrapes, bruises, stubbed toes, existential stubbing, or the noise you'll make when you discover scorpions glow under UV.</li>
+                    <li>Sunburn incurred because you insisted the jacket was "too hot" at 11am.</li>
+                    <li>Dehydration from operating under the personal theory that "I drank yesterday" is how hydration works.</li>
+                    <li>Lost, stolen, or whimsically repurposed belongings.</li>
+                    <li>Emotional attachments to dogs, strangers, or fire formed around a pit that will not carry back to the city.</li>
+                    <li>Embarrassing camp singing recorded on someone else's phone.</li>
+                    <li>Anything you chose to eat out of a shared pot without asking what was in it.</li>
+                    <li>Your ego after the talent show.</li>
+                  </ul>
+                  <p><strong>You certify that you are of sound mind and sufficient body to:</strong></p>
+                  <ul>
+                    <li>Hike up to four miles over loose gravel without a formal complaint.</li>
+                    <li>Sleep outside in unheated accommodations.</li>
+                    <li>Carry your own water, and drink it.</li>
+                    <li>Clean up after yourself, including your own mess in the shared bathroom.</li>
+                    <li>Say a clear "no" to anything you don't want to participate in, and respect the "no" of others without a debate.</li>
+                  </ul>
+                  <p><strong>You agree to:</strong></p>
+                  <ul>
+                    <li>Leave no trace. If it wasn't here Friday, it goes home Monday.</li>
+                    <li>Stay within marked camp bounds without asking the desert for directions.</li>
+                    <li>Treat the site, its neighbors, and the jackrabbits with the respect they've earned by showing up consistently for longer than any of us.</li>
+                    <li>Not operate heavy machinery — including your own feelings — after the fourth round at the firepit.</li>
+                    <li>Not sue us, in any jurisdiction terrestrial or otherwise, for anything that can reasonably be chalked up to "the desert being the desert" or "you making the choices you made."</li>
+                  </ul>
+                  <p>By checking the box below, you confirm you've read this, you understand it, you are participating entirely at your own risk, and you agree that the desert is bigger than us and owes us nothing.</p>
+                </div>
+              </details>
+              <label class="reg-consent">
+                <input type="checkbox" name="liabilityAck" />
+                <span class="box"></span>
+                <span class="text">
+                  <em>Agreement</em>
+                  I've read it, I understand it, and I agree — the desert owes me nothing.
+                </span>
+              </label>
+              <div class="err-msg" style="margin-top:8px;">↑ Please agree before filing.</div>
             </div>
           </div>
         </section>
 
         <div class="reg-submit-row">
-          <span class="left">Form A-01 / 14 of 14</span>
+          <span class="left">Form A-01 / 17 of 17</span>
           <button type="submit" class="oy-btn" id="regSubmit">File My Manifest →</button>
         </div>
       </form>
@@ -879,18 +1185,25 @@
   <!-- ============ FOOTER ============ -->
   <footer class="oy-footer">
     <div class="rule"></div>
-    <div class="oy-meta">EST · 2019 · 山中湖</div>
+    <div class="oy-meta">EST · 2026 · 山中湖</div>
   </footer>
 </main>
 
 <script>
+  const DAYS = [
+    { num: 15, dow: 'THU', jp: '木' },
+    { num: 16, dow: 'FRI', jp: '金' },
+    { num: 17, dow: 'SAT', jp: '土' },
+    { num: 18, dow: 'SUN', jp: '日' },
+  ];
+
   const PROGRAM = [
-    { id: 'walk',   name: 'Morning Walk',    jp: '朝歩き', desc: 'Four miles before sunrise. Coffee at the ridge. Back in time for miso.',        time: '05:30', intensity: 1 },
-    { id: 'onsen',  name: 'Hot Spring',      jp: '温泉',   desc: 'A steaming rock basin twenty minutes up the path. Cedar walls, no phones.',      time: '10:00', intensity: 0 },
-    { id: 'robata', name: 'Fireside Supper', jp: '炉端',   desc: 'Cast iron on coals. One long table. Potluck — bring something with a story.',   time: '18:00', intensity: 2 },
-    { id: 'tea',    name: 'Dawn Tea',        jp: '朝茶',   desc: 'Silent tea service at first light. Folded tatami, quiet hands, warm cups.',     time: '06:00', intensity: 0 },
-    { id: 'fish',   name: 'Night Fishing',   jp: '夜釣り', desc: 'Headlamps, hand lines, the stream. Release everything. Sashimi is not on the plan.', time: '22:00', intensity: 3 },
-    { id: 'stars',  name: 'Starlight Walk',  jp: '星空',   desc: 'No flashlights. Fifteen minutes down the old road. Eyes adjust. Mostly you listen.', time: '23:00', intensity: 1 },
+    { id: 'walk',   day: 15, name: 'Morning Walk',    jp: '朝歩き', desc: 'Four miles before sunrise. Coffee at the ridge. Back in time for miso.',        time: '05:30', location: 'Tokyo (Center Camp)' },
+    { id: 'onsen',  day: 15, name: 'Hot Spring',      jp: '温泉',   desc: 'A steaming rock basin twenty minutes up the path. Cedar walls, no phones.',      time: '10:00', location: 'Fukushima' },
+    { id: 'robata', day: 16, name: 'Fireside Supper', jp: '炉端',   desc: 'Cast iron on coals. One long table. Potluck — bring something with a story.',   time: '18:00', location: 'Tokyo (Center Camp)' },
+    { id: 'tea',    day: 17, name: 'Dawn Tea',        jp: '朝茶',   desc: 'Silent tea service at first light. Folded tatami, quiet hands, warm cups.',     time: '06:00', location: 'Wakayama' },
+    { id: 'fish',   day: 17, name: 'Night Fishing',   jp: '夜釣り', desc: 'Headlamps, hand lines, the stream. Release everything. Sashimi is not on the plan.', time: '22:00', location: 'Niigata' },
+    { id: 'stars',  day: 18, name: 'Starlight Walk',  jp: '星空',   desc: 'No flashlights. Fifteen minutes down the old road. Eyes adjust. Mostly you listen.', time: '23:00', location: 'Toyama' },
   ];
 
   // ===== Paste the Google Apps Script Web-App URL here once you've deployed it =====
@@ -904,22 +1217,42 @@
   }
 
   function renderProgram() {
-    const grid = document.getElementById('menuGrid');
-    grid.innerHTML = PROGRAM.map(item => `
-      <article class="oy-menu-card">
-        <div class="oy-menu-top">
-          <div>
-            <div class="oy-kana" style="font-size:16px">${item.jp}</div>
-            <h3 class="oy-h3" style="margin-top:6px">${item.name}</h3>
+    const grid = document.getElementById('dayGrid');
+    grid.innerHTML = DAYS.map(day => {
+      const items = PROGRAM.filter(p => p.day === day.num);
+      const cards = items.length
+        ? items.map(item => `
+            <article class="oy-menu-card">
+              <div class="oy-menu-top">
+                <div>
+                  <div class="oy-kana" style="font-size:14px">${item.jp}</div>
+                  <h3 class="oy-h3" style="margin-top:4px; font-size:18px;">${item.name}</h3>
+                </div>
+                <div class="oy-price" style="font-size:18px;">${item.time}</div>
+              </div>
+              <p class="oy-body" style="font-size:13px; margin-top:10px; line-height:1.5;">${item.desc}</p>
+              <div class="oy-menu-bot">
+                <div class="oy-location">
+                  <div class="oy-location-label">Location</div>
+                  <div class="oy-location-name">${item.location}</div>
+                </div>
+              </div>
+            </article>
+          `).join('')
+        : `<div class="oy-day-empty">More to come</div>`;
+      return `
+        <div class="oy-day-col">
+          <div class="oy-day-head">
+            <div class="oy-day-num">${day.num}</div>
+            <div class="oy-day-meta">
+              <span class="dow">${day.dow}</span>
+              <span class="jp">${day.jp}</span>
+            </div>
           </div>
-          <div class="oy-price">${item.time}</div>
+          ${cards}
         </div>
-        <p class="oy-body" style="font-size:13px; margin-top:10px">${item.desc}</p>
-        <div class="oy-menu-bot">
-          ${intensityDots(item.intensity)}
-        </div>
-      </article>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function navigate(route) {
@@ -965,6 +1298,7 @@
     for (const [k, v] of fd.entries()) data[k] = v;
     data.buildSign = regForm.querySelector('[name="buildSign"]').checked;
     data.feeAck = regForm.querySelector('[name="feeAck"]').checked;
+    data.liabilityAck = regForm.querySelector('[name="liabilityAck"]').checked;
     data.submittedAt = new Date().toISOString();
     return data;
   }
@@ -980,6 +1314,8 @@
       setFieldErr(k, bad);
       if (bad) ok = false;
     });
+    if (!data.liabilityAck) { setFieldErr('liability', true); ok = false; }
+    else setFieldErr('liability', false);
     if (!ok) {
       const firstErr = document.querySelector('.reg-field.err');
       firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
