@@ -750,6 +750,20 @@
     gap: 30px;
   }
   .oy-footer .rule { height: 1px; background: var(--oy-red); opacity: 0.8; }
+  .oy-secret-link {
+    grid-column: 2;
+    justify-self: end;
+    margin-top: 4px;
+    font-family: var(--oy-font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    opacity: 0.4;
+    text-decoration: none;
+    transition: opacity .2s, color .2s;
+  }
+  .oy-secret-link:hover { opacity: 1; color: var(--oy-red); }
 
   .oy-route { display: none; }
   .oy-route.active { display: block; }
@@ -1186,6 +1200,7 @@
   <footer class="oy-footer">
     <div class="rule"></div>
     <div class="oy-meta">EST · 2026 · 山中湖</div>
+    <a class="oy-secret-link" href="admin.html">secret area</a>
   </footer>
 </main>
 
@@ -1328,12 +1343,13 @@
 
     try {
       if (SHEET_ENDPOINT) {
-        await fetch(SHEET_ENDPOINT, {
+        const res = await fetch(SHEET_ENDPOINT, {
           method: 'POST',
-          mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(data)
+          body: JSON.stringify({ action: 'register', ...data })
         });
+        const payload = await res.json().catch(() => ({}));
+        if (!payload.ok) throw new Error(payload.error || 'submit_failed');
       } else {
         // no endpoint configured yet — simulate network for preview
         await new Promise(r => setTimeout(r, 700));
@@ -1350,6 +1366,38 @@
       console.error(err);
     }
   });
+
+  // ===== PROGRAMS HYDRATION =====
+  // Render hard-coded PROGRAM immediately, then async-fetch from Apps Script
+  // and refresh if the response differs from the cached version. localStorage
+  // hydrates on subsequent loads for instant render.
+  const PROGRAMS_CACHE_KEY = 'tramokyo:programs:v1';
+  function applyPrograms(programs) {
+    if (!Array.isArray(programs) || !programs.length) return;
+    PROGRAM.length = 0;
+    programs.forEach(p => PROGRAM.push(p));
+    renderProgram();
+  }
+  // 1) localStorage cache (instant)
+  try {
+    const cached = JSON.parse(localStorage.getItem(PROGRAMS_CACHE_KEY) || 'null');
+    if (cached && Array.isArray(cached.programs)) applyPrograms(cached.programs);
+  } catch (_) {}
+  // 2) network revalidate (best-effort, 5s timeout)
+  if (SHEET_ENDPOINT) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    fetch(SHEET_ENDPOINT, { signal: ctrl.signal })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        clearTimeout(timer);
+        if (data && data.ok && Array.isArray(data.programs)) {
+          applyPrograms(data.programs);
+          try { localStorage.setItem(PROGRAMS_CACHE_KEY, JSON.stringify({ programs: data.programs, cachedAt: Date.now() })); } catch (_) {}
+        }
+      })
+      .catch(() => { clearTimeout(timer); /* keep hard-coded fallback */ });
+  }
 
   renderProgram();
 </script>

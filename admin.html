@@ -1,0 +1,1184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tramokyo · Admin</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --oy-red: #E8412A;
+    --oy-red-deep: #C8341F;
+    --oy-cream: #F2E8D5;
+    --oy-cream-warm: #F7F0E0;
+    --oy-cream-soft: #EADFC8;
+    --oy-ink: #1C1917;
+    --oy-ink-soft: #3B3430;
+    --oy-mute: #6B625B;
+    --oy-hairline: #C8BCA3;
+    --oy-font-display: 'Archivo Black', Impact, sans-serif;
+    --oy-font-body: 'DM Sans', system-ui, sans-serif;
+    --oy-font-jp: 'Zen Kaku Gothic New', sans-serif;
+    --oy-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100vh; }
+  body {
+    background: var(--oy-cream);
+    color: var(--oy-ink);
+    font-family: var(--oy-font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .oy-kana { font-family: var(--oy-font-jp); font-weight: 900; color: var(--oy-red); letter-spacing: 4px; }
+  .oy-mono { font-family: var(--oy-font-mono); letter-spacing: 2px; text-transform: uppercase; font-size: 11px; color: var(--oy-mute); }
+
+  /* ============ LOGIN ============ */
+  .adm-login {
+    min-height: 100vh;
+    background: var(--oy-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+  .adm-login-card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--oy-cream);
+    border-radius: 10px;
+    padding: 44px 44px 40px;
+    position: relative;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,.4);
+  }
+  .adm-login-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1.5px solid var(--oy-red);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+  .adm-login-card .stamp {
+    position: relative;
+    display: inline-block;
+    border: 1.5px solid var(--oy-ink);
+    padding: 4px 12px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .adm-login-card .oy-kana { font-size: 22px; }
+  .adm-login-card h1 {
+    font-family: var(--oy-font-display);
+    font-size: 38px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin: 8px 0 12px;
+  }
+  .adm-login-card .lede {
+    font-size: 15px;
+    color: var(--oy-ink-soft);
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .adm-login-form { display: grid; gap: 14px; }
+  .adm-login-form label {
+    display: block;
+    font-family: var(--oy-font-mono);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    margin-bottom: 6px;
+  }
+  .adm-login-form input[type="password"] {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1.5px solid var(--oy-ink);
+    background: transparent;
+    font-family: var(--oy-font-body);
+    font-size: 18px;
+    color: var(--oy-ink);
+    outline: none;
+    letter-spacing: 0.5em;
+  }
+  .adm-login-form input[type="password"]:focus { border-color: var(--oy-red); }
+  .adm-login-form button {
+    margin-top: 8px;
+    padding: 14px 24px;
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    border: none;
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+  }
+  .adm-login-form button::before {
+    content: "";
+    position: absolute;
+    inset: -6px -6px 6px 6px;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: 2px;
+    z-index: -1;
+  }
+  .adm-login-form button:hover { background: var(--oy-red-deep); }
+  .adm-login-form button:disabled { opacity: 0.5; cursor: wait; }
+  .adm-login-msg {
+    min-height: 18px;
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-red);
+    text-align: center;
+    margin-top: 4px;
+  }
+  .adm-login-foot {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1.5px solid var(--oy-red);
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
+  .adm-login-foot a { color: var(--oy-mute); text-decoration: none; }
+  .adm-login-foot a:hover { color: var(--oy-red); }
+
+  /* ============ ADMIN SHELL ============ */
+  .adm-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .adm-header {
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+    padding: 14px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .adm-brand {
+    font-family: var(--oy-font-display);
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .adm-brand .label {
+    color: var(--oy-red);
+    margin-left: 6px;
+  }
+  .adm-brand a {
+    color: var(--oy-cream);
+    text-decoration: none;
+    opacity: 0.55;
+    margin-left: 16px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .adm-brand a:hover { opacity: 1; color: var(--oy-red); }
+  .adm-tabs {
+    justify-self: center;
+    display: flex;
+    gap: 4px;
+  }
+  .adm-tabs button {
+    background: transparent;
+    color: var(--oy-cream);
+    border: 1.5px solid transparent;
+    padding: 8px 18px;
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    opacity: 0.6;
+    transition: opacity .15s, border-color .15s;
+  }
+  .adm-tabs button:hover { opacity: 1; }
+  .adm-tabs button.on {
+    opacity: 1;
+    border-color: var(--oy-red);
+    color: var(--oy-red);
+  }
+  .adm-logout {
+    background: transparent;
+    color: var(--oy-cream);
+    border: 1.5px solid var(--oy-cream);
+    padding: 6px 14px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .adm-logout:hover { border-color: var(--oy-red); color: var(--oy-red); }
+
+  .adm-main {
+    flex: 1;
+    padding: 24px;
+  }
+
+  .adm-pane-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .adm-pane-head h2 {
+    font-family: var(--oy-font-display);
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+  }
+  .adm-pane-head .count {
+    font-family: var(--oy-font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    font-weight: 700;
+    margin-left: 6px;
+  }
+  .adm-pane-head .spacer { flex: 1; }
+  .adm-pane-head input[type="search"] {
+    padding: 8px 12px;
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream);
+    font-family: var(--oy-font-body);
+    font-size: 13px;
+    color: var(--oy-ink);
+    outline: none;
+    border-radius: 2px;
+    min-width: 220px;
+  }
+  .adm-pane-head input[type="search"]:focus { border-color: var(--oy-red); }
+
+  .adm-toast {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    padding: 4px 10px;
+    border: 1.5px solid var(--oy-hairline);
+    border-radius: 2px;
+    transition: opacity .2s;
+  }
+  .adm-toast.saving { color: var(--oy-mute); border-color: var(--oy-hairline); }
+  .adm-toast.saved { color: var(--oy-ink); border-color: var(--oy-ink); }
+  .adm-toast.err { color: var(--oy-red); border-color: var(--oy-red); }
+
+  /* ============ REG TABLE ============ */
+  .reg-table-wrap {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream);
+    overflow: auto;
+    max-height: calc(100vh - 200px);
+    border-radius: 2px;
+  }
+  table.reg-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px;
+  }
+  table.reg-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+    text-align: left;
+    padding: 10px 12px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+    z-index: 2;
+    border-right: 1px solid var(--oy-ink-soft);
+  }
+  table.reg-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--oy-hairline);
+    border-right: 1px solid var(--oy-hairline);
+    vertical-align: top;
+    min-width: 120px;
+    max-width: 280px;
+    word-break: break-word;
+    cursor: text;
+  }
+  table.reg-table tbody td.admin-col {
+    background: var(--oy-cream-warm);
+    border-right-color: var(--oy-hairline);
+  }
+  table.reg-table thead th.admin-col {
+    background: var(--oy-red-deep);
+  }
+  table.reg-table tbody tr:hover td { background: rgba(232, 65, 42, 0.04); }
+  table.reg-table tbody tr:hover td.admin-col { background: rgba(232, 65, 42, 0.10); }
+  table.reg-table td .editor {
+    width: 100%;
+    border: 1.5px solid var(--oy-red);
+    background: var(--oy-cream);
+    padding: 6px 8px;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--oy-ink);
+    outline: none;
+    border-radius: 2px;
+    min-height: 30px;
+    resize: vertical;
+  }
+  table.reg-table td.dirty { box-shadow: inset 0 -3px 0 var(--oy-red); }
+  table.reg-table td.saving { box-shadow: inset 0 -3px 0 var(--oy-mute); }
+  table.reg-table td.saved { box-shadow: inset 0 -3px 0 #4a8b3d; }
+  table.reg-table td.err { box-shadow: inset 0 -3px 0 var(--oy-red); background: rgba(232, 65, 42, 0.1) !important; }
+
+  .conf-pills { display: inline-flex; gap: 4px; }
+  .conf-pill {
+    padding: 4px 10px;
+    border: 1.5px solid var(--oy-hairline);
+    background: var(--oy-cream);
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    color: var(--oy-mute);
+    line-height: 1;
+    transition: all .12s;
+  }
+  .conf-pill.on { color: var(--oy-cream); border-color: var(--oy-ink); background: var(--oy-ink); }
+  .conf-pill[data-v="Confirmed"].on { background: #4a8b3d; border-color: #4a8b3d; }
+  .conf-pill[data-v="Cancelled"].on { background: var(--oy-red); border-color: var(--oy-red); }
+  .conf-pill:hover { background: var(--oy-cream-warm); }
+
+  .yesno-pills { display: inline-flex; gap: 4px; }
+  .yesno-pill {
+    padding: 4px 10px;
+    border: 1.5px solid var(--oy-hairline);
+    background: var(--oy-cream);
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: var(--oy-mute);
+    line-height: 1;
+  }
+  .yesno-pill.on { color: var(--oy-cream); background: var(--oy-ink); border-color: var(--oy-ink); }
+  .yesno-pill[data-v="YES"].on { background: var(--oy-red); border-color: var(--oy-red); }
+
+  .reg-empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--oy-mute);
+    font-style: italic;
+  }
+
+  /* ============ PROGRAMS ============ */
+  .prog-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 10px 20px;
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    border: none;
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .btn-primary:hover { background: var(--oy-red-deep); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-ghost {
+    padding: 8px 14px;
+    background: transparent;
+    color: var(--oy-ink);
+    border: 1.5px solid var(--oy-ink);
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .btn-ghost:hover { background: var(--oy-ink); color: var(--oy-cream); }
+  .btn-icon {
+    width: 28px; height: 28px;
+    background: transparent;
+    border: 1.5px solid var(--oy-hairline);
+    color: var(--oy-mute);
+    cursor: pointer;
+    font-family: var(--oy-font-mono);
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-icon:hover { color: var(--oy-red); border-color: var(--oy-red); }
+  .btn-icon.danger:hover { color: var(--oy-cream); border-color: var(--oy-red); background: var(--oy-red); }
+
+  .prog-day-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .prog-day-col {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream);
+    padding: 12px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .prog-day-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1.5px dashed var(--oy-hairline);
+  }
+  .prog-day-head .num {
+    font-family: var(--oy-font-display);
+    font-size: 32px;
+    line-height: 1;
+    color: var(--oy-red);
+  }
+  .prog-day-head .dow { font-family: var(--oy-font-mono); font-size: 10px; letter-spacing: 2px; color: var(--oy-mute); }
+  .prog-day-head .add {
+    background: transparent;
+    border: 1.5px solid var(--oy-ink);
+    color: var(--oy-ink);
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .prog-day-head .add:hover { background: var(--oy-ink); color: var(--oy-cream); }
+
+  .prog-card {
+    border: 1.5px solid var(--oy-hairline);
+    background: var(--oy-cream-warm);
+    padding: 12px;
+    display: grid;
+    gap: 8px;
+    border-radius: 2px;
+  }
+  .prog-card.dirty { border-color: var(--oy-red); box-shadow: 0 0 0 2px rgba(232, 65, 42, 0.15); }
+  .prog-card-row { display: flex; gap: 8px; align-items: center; }
+  .prog-card-row .grow { flex: 1; }
+  .prog-field { display: block; }
+  .prog-field label {
+    display: block;
+    font-family: var(--oy-font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    margin-bottom: 2px;
+    font-weight: 700;
+  }
+  .prog-field input, .prog-field textarea {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid var(--oy-hairline);
+    background: var(--oy-cream);
+    font-family: var(--oy-font-body);
+    font-size: 13px;
+    color: var(--oy-ink);
+    outline: none;
+    border-radius: 2px;
+  }
+  .prog-field input:focus, .prog-field textarea:focus { border-color: var(--oy-red); }
+  .prog-field textarea { resize: vertical; min-height: 50px; line-height: 1.4; }
+  .prog-card-controls {
+    display: flex;
+    gap: 4px;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--oy-hairline);
+  }
+  .prog-card-controls .order { display: flex; gap: 4px; }
+  .prog-card-controls .order .lbl {
+    font-family: var(--oy-font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    align-self: center;
+    margin-right: 4px;
+    font-weight: 700;
+  }
+  .prog-empty {
+    padding: 18px 8px;
+    text-align: center;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    border: 1px dashed var(--oy-hairline);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 1100px) {
+    .prog-day-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .prog-day-grid { grid-template-columns: 1fr; }
+    .adm-header { grid-template-columns: 1fr; gap: 12px; }
+    .adm-tabs { justify-self: stretch; justify-content: center; }
+    table.reg-table tbody td { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN VIEW ============ -->
+<main class="adm-login" id="loginView">
+  <div class="adm-login-card">
+    <div class="stamp">Form B-01 · Admin</div>
+    <div class="oy-kana">管理</div>
+    <h1>Tramokyo · Admin</h1>
+    <p class="lede">Enter the admin password to manage registrations and the program.</p>
+    <form class="adm-login-form" id="loginForm" autocomplete="off">
+      <div>
+        <label>Password</label>
+        <input type="password" id="loginPassword" autofocus />
+      </div>
+      <button type="submit" id="loginBtn">Unlock →</button>
+      <div class="adm-login-msg" id="loginMsg"></div>
+    </form>
+    <div class="adm-login-foot">
+      <a href="index.html">← Back to site</a>
+      <span>EST · 2026 · 山中湖</span>
+    </div>
+  </div>
+</main>
+
+<!-- ============ ADMIN SHELL ============ -->
+<div class="adm-shell" id="admShell" hidden>
+  <header class="adm-header">
+    <div class="adm-brand">
+      Tramokyo<span class="label">/ Admin</span>
+      <a href="index.html">↗ Public site</a>
+    </div>
+    <nav class="adm-tabs">
+      <button data-tab="registrations" class="on">Registrations</button>
+      <button data-tab="programs">Programs</button>
+    </nav>
+    <button class="adm-logout" id="logoutBtn">Log out</button>
+  </header>
+
+  <main class="adm-main">
+
+    <!-- REGISTRATIONS PANE -->
+    <section id="regPane">
+      <div class="adm-pane-head">
+        <h2>Registrations <span class="count" id="regCount">0</span></h2>
+        <div class="spacer"></div>
+        <span class="adm-toast" id="regToast" hidden>Idle</span>
+        <input type="search" id="regSearch" placeholder="Search name or email…" />
+      </div>
+      <div class="reg-table-wrap" id="regTableWrap">
+        <div class="reg-empty" id="regEmpty">Loading…</div>
+      </div>
+    </section>
+
+    <!-- PROGRAMS PANE -->
+    <section id="progPane" hidden>
+      <div class="adm-pane-head">
+        <h2>Programs</h2>
+        <div class="spacer"></div>
+        <span class="adm-toast" id="progToast" hidden>Idle</span>
+        <button class="btn-ghost" id="progRevert">Revert changes</button>
+        <button class="btn-primary" id="progSave">Save programs</button>
+      </div>
+      <div class="prog-day-grid" id="progGrid"></div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // ============ CONFIG ============
+  const SHEET_ENDPOINT = ''; // Paste your Apps Script Web App URL here, same as in index.html
+  const TOKEN_KEY = 'tramokyo:admin:token';
+  const CLIENT_KEY = 'tramokyo:admin:client';
+  const TOKEN_TTL_MS = 12 * 60 * 60 * 1000;
+
+  // Stable per-browser client id used for per-client lockout in Apps Script
+  function clientId() {
+    let id = localStorage.getItem(CLIENT_KEY);
+    if (!id) {
+      id = 'c-' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+      localStorage.setItem(CLIENT_KEY, id);
+    }
+    return id;
+  }
+
+  // ============ STATE ============
+  const state = {
+    token: null,
+    expiresAt: 0,
+    tab: 'registrations',
+    headers: [],
+    registrations: [],
+    programs: [],
+    programsBaseline: [],
+    search: '',
+  };
+
+  // ============ DOM ============
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  const els = {
+    loginView: $('#loginView'),
+    admShell: $('#admShell'),
+    loginForm: $('#loginForm'),
+    loginPassword: $('#loginPassword'),
+    loginBtn: $('#loginBtn'),
+    loginMsg: $('#loginMsg'),
+    logoutBtn: $('#logoutBtn'),
+    tabs: $$('.adm-tabs button'),
+    regPane: $('#regPane'),
+    progPane: $('#progPane'),
+    regCount: $('#regCount'),
+    regSearch: $('#regSearch'),
+    regToast: $('#regToast'),
+    regTableWrap: $('#regTableWrap'),
+    regEmpty: $('#regEmpty'),
+    progGrid: $('#progGrid'),
+    progSave: $('#progSave'),
+    progRevert: $('#progRevert'),
+    progToast: $('#progToast'),
+  };
+
+  // ============ API ============
+  async function apiPost(action, payload) {
+    if (!SHEET_ENDPOINT) {
+      throw new Error('SHEET_ENDPOINT not configured. Open admin.html and paste your Apps Script Web App URL into the SHEET_ENDPOINT constant.');
+    }
+    const body = { action, ...payload };
+    const res = await fetch(SHEET_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body)
+    });
+    let data;
+    try { data = await res.json(); }
+    catch (_) { throw new Error('bad_response'); }
+    if (!data.ok) {
+      const e = new Error(data.error || 'request_failed');
+      e.code = data.error;
+      throw e;
+    }
+    return data;
+  }
+
+  // ============ TOAST ============
+  function toast(el, msg, kind = 'saving') {
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'adm-toast ' + kind;
+    el.hidden = false;
+    if (kind === 'saved') {
+      clearTimeout(el._t);
+      el._t = setTimeout(() => { el.hidden = true; }, 1400);
+    }
+  }
+
+  // ============ LOGIN ============
+  function loadToken() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(TOKEN_KEY) || 'null');
+      if (raw && raw.token && raw.expiresAt > Date.now()) {
+        state.token = raw.token;
+        state.expiresAt = raw.expiresAt;
+        return true;
+      }
+    } catch (_) {}
+    state.token = null;
+    state.expiresAt = 0;
+    return false;
+  }
+
+  function saveToken(token, expiresAt) {
+    state.token = token;
+    state.expiresAt = expiresAt;
+    localStorage.setItem(TOKEN_KEY, JSON.stringify({ token, expiresAt }));
+  }
+
+  function clearToken() {
+    state.token = null;
+    state.expiresAt = 0;
+    localStorage.removeItem(TOKEN_KEY);
+  }
+
+  function showLogin() {
+    els.admShell.hidden = true;
+    els.loginView.hidden = false;
+    setTimeout(() => els.loginPassword?.focus(), 50);
+  }
+
+  function showAdmin() {
+    els.loginView.hidden = true;
+    els.admShell.hidden = false;
+    refresh();
+  }
+
+  els.loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    els.loginMsg.textContent = '';
+    const password = els.loginPassword.value;
+    if (!password) { els.loginMsg.textContent = '↑ Enter the password'; return; }
+    els.loginBtn.disabled = true;
+    els.loginBtn.textContent = 'Checking…';
+    try {
+      const r = await apiPost('login', { password, clientId: clientId() });
+      saveToken(r.token, r.expiresAt);
+      els.loginPassword.value = '';
+      els.loginMsg.textContent = '';
+      showAdmin();
+    } catch (err) {
+      const code = err.code || err.message || 'error';
+      const msg =
+        code === 'invalid' ? '↑ Wrong password' :
+        code === 'locked' ? '↑ Locked — wait 60s' :
+        code === 'not_configured' ? '↑ ADMIN_PASSWORD not set in Apps Script' :
+        ('↑ ' + code);
+      els.loginMsg.textContent = msg;
+    } finally {
+      els.loginBtn.disabled = false;
+      els.loginBtn.textContent = 'Unlock →';
+    }
+  });
+
+  els.logoutBtn.addEventListener('click', () => {
+    clearToken();
+    state.headers = [];
+    state.registrations = [];
+    state.programs = [];
+    state.programsBaseline = [];
+    showLogin();
+  });
+
+  // ============ TABS ============
+  els.tabs.forEach(b => b.addEventListener('click', () => {
+    state.tab = b.dataset.tab;
+    els.tabs.forEach(x => x.classList.toggle('on', x === b));
+    els.regPane.hidden = state.tab !== 'registrations';
+    els.progPane.hidden = state.tab !== 'programs';
+  }));
+
+  // ============ REFRESH (load from server) ============
+  async function refresh() {
+    try {
+      toast(els.regToast, 'Loading…', 'saving');
+      const r = await apiPost('list', { token: state.token });
+      state.headers = r.headers || [];
+      state.registrations = r.registrations || [];
+      state.programs = (r.programs || []).map(p => ({ ...p }));
+      state.programsBaseline = JSON.stringify(state.programs);
+      toast(els.regToast, 'Loaded', 'saved');
+      renderRegistrations();
+      renderPrograms();
+    } catch (err) {
+      if (err.code === 'unauthorized') {
+        clearToken();
+        showLogin();
+        els.loginMsg.textContent = '↑ Session expired';
+        return;
+      }
+      toast(els.regToast, 'Error: ' + (err.message || 'load_failed'), 'err');
+    }
+  }
+
+  // ============ REGISTRATIONS RENDER ============
+  function renderRegistrations() {
+    els.regCount.textContent = state.registrations.length;
+    if (!state.registrations.length) {
+      els.regTableWrap.innerHTML = '<div class="reg-empty">No registrations yet.</div>';
+      return;
+    }
+    const headers = state.headers;
+    const filter = state.search.trim().toLowerCase();
+    const filtered = filter
+      ? state.registrations.filter(r => {
+          const blob = (r['First Name'] + ' ' + r['Last Name'] + ' ' + r['Email']).toLowerCase();
+          return blob.includes(filter);
+        })
+      : state.registrations;
+
+    const ADMIN_COLS = new Set(['Admin Notes', 'Payment Received', 'Confirmed Attendee']);
+    const html = `
+      <table class="reg-table">
+        <thead>
+          <tr>${headers.map(h => `<th class="${ADMIN_COLS.has(h) ? 'admin-col' : ''}">${escapeHtml(h)}</th>`).join('')}</tr>
+        </thead>
+        <tbody>
+          ${filtered.map(row => `
+            <tr data-row="${row.rowIndex}">
+              ${headers.map(h => `<td class="${ADMIN_COLS.has(h) ? 'admin-col' : ''}" data-field="${escapeHtml(h)}">${cellRender(row, h)}</td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    els.regTableWrap.innerHTML = html;
+  }
+
+  function cellRender(row, field) {
+    const v = row[field];
+    if (field === 'Confirmed Attendee') {
+      const cur = String(v || 'Pending');
+      return `<div class="conf-pills">
+        ${['Pending', 'Confirmed', 'Cancelled'].map(s => `
+          <button class="conf-pill ${cur === s ? 'on' : ''}" data-v="${s}">${s}</button>
+        `).join('')}
+      </div>`;
+    }
+    if (field === 'Payment Received') {
+      const cur = String(v || '');
+      return `<div class="yesno-pills">
+        ${['YES', 'NO'].map(s => `
+          <button class="yesno-pill ${cur === s ? 'on' : ''}" data-v="${s}">${s}</button>
+        `).join('')}
+      </div>`;
+    }
+    return escapeHtml(v == null ? '' : String(v));
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  // ============ REGISTRATIONS EDIT ============
+  // Click a cell → spawn editor; on blur or Enter → save.
+  els.regTableWrap.addEventListener('click', async (e) => {
+    const pill = e.target.closest('.conf-pill, .yesno-pill');
+    if (pill) {
+      const td = pill.closest('td');
+      const tr = pill.closest('tr');
+      const value = pill.dataset.v;
+      const field = td.dataset.field;
+      const rowIndex = Number(tr.dataset.row);
+      // optimistic UI
+      td.querySelectorAll('.conf-pill, .yesno-pill').forEach(p => p.classList.toggle('on', p.dataset.v === value));
+      saveCell(rowIndex, field, value, td);
+      return;
+    }
+    const td = e.target.closest('td');
+    if (!td || td.querySelector('.editor')) return;
+    if (td.dataset.field === 'Confirmed Attendee' || td.dataset.field === 'Payment Received') return;
+    if (td.dataset.field === 'Submitted At') return; // non-editable timestamp
+    spawnEditor(td);
+  });
+
+  function spawnEditor(td) {
+    const original = td.textContent;
+    const field = td.dataset.field;
+    const isLong = ['Notes', 'Schedule', 'Admin Notes', 'Experience Name'].includes(field);
+    const tag = isLong ? 'textarea' : 'input';
+    const editor = document.createElement(tag);
+    editor.className = 'editor';
+    editor.value = original;
+    if (isLong) editor.rows = Math.max(2, Math.ceil(original.length / 36));
+    td.innerHTML = '';
+    td.appendChild(editor);
+    editor.focus();
+    if (!isLong) editor.select();
+    let done = false;
+    const finish = (commit) => {
+      if (done) return;
+      done = true;
+      const next = editor.value;
+      const tr = td.closest('tr');
+      const rowIndex = Number(tr.dataset.row);
+      td.textContent = next;
+      if (commit && next !== original) {
+        saveCell(rowIndex, field, next, td, original);
+      }
+    };
+    editor.addEventListener('blur', () => finish(true));
+    editor.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (!isLong || e.metaKey || e.ctrlKey)) { e.preventDefault(); editor.blur(); }
+      if (e.key === 'Escape') { e.preventDefault(); td.textContent = original; done = true; }
+    });
+  }
+
+  async function saveCell(rowIndex, field, value, td, expectedOldValue) {
+    td.classList.remove('saved', 'err');
+    td.classList.add('saving');
+    toast(els.regToast, 'Saving…', 'saving');
+    try {
+      const payload = { token: state.token, rowIndex, field, value };
+      if (expectedOldValue !== undefined) payload.expectedOldValue = expectedOldValue;
+      await apiPost('updateRegistration', payload);
+      // update local cache
+      const r = state.registrations.find(x => x.rowIndex === rowIndex);
+      if (r) r[field] = value;
+      td.classList.remove('saving');
+      td.classList.add('saved');
+      toast(els.regToast, 'Saved', 'saved');
+      setTimeout(() => td.classList.remove('saved'), 1200);
+    } catch (err) {
+      td.classList.remove('saving');
+      td.classList.add('err');
+      toast(els.regToast, 'Error: ' + (err.message || 'save_failed'), 'err');
+      if (err.code === 'unauthorized') {
+        clearToken();
+        showLogin();
+      }
+    }
+  }
+
+  els.regSearch.addEventListener('input', (e) => {
+    state.search = e.target.value;
+    renderRegistrations();
+  });
+
+  // ============ PROGRAMS RENDER ============
+  const DAYS = [
+    { num: 15, dow: 'THU' },
+    { num: 16, dow: 'FRI' },
+    { num: 17, dow: 'SAT' },
+    { num: 18, dow: 'SUN' },
+  ];
+
+  function renderPrograms() {
+    const dirty = isProgramsDirty();
+    els.progSave.disabled = !dirty;
+    els.progRevert.disabled = !dirty;
+    els.progRevert.style.visibility = dirty ? 'visible' : 'hidden';
+
+    const grouped = DAYS.map(d => ({
+      day: d,
+      items: state.programs
+        .filter(p => Number(p.day) === d.num)
+        .sort((a, b) => (Number(a.sortOrder) || 0) - (Number(b.sortOrder) || 0))
+    }));
+    // include any programs with unknown day numbers as their own column? skip for now
+
+    els.progGrid.innerHTML = grouped.map(g => `
+      <div class="prog-day-col" data-day="${g.day.num}">
+        <div class="prog-day-head">
+          <div>
+            <span class="num">${g.day.num}</span>
+            <span class="dow">${g.day.dow}</span>
+          </div>
+          <button class="add" data-add-day="${g.day.num}">+ Add</button>
+        </div>
+        ${g.items.length ? g.items.map((p, i) => progCardHtml(p, i, g.items.length)).join('') : '<div class="prog-empty">No sessions</div>'}
+      </div>
+    `).join('');
+  }
+
+  function progCardHtml(p, i, total) {
+    const dirty = state.programsBaseline && !programInBaseline(p);
+    return `
+      <div class="prog-card ${dirty ? 'dirty' : ''}" data-id="${escapeAttr(p.id)}">
+        <div class="prog-field">
+          <label>Name</label>
+          <input data-key="name" value="${escapeAttr(p.name || '')}" />
+        </div>
+        <div class="prog-card-row">
+          <div class="prog-field grow">
+            <label>Kanji</label>
+            <input data-key="jp" value="${escapeAttr(p.jp || '')}" />
+          </div>
+          <div class="prog-field" style="width:90px">
+            <label>Time</label>
+            <input data-key="time" value="${escapeAttr(p.time || '')}" />
+          </div>
+        </div>
+        <div class="prog-field">
+          <label>Description</label>
+          <textarea data-key="desc">${escapeHtml(p.desc || '')}</textarea>
+        </div>
+        <div class="prog-card-row">
+          <div class="prog-field grow">
+            <label>Location</label>
+            <input data-key="location" value="${escapeAttr(p.location || '')}" />
+          </div>
+          <div class="prog-field" style="width:80px">
+            <label>Day</label>
+            <input data-key="day" type="number" min="1" max="31" value="${escapeAttr(p.day || '')}" />
+          </div>
+          <div class="prog-field" style="width:60px">
+            <label>ID</label>
+            <input data-key="id" value="${escapeAttr(p.id || '')}" />
+          </div>
+        </div>
+        <div class="prog-card-controls">
+          <div class="order">
+            <span class="lbl">Order</span>
+            <button class="btn-icon" data-move="up" ${i === 0 ? 'disabled' : ''}>↑</button>
+            <button class="btn-icon" data-move="down" ${i === total - 1 ? 'disabled' : ''}>↓</button>
+          </div>
+          <button class="btn-icon danger" data-delete title="Delete">🗑</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  function programInBaseline(p) {
+    try {
+      const baseline = JSON.parse(state.programsBaseline);
+      const orig = baseline.find(x => x.id === p.id);
+      if (!orig) return false;
+      return ['name','jp','desc','time','location','day','sortOrder'].every(k => String(orig[k] || '') === String(p[k] || ''));
+    } catch (_) { return true; }
+  }
+
+  function isProgramsDirty() {
+    if (!state.programsBaseline) return false;
+    return JSON.stringify(state.programs) !== state.programsBaseline;
+  }
+
+  // ============ PROGRAMS EDIT ============
+  els.progGrid.addEventListener('input', (e) => {
+    const card = e.target.closest('.prog-card');
+    if (!card) return;
+    const id = card.dataset.id;
+    const key = e.target.dataset.key;
+    if (!key) return;
+    const p = state.programs.find(x => String(x.id) === String(id));
+    if (!p) return;
+    let v = e.target.value;
+    if (key === 'day') v = v === '' ? '' : Number(v);
+    p[key] = v;
+    card.classList.toggle('dirty', !programInBaseline(p));
+    els.progSave.disabled = !isProgramsDirty();
+    els.progRevert.style.visibility = isProgramsDirty() ? 'visible' : 'hidden';
+  });
+
+  els.progGrid.addEventListener('click', (e) => {
+    const card = e.target.closest('.prog-card');
+
+    // Delete
+    if (e.target.closest('[data-delete]') && card) {
+      const id = card.dataset.id;
+      if (!confirm('Delete this program card?')) return;
+      state.programs = state.programs.filter(p => String(p.id) !== String(id));
+      renderPrograms();
+      return;
+    }
+
+    // Reorder within day
+    const moveBtn = e.target.closest('[data-move]');
+    if (moveBtn && card) {
+      const dir = moveBtn.dataset.move;
+      const id = card.dataset.id;
+      const target = state.programs.find(p => String(p.id) === String(id));
+      if (!target) return;
+      const day = Number(target.day);
+      const sameDay = state.programs.filter(p => Number(p.day) === day)
+        .sort((a, b) => (Number(a.sortOrder) || 0) - (Number(b.sortOrder) || 0));
+      const idx = sameDay.findIndex(p => String(p.id) === String(id));
+      const swapWith = dir === 'up' ? sameDay[idx - 1] : sameDay[idx + 1];
+      if (!swapWith) return;
+      const a = Number(target.sortOrder) || (idx + 1);
+      const b = Number(swapWith.sortOrder) || (dir === 'up' ? idx : idx + 2);
+      target.sortOrder = b;
+      swapWith.sortOrder = a;
+      renderPrograms();
+      return;
+    }
+
+    // Add
+    const addBtn = e.target.closest('[data-add-day]');
+    if (addBtn) {
+      const day = Number(addBtn.dataset.addDay);
+      const sameDay = state.programs.filter(p => Number(p.day) === day);
+      const maxOrder = sameDay.reduce((m, p) => Math.max(m, Number(p.sortOrder) || 0), 0);
+      const newId = 'p-' + Math.random().toString(36).slice(2, 8);
+      state.programs.push({
+        id: newId, day, name: 'New session', jp: '', desc: '', time: '', location: '', sortOrder: maxOrder + 1
+      });
+      renderPrograms();
+      return;
+    }
+  });
+
+  els.progSave.addEventListener('click', async () => {
+    if (!isProgramsDirty()) return;
+    els.progSave.disabled = true;
+    toast(els.progToast, 'Saving programs…', 'saving');
+    try {
+      const r = await apiPost('updatePrograms', { token: state.token, programs: state.programs });
+      state.programsBaseline = JSON.stringify(state.programs);
+      renderPrograms();
+      toast(els.progToast, `Saved (${r.count})`, 'saved');
+    } catch (err) {
+      toast(els.progToast, 'Error: ' + (err.message || 'save_failed'), 'err');
+      els.progSave.disabled = false;
+      if (err.code === 'unauthorized') {
+        clearToken();
+        showLogin();
+      }
+    }
+  });
+
+  els.progRevert.addEventListener('click', () => {
+    if (!confirm('Revert all unsaved program changes?')) return;
+    try { state.programs = JSON.parse(state.programsBaseline).map(p => ({ ...p })); }
+    catch (_) {}
+    renderPrograms();
+  });
+
+  // ============ INIT ============
+  if (loadToken()) {
+    showAdmin();
+  } else {
+    showLogin();
+  }
+</script>
+</body>
+</html>
