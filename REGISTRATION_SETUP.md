@@ -2,9 +2,9 @@
 
 Five minutes. No backend, no hosting, free forever.
 
-## 1. Make the Sheet
+## 1. Prep the Sheet
 
-- Create a new Google Sheet (call it whatever — "Tramokyo 2026" works).
+- Open the Sheet you want submissions to land in.
 - Put this header row in row 1 so the columns align with what the form sends:
 
 ```
@@ -44,7 +44,7 @@ function doPost(e) {
 
 ## 4. Paste the URL into the site
 
-Open `ui_kits/marketing/index.html` and find:
+Open `index.html` (in the repo root) and find:
 
 ```javascript
 const SHEET_ENDPOINT = '';
