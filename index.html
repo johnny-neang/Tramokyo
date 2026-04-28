@@ -1221,9 +1221,10 @@
     { id: 'stars',  day: 18, name: 'Starlight Walk',  jp: '星空',   desc: 'No flashlights. Fifteen minutes down the old road. Eyes adjust. Mostly you listen.', time: '23:00', location: 'Toyama' },
   ];
 
-  // ===== Paste the Google Apps Script Web-App URL here once you've deployed it =====
-  // (See REGISTRATION_SETUP.md for the 5-minute setup.)
-  const SHEET_ENDPOINT = ''; // e.g. 'https://script.google.com/macros/s/AKfycby.../exec'
+  // Same-origin Vercel API endpoints. No env config needed in the browser —
+  // see BACKEND_SETUP.md for the server-side setup (Postgres + env vars).
+  const API_REGISTER = '/api/register';
+  const API_PROGRAMS = '/api/programs';
 
   const state = { route: 'Home' };
 
@@ -1342,20 +1343,24 @@
     btn.textContent = 'Filing paperwork…';
 
     try {
-      if (SHEET_ENDPOINT) {
-        const res = await fetch(SHEET_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'register', ...data })
-        });
-        const payload = await res.json().catch(() => ({}));
-        if (!payload.ok) throw new Error(payload.error || 'submit_failed');
-      } else {
-        // no endpoint configured yet — simulate network for preview
-        await new Promise(r => setTimeout(r, 700));
-        console.log('[Tramokyo] SHEET_ENDPOINT not set. Payload:', data);
+      const res = await fetch(API_REGISTER, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const payload = await res.json().catch(() => ({}));
+      if (!res.ok || !payload.ok) {
+        // 404 / 405 typically means we're running statically without the API
+        // (e.g. `npx http-server` instead of `vercel dev`). Fall through to a
+        // friendly preview-style confirmation in that case so the demo works.
+        if (res.status === 404 || res.status === 405) {
+          await new Promise(r => setTimeout(r, 500));
+          console.log('[Tramokyo] /api/register not available (static preview). Payload:', data);
+        } else {
+          throw new Error(payload.error || 'submit_failed');
+        }
       }
-      const n = String(Math.floor(Math.random() * 999) + 1).padStart(4, '0');
+      const n = payload && payload.id ? String(payload.id).padStart(4, '0') : String(Math.floor(Math.random() * 999) + 1).padStart(4, '0');
       document.getElementById('regTicket').textContent = 'T-' + n;
       document.getElementById('regFormView').style.display = 'none';
       document.getElementById('regConfirmView').style.display = 'block';
@@ -1368,9 +1373,9 @@
   });
 
   // ===== PROGRAMS HYDRATION =====
-  // Render hard-coded PROGRAM immediately, then async-fetch from Apps Script
-  // and refresh if the response differs from the cached version. localStorage
-  // hydrates on subsequent loads for instant render.
+  // Render hard-coded PROGRAM immediately, hydrate from localStorage cache,
+  // then async-fetch /api/programs and refresh if the server's list differs.
+  // Falls back gracefully if the API isn't reachable (e.g. local static preview).
   const PROGRAMS_CACHE_KEY = 'tramokyo:programs:v1';
   function applyPrograms(programs) {
     if (!Array.isArray(programs) || !programs.length) return;
@@ -1378,16 +1383,14 @@
     programs.forEach(p => PROGRAM.push(p));
     renderProgram();
   }
-  // 1) localStorage cache (instant)
   try {
     const cached = JSON.parse(localStorage.getItem(PROGRAMS_CACHE_KEY) || 'null');
     if (cached && Array.isArray(cached.programs)) applyPrograms(cached.programs);
   } catch (_) {}
-  // 2) network revalidate (best-effort, 5s timeout)
-  if (SHEET_ENDPOINT) {
+  (() => {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 5000);
-    fetch(SHEET_ENDPOINT, { signal: ctrl.signal })
+    fetch(API_PROGRAMS, { signal: ctrl.signal })
       .then(r => r.ok ? r.json() : null)
       .then(data => {
         clearTimeout(timer);
@@ -1397,7 +1400,7 @@
         }
       })
       .catch(() => { clearTimeout(timer); /* keep hard-coded fallback */ });
-  }
+  })();
 
   renderProgram();
 </script>

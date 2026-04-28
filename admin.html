@@ -645,12 +645,15 @@
 
 <script>
   // ============ CONFIG ============
-  const SHEET_ENDPOINT = ''; // Paste your Apps Script Web App URL here, same as in index.html
+  // Same-origin Vercel API. No URLs to edit per environment.
+  const API_LOGIN = '/api/login';
+  const API_REGISTRATIONS = '/api/registrations';
+  const API_PROGRAMS = '/api/programs';
+
   const TOKEN_KEY = 'tramokyo:admin:token';
   const CLIENT_KEY = 'tramokyo:admin:client';
-  const TOKEN_TTL_MS = 12 * 60 * 60 * 1000;
 
-  // Stable per-browser client id used for per-client lockout in Apps Script
+  // Stable per-browser client id used for per-client login lockout on the server.
   function clientId() {
     let id = localStorage.getItem(CLIENT_KEY);
     if (!id) {
@@ -660,16 +663,42 @@
     return id;
   }
 
+  // ============ FIELD METADATA ============
+  // Fixed schema for the registrations table. Order = column order in the admin UI.
+  const REG_FIELDS = [
+    { key: 'submittedAt',       label: 'Submitted',   type: 'datetime', readOnly: true },
+    { key: 'firstName',         label: 'First Name',  type: 'text' },
+    { key: 'lastName',          label: 'Last Name',   type: 'text' },
+    { key: 'pronouns',          label: 'Pronouns',    type: 'text' },
+    { key: 'email',             label: 'Email',       type: 'text' },
+    { key: 'phone',             label: 'Phone',       type: 'text' },
+    { key: 'experienceName',    label: 'Experience',  type: 'long' },
+    { key: 'schedule',          label: 'Schedule',    type: 'long' },
+    { key: 'buildSign',         label: 'Build Sign',  type: 'bool' },
+    { key: 'feeAck',            label: 'Fee Ack',     type: 'bool' },
+    { key: 'pets',              label: 'Pets',        type: 'text' },
+    { key: 'containerRoom',     label: 'Container',   type: 'text' },
+    { key: 'sandman',           label: 'Sandman',     type: 'text' },
+    { key: 'ranger',            label: 'Ranger',      type: 'text' },
+    { key: 'artGrant',          label: 'Art Grant',   type: 'text' },
+    { key: 'sponsor',           label: 'Sponsor',     type: 'text' },
+    { key: 'notes',             label: 'Notes',       type: 'long' },
+    { key: 'liabilityAck',      label: 'Liability',   type: 'bool' },
+    // admin-only
+    { key: 'adminNotes',        label: 'Admin Notes', type: 'long', admin: true },
+    { key: 'paymentReceived',   label: 'Payment',     type: 'enum', admin: true, options: ['', 'YES', 'NO'] },
+    { key: 'confirmedAttendee', label: 'Confirmed',   type: 'enum', admin: true, options: ['Pending', 'Confirmed', 'Cancelled'] }
+  ];
+
   // ============ STATE ============
   const state = {
     token: null,
     expiresAt: 0,
     tab: 'registrations',
-    headers: [],
     registrations: [],
     programs: [],
-    programsBaseline: [],
-    search: '',
+    programsBaseline: '[]',
+    search: ''
   };
 
   // ============ DOM ============
@@ -699,22 +728,29 @@
   };
 
   // ============ API ============
-  async function apiPost(action, payload) {
-    if (!SHEET_ENDPOINT) {
-      throw new Error('SHEET_ENDPOINT not configured. Open admin.html and paste your Apps Script Web App URL into the SHEET_ENDPOINT constant.');
+  async function apiFetch(url, opts = {}) {
+    const headers = { ...(opts.headers || {}) };
+    if (state.token) headers['Authorization'] = 'Bearer ' + state.token;
+    let body = opts.body;
+    if (body && typeof body === 'object' && !(body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(body);
     }
-    const body = { action, ...payload };
-    const res = await fetch(SHEET_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(body)
-    });
-    let data;
-    try { data = await res.json(); }
-    catch (_) { throw new Error('bad_response'); }
-    if (!data.ok) {
-      const e = new Error(data.error || 'request_failed');
-      e.code = data.error;
+    let res;
+    try {
+      res = await fetch(url, { ...opts, headers, body });
+    } catch (_) {
+      const e = new Error('network_error');
+      e.code = 'network_error';
+      throw e;
+    }
+    let data = {};
+    try { data = await res.json(); } catch (_) {}
+    if (!res.ok || !data.ok) {
+      const code = data.error || 'request_failed';
+      const e = new Error(code);
+      e.code = code;
+      e.status = res.status;
       throw e;
     }
     return data;
@@ -779,7 +815,10 @@
     els.loginBtn.disabled = true;
     els.loginBtn.textContent = 'Checking…';
     try {
-      const r = await apiPost('login', { password, clientId: clientId() });
+      const r = await apiFetch(API_LOGIN, {
+        method: 'POST',
+        body: { password, clientId: clientId() }
+      });
       saveToken(r.token, r.expiresAt);
       els.loginPassword.value = '';
       els.loginMsg.textContent = '';
@@ -789,7 +828,8 @@
       const msg =
         code === 'invalid' ? '↑ Wrong password' :
         code === 'locked' ? '↑ Locked — wait 60s' :
-        code === 'not_configured' ? '↑ ADMIN_PASSWORD not set in Apps Script' :
+        code === 'network_error' ? '↑ API unreachable (deploy first?)' :
+        code === 'request_failed' ? '↑ Login failed' :
         ('↑ ' + code);
       els.loginMsg.textContent = msg;
     } finally {
@@ -800,10 +840,9 @@
 
   els.logoutBtn.addEventListener('click', () => {
     clearToken();
-    state.headers = [];
     state.registrations = [];
     state.programs = [];
-    state.programsBaseline = [];
+    state.programsBaseline = '[]';
     showLogin();
   });
 
@@ -819,16 +858,18 @@
   async function refresh() {
     try {
       toast(els.regToast, 'Loading…', 'saving');
-      const r = await apiPost('list', { token: state.token });
-      state.headers = r.headers || [];
-      state.registrations = r.registrations || [];
-      state.programs = (r.programs || []).map(p => ({ ...p }));
+      const [regs, progs] = await Promise.all([
+        apiFetch(API_REGISTRATIONS),
+        apiFetch(API_PROGRAMS)
+      ]);
+      state.registrations = regs.registrations || [];
+      state.programs = (progs.programs || []).map(p => ({ ...p }));
       state.programsBaseline = JSON.stringify(state.programs);
       toast(els.regToast, 'Loaded', 'saved');
       renderRegistrations();
       renderPrograms();
     } catch (err) {
-      if (err.code === 'unauthorized') {
+      if (err.status === 401 || err.code === 'unauthorized') {
         clearToken();
         showLogin();
         els.loginMsg.textContent = '↑ Session expired';
@@ -845,25 +886,23 @@
       els.regTableWrap.innerHTML = '<div class="reg-empty">No registrations yet.</div>';
       return;
     }
-    const headers = state.headers;
     const filter = state.search.trim().toLowerCase();
     const filtered = filter
       ? state.registrations.filter(r => {
-          const blob = (r['First Name'] + ' ' + r['Last Name'] + ' ' + r['Email']).toLowerCase();
+          const blob = ((r.firstName || '') + ' ' + (r.lastName || '') + ' ' + (r.email || '')).toLowerCase();
           return blob.includes(filter);
         })
       : state.registrations;
 
-    const ADMIN_COLS = new Set(['Admin Notes', 'Payment Received', 'Confirmed Attendee']);
     const html = `
       <table class="reg-table">
         <thead>
-          <tr>${headers.map(h => `<th class="${ADMIN_COLS.has(h) ? 'admin-col' : ''}">${escapeHtml(h)}</th>`).join('')}</tr>
+          <tr>${REG_FIELDS.map(f => `<th class="${f.admin ? 'admin-col' : ''}">${escapeHtml(f.label)}</th>`).join('')}</tr>
         </thead>
         <tbody>
           ${filtered.map(row => `
-            <tr data-row="${row.rowIndex}">
-              ${headers.map(h => `<td class="${ADMIN_COLS.has(h) ? 'admin-col' : ''}" data-field="${escapeHtml(h)}">${cellRender(row, h)}</td>`).join('')}
+            <tr data-id="${row.id}">
+              ${REG_FIELDS.map(f => `<td class="${f.admin ? 'admin-col' : ''}" data-key="${f.key}">${cellRender(row, f)}</td>`).join('')}
             </tr>
           `).join('')}
         </tbody>
@@ -872,21 +911,39 @@
     els.regTableWrap.innerHTML = html;
   }
 
+  function fmtDateTime(v) {
+    if (!v) return '';
+    try {
+      const d = new Date(v);
+      if (isNaN(d.getTime())) return String(v);
+      return d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    } catch (_) { return String(v); }
+  }
+
   function cellRender(row, field) {
-    const v = row[field];
-    if (field === 'Confirmed Attendee') {
+    const v = row[field.key];
+    if (field.type === 'datetime') return escapeHtml(fmtDateTime(v));
+    if (field.key === 'confirmedAttendee') {
       const cur = String(v || 'Pending');
       return `<div class="conf-pills">
-        ${['Pending', 'Confirmed', 'Cancelled'].map(s => `
-          <button class="conf-pill ${cur === s ? 'on' : ''}" data-v="${s}">${s}</button>
+        ${field.options.map(s => `
+          <button class="conf-pill ${cur === s ? 'on' : ''}" data-v="${escapeAttr(s)}">${escapeHtml(s)}</button>
         `).join('')}
       </div>`;
     }
-    if (field === 'Payment Received') {
+    if (field.key === 'paymentReceived') {
       const cur = String(v || '');
       return `<div class="yesno-pills">
         ${['YES', 'NO'].map(s => `
           <button class="yesno-pill ${cur === s ? 'on' : ''}" data-v="${s}">${s}</button>
+        `).join('')}
+      </div>`;
+    }
+    if (field.type === 'bool') {
+      const on = (v === true || v === 'YES' || v === 'true');
+      return `<div class="yesno-pills">
+        ${['YES', 'NO'].map(s => `
+          <button class="yesno-pill ${(on ? 'YES' : 'NO') === s ? 'on' : ''}" data-v="${s}">${s}</button>
         `).join('')}
       </div>`;
     }
@@ -898,31 +955,35 @@
   }
 
   // ============ REGISTRATIONS EDIT ============
-  // Click a cell → spawn editor; on blur or Enter → save.
-  els.regTableWrap.addEventListener('click', async (e) => {
+  function fieldByKey(key) { return REG_FIELDS.find(f => f.key === key); }
+
+  els.regTableWrap.addEventListener('click', (e) => {
     const pill = e.target.closest('.conf-pill, .yesno-pill');
     if (pill) {
       const td = pill.closest('td');
       const tr = pill.closest('tr');
       const value = pill.dataset.v;
-      const field = td.dataset.field;
-      const rowIndex = Number(tr.dataset.row);
-      // optimistic UI
+      const key = td.dataset.key;
+      const id = Number(tr.dataset.id);
+      const field = fieldByKey(key);
       td.querySelectorAll('.conf-pill, .yesno-pill').forEach(p => p.classList.toggle('on', p.dataset.v === value));
-      saveCell(rowIndex, field, value, td);
+      let outValue = value;
+      if (field.type === 'bool') outValue = value === 'YES';
+      saveCell(id, key, outValue, td);
       return;
     }
     const td = e.target.closest('td');
     if (!td || td.querySelector('.editor')) return;
-    if (td.dataset.field === 'Confirmed Attendee' || td.dataset.field === 'Payment Received') return;
-    if (td.dataset.field === 'Submitted At') return; // non-editable timestamp
+    const field = fieldByKey(td.dataset.key);
+    if (!field || field.readOnly) return;
+    if (field.type === 'enum' || field.type === 'bool' || field.type === 'datetime') return;
     spawnEditor(td);
   });
 
   function spawnEditor(td) {
     const original = td.textContent;
-    const field = td.dataset.field;
-    const isLong = ['Notes', 'Schedule', 'Admin Notes', 'Experience Name'].includes(field);
+    const field = fieldByKey(td.dataset.key);
+    const isLong = field.type === 'long';
     const tag = isLong ? 'textarea' : 'input';
     const editor = document.createElement(tag);
     editor.className = 'editor';
@@ -938,30 +999,30 @@
       done = true;
       const next = editor.value;
       const tr = td.closest('tr');
-      const rowIndex = Number(tr.dataset.row);
+      const id = Number(tr.dataset.id);
       td.textContent = next;
       if (commit && next !== original) {
-        saveCell(rowIndex, field, next, td, original);
+        saveCell(id, field.key, next, td);
       }
     };
     editor.addEventListener('blur', () => finish(true));
-    editor.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && (!isLong || e.metaKey || e.ctrlKey)) { e.preventDefault(); editor.blur(); }
-      if (e.key === 'Escape') { e.preventDefault(); td.textContent = original; done = true; }
+    editor.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' && (!isLong || ev.metaKey || ev.ctrlKey)) { ev.preventDefault(); editor.blur(); }
+      if (ev.key === 'Escape') { ev.preventDefault(); td.textContent = original; done = true; }
     });
   }
 
-  async function saveCell(rowIndex, field, value, td, expectedOldValue) {
+  async function saveCell(id, field, value, td) {
     td.classList.remove('saved', 'err');
     td.classList.add('saving');
     toast(els.regToast, 'Saving…', 'saving');
     try {
-      const payload = { token: state.token, rowIndex, field, value };
-      if (expectedOldValue !== undefined) payload.expectedOldValue = expectedOldValue;
-      await apiPost('updateRegistration', payload);
-      // update local cache
-      const r = state.registrations.find(x => x.rowIndex === rowIndex);
-      if (r) r[field] = value;
+      const r = await apiFetch(`${API_REGISTRATIONS}/${id}`, {
+        method: 'PATCH',
+        body: { field, value }
+      });
+      const reg = state.registrations.find(x => x.id === id);
+      if (reg) reg[field] = r.value;
       td.classList.remove('saving');
       td.classList.add('saved');
       toast(els.regToast, 'Saved', 'saved');
@@ -970,7 +1031,7 @@
       td.classList.remove('saving');
       td.classList.add('err');
       toast(els.regToast, 'Error: ' + (err.message || 'save_failed'), 'err');
-      if (err.code === 'unauthorized') {
+      if (err.status === 401 || err.code === 'unauthorized') {
         clearToken();
         showLogin();
       }
@@ -1152,14 +1213,17 @@
     els.progSave.disabled = true;
     toast(els.progToast, 'Saving programs…', 'saving');
     try {
-      const r = await apiPost('updatePrograms', { token: state.token, programs: state.programs });
+      const r = await apiFetch(API_PROGRAMS, {
+        method: 'PUT',
+        body: { programs: state.programs }
+      });
       state.programsBaseline = JSON.stringify(state.programs);
       renderPrograms();
       toast(els.progToast, `Saved (${r.count})`, 'saved');
     } catch (err) {
       toast(els.progToast, 'Error: ' + (err.message || 'save_failed'), 'err');
       els.progSave.disabled = false;
-      if (err.code === 'unauthorized') {
+      if (err.status === 401 || err.code === 'unauthorized') {
         clearToken();
         showLogin();
       }
