@@ -807,6 +807,7 @@
       <li data-route="Program"><a>Program</a></li>
       <li data-route="Our Story"><a>Our Story</a></li>
       <li data-route="Where"><a>Where</a></li>
+      <li><a href="survey.html">Feedback</a></li>
     </ul>
     <button class="oy-btn" data-route="Register">Register</button>
   </nav>
@@ -1286,7 +1287,7 @@
     el.addEventListener('click', () => navigate(el.dataset.route));
   });
   document.querySelectorAll('.oy-nav-links li').forEach(li => {
-    li.addEventListener('click', () => navigate(li.dataset.route));
+    if (li.dataset.route) li.addEventListener('click', () => navigate(li.dataset.route));
   });
 
   // ===== REGISTRATION FORM =====

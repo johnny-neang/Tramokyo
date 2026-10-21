@@ -112,6 +112,13 @@ If you want to run truly offline (without the API), the public site falls back t
 | `JWT_SECRET` | Vercel env vars | All sessions invalidated. Everyone re-logs-in. Redeploy required. |
 | `SUPABASE_SERVICE_ROLE_KEY` | Rotate in Supabase Dashboard → API, then update in Vercel env vars | All API routes lose DB access until updated; redeploy after both. |
 
+## Feedback survey
+
+- Public page: `/survey.html` (linked as **Feedback** in the site nav).
+- Questions live in `assets/survey-schema.js`. The page, `/api/survey` and the admin **Survey** tab all read from it, so edit questions there only.
+- Responses go to `public.survey_responses` (one JSON `answers` object per row). Create the table once by running `db/migrations/20261021120000_add_survey_responses.sql` in the Supabase SQL editor.
+- Admin → **Survey** shows tallies, every response, and a CSV export.
+
 ## Adding a new registration field
 
 1. **Supabase**: open SQL editor, run `ALTER TABLE registrations ADD COLUMN ...;`.

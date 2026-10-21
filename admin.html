@@ -565,6 +565,42 @@
     border-radius: 2px;
   }
 
+  /* ============ SURVEY ============ */
+  .sv-views { display: inline-flex; border: 1.5px solid var(--oy-ink); border-radius: 2px; }
+  .sv-views button {
+    background: transparent; border: none; padding: 7px 14px; cursor: pointer;
+    font-family: var(--oy-font-mono); font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 700; color: var(--oy-ink);
+  }
+  .sv-views button.on { background: var(--oy-ink); color: var(--oy-cream); }
+  .sv-summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+  .sv-card { border: 1.5px solid var(--oy-ink); background: var(--oy-cream-warm); padding: 16px 18px; }
+  .sv-card h3 { font-family: var(--oy-font-body); font-size: 14px; font-weight: 700; line-height: 1.35; margin-bottom: 12px; }
+  .sv-card h3 .n { font-family: var(--oy-font-mono); color: var(--oy-red); font-size: 10px; letter-spacing: 1.5px; margin-right: 8px; }
+  .sv-card h4 { font-family: var(--oy-font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--oy-mute); margin: 12px 0 6px; }
+  .sv-bar { display: grid; grid-template-columns: minmax(0, 1fr) 90px 34px; gap: 10px; align-items: center; font-size: 13px; padding: 3px 0; }
+  .sv-bar .track { height: 8px; background: var(--oy-cream-soft); border-radius: 1px; overflow: hidden; }
+  .sv-bar .fill { height: 100%; background: var(--oy-red); }
+  .sv-bar .num { font-family: var(--oy-font-mono); font-size: 11px; text-align: right; color: var(--oy-ink-soft); }
+  .sv-card.wide { grid-column: 1 / -1; }
+  .sv-quote { font-size: 13px; line-height: 1.5; padding: 8px 0; border-top: 1px dashed var(--oy-hairline); white-space: pre-wrap; }
+  .sv-quote:first-of-type { border-top: none; }
+  .sv-quote .who { display: block; font-family: var(--oy-font-mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--oy-mute); margin-top: 3px; }
+  .sv-list { display: grid; gap: 18px; }
+  .sv-resp { border: 1.5px solid var(--oy-ink); background: var(--oy-cream-warm); }
+  .sv-resp > summary {
+    list-style: none; cursor: pointer; padding: 12px 16px;
+    display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap;
+    font-family: var(--oy-font-mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .sv-resp > summary::-webkit-details-marker { display: none; }
+  .sv-resp > summary .id { color: var(--oy-red); font-weight: 700; }
+  .sv-resp > summary .who { color: var(--oy-ink); font-weight: 700; }
+  .sv-resp > summary .meta { color: var(--oy-mute); }
+  .sv-resp dl { padding: 4px 16px 16px; border-top: 1.5px dashed var(--oy-hairline); }
+  .sv-resp dt { font-size: 12px; font-weight: 700; color: var(--oy-mute); margin-top: 12px; }
+  .sv-resp dd { font-size: 14px; line-height: 1.5; white-space: pre-wrap; }
+
   @media (max-width: 1100px) {
     .prog-day-grid { grid-template-columns: repeat(2, 1fr); }
   }
@@ -610,6 +646,7 @@
     <nav class="adm-tabs">
       <button data-tab="registrations" class="on">Registrations</button>
       <button data-tab="programs">Programs</button>
+      <button data-tab="survey">Survey</button>
     </nav>
     <button class="adm-logout" id="logoutBtn">Log out</button>
   </header>
@@ -639,6 +676,22 @@
         <button class="btn-primary" id="progSave">Save programs</button>
       </div>
       <div class="prog-day-grid" id="progGrid"></div>
+    </section>
+
+    <!-- SURVEY PANE -->
+    <section id="svPane" hidden>
+      <div class="adm-pane-head">
+        <h2>Feedback Survey <span class="count" id="svCount">0</span></h2>
+        <div class="spacer"></div>
+        <span class="adm-toast" id="svToast" hidden>Idle</span>
+        <a class="btn-ghost" href="survey.html" target="_blank" rel="noopener" style="text-decoration:none">↗ Open survey</a>
+        <div class="sv-views" role="tablist">
+          <button data-svview="summary" class="on">Summary</button>
+          <button data-svview="responses">Responses</button>
+        </div>
+        <button class="btn-primary" id="svExport">Export CSV</button>
+      </div>
+      <div id="svBody"><div class="reg-empty">Loading…</div></div>
     </section>
 
   </main>
@@ -717,6 +770,11 @@
     tabs: $$('.adm-tabs button'),
     regPane: $('#regPane'),
     progPane: $('#progPane'),
+    svPane: $('#svPane'),
+    svBody: $('#svBody'),
+    svCount: $('#svCount'),
+    svToast: $('#svToast'),
+    svExport: $('#svExport'),
     regCount: $('#regCount'),
     regSearch: $('#regSearch'),
     regToast: $('#regToast'),
@@ -844,6 +902,8 @@
     state.registrations = [];
     state.programs = [];
     state.programsBaseline = '[]';
+    survey.loaded = false;
+    survey.responses = [];
     showLogin();
   });
 
@@ -853,7 +913,142 @@
     els.tabs.forEach(x => x.classList.toggle('on', x === b));
     els.regPane.hidden = state.tab !== 'registrations';
     els.progPane.hidden = state.tab !== 'programs';
+    els.svPane.hidden = state.tab !== 'survey';
+    if (state.tab === 'survey' && !survey.loaded) loadSurvey();
   }));
+
+  // ============ SURVEY ============
+  // Schema is shared with survey.html and /api/survey — see assets/survey-schema.js.
+  const API_SURVEY = '/api/survey';
+  const survey = { loaded: false, responses: [], schema: null, view: 'summary' };
+
+  async function loadSurvey() {
+    toast(els.svToast, 'Loading…', 'saving');
+    try {
+      const [schema, r] = await Promise.all([
+        survey.schema || import('./assets/survey-schema.js'),
+        apiFetch(API_SURVEY)
+      ]);
+      survey.schema = schema;
+      survey.responses = r.responses || [];
+      survey.loaded = true;
+      toast(els.svToast, 'Loaded', 'saved');
+      renderSurvey();
+    } catch (err) {
+      if (err.status === 401 || err.code === 'unauthorized') { clearToken(); showLogin(); return; }
+      toast(els.svToast, 'Error: ' + (err.message || 'load_failed'), 'err');
+      els.svBody.innerHTML = '<div class="reg-empty">Couldn\u2019t load responses. If this is a fresh deploy, run db/migrations/20261021120000_add_survey_responses.sql in Supabase.</div>';
+    }
+  }
+
+  $$('[data-svview]').forEach(b => b.addEventListener('click', () => {
+    survey.view = b.dataset.svview;
+    $$('[data-svview]').forEach(x => x.classList.toggle('on', x === b));
+    if (survey.loaded) renderSurvey();
+  }));
+
+  function svWho(a) { return a.name ? a.name : 'Anonymous'; }
+
+  function svBars(options, counts, total) {
+    return options.map(o => {
+      const c = counts[o] || 0;
+      const pct = total ? Math.round((c / total) * 100) : 0;
+      return `<div class="sv-bar"><span>${escapeHtml(o)}</span>
+        <span class="track"><span class="fill" style="display:block;width:${pct}%"></span></span>
+        <span class="num">${c}</span></div>`;
+    }).join('');
+  }
+
+  function renderSurvey() {
+    const { SURVEY_QUESTIONS } = survey.schema;
+    const list = survey.responses;
+    els.svCount.textContent = list.length;
+    if (!list.length) {
+      els.svBody.innerHTML = '<div class="reg-empty">No responses yet. Share survey.html with attendees.</div>';
+      return;
+    }
+
+    if (survey.view === 'responses') {
+      els.svBody.innerHTML = '<div class="sv-list">' + list.map(r => {
+        const a = r.answers || {};
+        const rows = SURVEY_QUESTIONS.map(q => {
+          let v = a[q.id];
+          if (q.type === 'grid') v = v ? q.rows.map(row => `${row.label}: ${v[row.id] || '—'}`).join('\n') : '';
+          else if (Array.isArray(v)) v = v.join(', ');
+          if (q.other && a[q.id + 'Other']) v = (v ? v + ' — ' : '') + a[q.id + 'Other'];
+          if (!v) return '';
+          return `<dt>Q${q.n}. ${escapeHtml(q.label)}</dt><dd>${escapeHtml(v)}</dd>`;
+        }).join('');
+        return `<details class="sv-resp">
+          <summary><span class="id">F-${String(r.id).padStart(4, '0')}</span>
+            <span class="who">${escapeHtml(svWho(a))}</span>
+            <span class="meta">${escapeHtml(fmtDateTime(r.submittedAt))}</span>
+            <span class="meta">${escapeHtml(a.overall || '')}</span></summary>
+          <dl>${rows}</dl></details>`;
+      }).join('') + '</div>';
+      return;
+    }
+
+    // Summary: tallies for choice questions, quotes for written ones.
+    const cards = SURVEY_QUESTIONS.map(q => {
+      const head = `<h3><span class="n">Q${String(q.n).padStart(2, '0')}</span>${escapeHtml(q.label)}</h3>`;
+      if (q.type === 'single' || q.type === 'multi') {
+        const counts = {}; let answered = 0;
+        for (const r of list) {
+          const v = r.answers[q.id];
+          if (v == null) continue;
+          answered++;
+          (Array.isArray(v) ? v : [v]).forEach(x => { counts[x] = (counts[x] || 0) + 1; });
+        }
+        const others = q.other ? list.filter(r => r.answers[q.id + 'Other']) : [];
+        return `<div class="sv-card">${head}${svBars(q.options, counts, answered)}
+          <h4>${answered} answered${q.type === 'multi' ? ' · pick any' : ''}</h4>
+          ${others.map(r => `<div class="sv-quote">${escapeHtml(q.other)}: ${escapeHtml(r.answers[q.id + 'Other'])}</div>`).join('')}</div>`;
+      }
+      if (q.type === 'grid') {
+        const rows = q.rows.map(row => {
+          const counts = {}; let answered = 0;
+          for (const r of list) {
+            const v = (r.answers[q.id] || {})[row.id];
+            if (v) { answered++; counts[v] = (counts[v] || 0) + 1; }
+          }
+          return `<h4>${escapeHtml(row.label)}</h4>${svBars(q.columns, counts, answered)}`;
+        }).join('');
+        return `<div class="sv-card wide">${head}${rows}</div>`;
+      }
+      const quotes = list.filter(r => r.answers[q.id]);
+      return `<div class="sv-card${quotes.length ? ' wide' : ''}">${head}
+        <h4>${quotes.length} written</h4>
+        ${quotes.map(r => `<div class="sv-quote">${escapeHtml(r.answers[q.id])}<span class="who">${escapeHtml(svWho(r.answers))} · F-${String(r.id).padStart(4, '0')}</span></div>`).join('')}</div>`;
+    }).join('');
+    els.svBody.innerHTML = `<div class="sv-summary">${cards}</div>`;
+  }
+
+  function csvCell(v) {
+    let s = v == null ? '' : String(v);
+    // Neutralise spreadsheet formula injection from free-text answers.
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  els.svExport.addEventListener('click', async () => {
+    if (!survey.loaded) await loadSurvey();
+    if (!survey.loaded) return;
+    const cols = survey.schema.surveyColumns();
+    const lines = [['Response', 'Submitted', ...cols.map(c => c.label)].map(csvCell).join(',')];
+    for (const r of survey.responses) {
+      lines.push([`F-${String(r.id).padStart(4, '0')}`, r.submittedAt, ...cols.map(c => c.get(r.answers || {}))].map(csvCell).join(','));
+    }
+    const blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `tramokyo-2026-survey-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
 
   // ============ REFRESH (load from server) ============
   async function refresh() {
