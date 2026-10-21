@@ -5,5 +5,17 @@
       "memory": 256,
       "maxDuration": 10
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "^/$",
+      "has": [{ "type": "host", "value": "tramokyo.johnnyneang.com" }],
+      "dest": "/survey-site/index.html"
+    },
+    {
+      "src": "^/(.*)$",
+      "has": [{ "type": "host", "value": "tramokyo.johnnyneang.com" }],
+      "dest": "/survey-site/$1"
+    }
+  ]
 }
