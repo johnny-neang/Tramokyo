@@ -564,11 +564,7 @@
       </svg>
       <h2 class="big-h">Thank you<span class="red">for sharing.</span></h2>
       <p class="sub">Thank you for sharing your thoughts! We hope to see you in 2027.</p>
-      <div class="ticket">Report filed<span class="n">${esc(id ? 'F-' + id.slice(-6) : 'F-000000')}</span></div>
-      <div style="margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-        ${MAIN_SITE_URL ? `<a class="btn-ghost" href="${esc(MAIN_SITE_URL)}">Back to Tramokyo</a>` : ''}
-        <button class="btn-link" id="anotherBtn" type="button">Submit another response</button>
-      </div>
+      <div class="ticket">Report filed<span class="n">${esc(id ? 'F-' + id.replace(/-/g, '').slice(-6) : 'F-000000')}</span></div>
     </div>`;
   }
 
@@ -670,12 +666,7 @@
       setTimeout(() => $('#sendBtn', card)?.focus({ preventScroll: true }), 350);
       return;
     }
-    if (key === 'done') {
-      $('#anotherBtn', card).addEventListener('click', () => {
-        store.del(DONE_KEY); answers = {}; responseId = null; store.del(DRAFT_KEY); show('intro', 'prev');
-      });
-      return;
-    }
+    if (key === 'done') return;
 
     const { q, row } = parseKey(key);
     const field = $('#field', card);
