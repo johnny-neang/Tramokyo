@@ -5,3 +5,7 @@ export const SUBMIT_URL = 'https://script.google.com/a/macros/uppercloud.com/s/A
 
 // Where the logo links to.
 export const MAIN_SITE_URL = 'https://tramokyo.vercel.app';
+
+// Shared Google Photos album, linked from the thank-you screen.
+// Set to '' to hide that section.
+export const PHOTO_ALBUM_URL = 'https://photos.app.goo.gl/8gWpv26gCsv7nc1y8';

@@ -315,6 +315,20 @@
   }
   .ticket .n { font-family: var(--oy-font-display); font-size: 22px; color: var(--oy-red); letter-spacing: 1px; margin-left: 8px; }
 
+  /* Shared photo album, on the thank-you screen */
+  .album {
+    position: relative; margin: 40px auto 0; max-width: 480px; padding: 26px 24px 30px;
+    border: 1.5px solid var(--oy-ink); background: var(--oy-cream-warm); text-align: center;
+    animation: optIn .6s var(--oy-ease) .5s both;
+  }
+  .album .kana-tag {
+    position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+    background: var(--oy-cream); padding: 0 12px;
+    font-family: var(--oy-font-jp); font-weight: 900; color: var(--oy-red); letter-spacing: 4px; font-size: 14px;
+  }
+  .album h3 { font-family: var(--oy-font-display); font-size: clamp(22px, 3vw, 28px); text-transform: uppercase; letter-spacing: -.3px; line-height: 1.05; }
+  .album p { font-size: 16px; line-height: 1.55; color: var(--oy-ink-soft); margin: 10px auto 24px; max-width: 380px; }
+
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* ============ Responsive ============ */
@@ -377,7 +391,7 @@
 
 <script type="module">
   import { SURVEY_SECTIONS, SURVEY_QUESTIONS, isVisible, validateSurvey, surveyColumns, SURVEY_VERSION, MAX_TEXT } from './survey-schema.js';
-  import { SUBMIT_URL, MAIN_SITE_URL } from './config.js';
+  import { SUBMIT_URL, MAIN_SITE_URL, PHOTO_ALBUM_URL } from './config.js';
 
   const DRAFT_KEY = 'tramokyo-survey:draft:v1';
   const DONE_KEY = 'tramokyo-survey:done:v1';
@@ -565,6 +579,12 @@
       <h2 class="big-h">Thank you<span class="red">for sharing.</span></h2>
       <p class="sub">Thank you for sharing your thoughts! We hope to see you in 2027.</p>
       <div class="ticket">Report filed<span class="n">${esc(id ? 'F-' + id.replace(/-/g, '').slice(-6) : 'F-000000')}</span></div>
+      ${PHOTO_ALBUM_URL ? `<div class="album">
+        <span class="kana-tag" lang="ja">写真</span>
+        <h3>Share your photos</h3>
+        <p>What a weekend with all of you. We started a shared album so everyone can have the memories. Add your photos and videos, and grab everyone else's.</p>
+        <a class="btn" href="${esc(PHOTO_ALBUM_URL)}" target="_blank" rel="noopener">Open the shared album →</a>
+      </div>` : ''}
     </div>`;
   }
 
