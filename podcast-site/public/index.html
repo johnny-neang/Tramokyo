@@ -330,17 +330,18 @@
     background: var(--oy-cream-warm);
     border: 1.5px solid var(--oy-ink);
   }
-  .ep { position: relative; border-bottom: 1px solid var(--oy-hairline); }
+  .ep { position: relative; display: flex; align-items: center; border-bottom: 1px solid var(--oy-hairline); }
   .ep:last-child { border-bottom: none; }
   .ep.is-current { background: var(--oy-cream); }
   .ep-btn {
+    flex: 1;
+    min-width: 0;
     display: grid;
     grid-template-columns: 44px minmax(0, 1fr) auto;
     align-items: center;
     gap: 16px;
-    width: 100%;
     min-height: 72px;
-    padding: 12px 18px 14px;
+    padding: 12px 14px 14px 18px;
     background: transparent;
     border: none;
     font-family: var(--oy-font-body);
@@ -383,6 +384,21 @@
   }
   .ep-state:empty { display: none; }
   .ep-dur { font-family: var(--oy-font-mono); font-size: 12px; color: var(--oy-mute); font-variant-numeric: tabular-nums; }
+  .ep-dur-sm { display: none; font-weight: 500; letter-spacing: 1px; }   /* phones: duration moves up beside the code */
+  /* Download: a link beside the row's play button (a link can't sit inside a button). */
+  .ep-dl {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px; height: 40px;
+    margin-right: 16px;
+    border: 1.5px solid var(--oy-hairline);
+    border-radius: var(--oy-radius-pill);
+    color: var(--oy-ink-soft);
+    transition: color .2s var(--oy-ease), border-color .2s var(--oy-ease);
+  }
+  .ep-dl svg { width: 18px; height: 18px; }
+  .ep-dl:hover { color: var(--oy-red); border-color: var(--oy-red); }
   .ep-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; pointer-events: none; }
   .ep-bar span { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--oy-red); }
   .eq { display: none; align-items: flex-end; gap: 2px; height: 11px; }
@@ -623,7 +639,10 @@
     .stamp { font-size: 9px; letter-spacing: 1px; }
     .pod { padding: 28px 0 0; }
     .pod-main { margin-top: 24px; }
-    .ep-btn { gap: 12px; padding: 12px 14px 14px; }
+    .ep-btn { grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 12px 10px 14px 14px; }
+    .ep-dur { display: none; }
+    .ep-dur-sm { display: inline; }
+    .ep-dl { width: 38px; height: 38px; margin-right: 12px; }
     .ep-title { font-size: 16px; }
     .oy-dock { padding: 12px; gap: 10px 4px; }
     .dk-text { column-gap: 8px; }
@@ -771,6 +790,7 @@
     pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>',
     prev:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg>',
     next:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg>',
+    download: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   };
   const WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
   const word = (n) => WORDS[n] || String(n);
@@ -910,18 +930,29 @@
     $('#dkEdition').textContent = S.edition;
   }
 
+  // Blob storage sends a public file as a download (not inline) when ?download=1 is added.
+  function downloadUrl(src) {
+    try { const u = new URL(src, location.href); u.searchParams.set('download', '1'); return u.href; }
+    catch (_) { return src; }
+  }
+
   function rowHTML(e) {
+    const mb = e.bytes ? Math.max(1, Math.round(e.bytes / 1e6)) : 0;
+    const size = mb ? `${mb} MB` : '';
     return `
       <li class="ep" data-id="${esc(e.id)}">
         <button class="ep-btn" type="button" data-play="${esc(e.id)}">
           <span class="ep-icon" aria-hidden="true"></span>
           <span class="ep-text">
-            <span class="ep-code">${esc(e.code)}<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></span>
+            <span class="ep-code">${esc(e.code)}<span class="ep-dur-sm">${clock(e.duration)}</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></span>
             <span class="ep-title">${esc(e.title)}</span>
             <span class="ep-state"></span>
           </span>
           <span class="ep-dur">${clock(e.duration)}</span>
         </button>
+        <a class="ep-dl" href="${esc(downloadUrl(e.src))}" download
+           aria-label="${esc(`Download ${e.code}, ${e.title}${size ? `, ${size}` : ''}`)}"
+           title="${esc(`Download${size ? ` (${size})` : ''}`)}">${ICON.download}</a>
         <span class="ep-bar" aria-hidden="true"><span></span></span>
       </li>`;
   }

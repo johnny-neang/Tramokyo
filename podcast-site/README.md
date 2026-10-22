@@ -39,6 +39,10 @@ the audio URLs are public.
 
 `vercel.json` only allows `media-src` from `*.public.blob.vercel-storage.com`.
 
+Downloads: each recording's row links to its blob URL with `?download=1`, which makes Blob send the
+file as an attachment instead of playing it. The saved file keeps the upload's random suffix in its
+name. Like the audio, the links only reach browsers that got past the password.
+
 ## Adding or changing episodes
 
 Name the file `TMKO_R13_2026-10-20_Some-Title.m4a`, tag it (title, track, date, album), put it in
