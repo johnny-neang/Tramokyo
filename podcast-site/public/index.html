@@ -1,0 +1,1338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TMKO · Listening Edition 01</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#E8412A">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Twelve recordings from Tramokyo, October 17-19. Invitation only.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tramokyo">
+<meta property="og:title" content="TMKO · Listening Edition 01">
+<meta property="og:description" content="Twelve recordings from the campout. Invitation only. Say the word.">
+<meta property="og:image" content="https://tmko.johnnyneang.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F2E8D5'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23E8412A'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/cover-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem('tmko:in')==='1')document.documentElement.classList.add('is-returning')}catch(e){}</script>
+
+<style>
+  :root {
+    --oy-red:        #E8412A;
+    --oy-red-deep:   #C8341F;
+    --oy-red-soft:   #F4B8AC;
+
+    --oy-cream:      #F2E8D5;
+    --oy-cream-soft: #EADFC8;
+    --oy-cream-warm: #F7F0E0;
+
+    --oy-ink:        #1C1917;
+    --oy-ink-soft:   #3B3430;
+    --oy-mute:       #6B625B;
+    --oy-hairline:   #C8BCA3;
+
+    --oy-font-display: 'Archivo Black', 'Impact', sans-serif;
+    --oy-font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+    --oy-font-jp:      'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    --oy-font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --oy-radius-xs: 2px;
+    --oy-radius-sm: 4px;
+    --oy-radius-md: 6px;
+    --oy-radius-lg: 10px;
+    --oy-radius-pill: 999px;
+
+    --oy-ease: cubic-bezier(.2,.7,.2,1);
+
+    --dock-h: 0px;   /* set from JS while the player dock is showing */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--oy-red);
+    color: var(--oy-ink);
+    font-family: var(--oy-font-body);
+    -webkit-font-smoothing: antialiased;
+    padding: 24px 24px calc(24px + var(--dock-h));
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  :focus-visible { outline: 2px solid var(--oy-red); outline-offset: 2px; }
+
+  .oy-frame {
+    position: relative;
+    width: 100%;
+    max-width: 1320px;
+    background: var(--oy-cream);
+    border-radius: 10px;
+    padding: 32px 52px 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.35);
+  }
+  .oy-frame::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1.5px solid var(--oy-red);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  /* ============ Semantic type ============ */
+  .oy-h1 {
+    font-family: var(--oy-font-display);
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .oy-h3 {
+    font-family: var(--oy-font-body);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .oy-kana {
+    font-family: var(--oy-font-jp);
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--oy-red);
+  }
+  .oy-lede {
+    font-family: var(--oy-font-body);
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--oy-ink-soft);
+  }
+  .oy-eyebrow {
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .oy-meta {
+    font-family: var(--oy-font-body);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .stamp {
+    display: inline-block;
+    border: 1.5px solid var(--oy-ink);
+    padding: 4px 12px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* ============ Primitives ============ */
+  .oy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 34px;
+    background: var(--oy-red);
+    color: var(--oy-cream);
+    border: none;
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: var(--oy-radius-xs);
+    cursor: pointer;
+    position: relative;
+    top: 0; left: 0;
+    transition: top 120ms var(--oy-ease), left 120ms var(--oy-ease), background 200ms var(--oy-ease);
+  }
+  .oy-btn::before {
+    content: "";
+    position: absolute;
+    inset: -6px -6px 6px 6px;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    z-index: -1;
+  }
+  /* Nudge with top/left, not transform/opacity: those would make the button its own
+     stacking context and the offset outline would paint over its face. */
+  .oy-btn:hover  { background: var(--oy-red-deep); top: -1px; left: -1px; }
+  .oy-btn:active { top: 1px; left: 1px; }
+  .oy-btn:disabled { background: var(--oy-red-deep); cursor: wait; top: 0; left: 0; }
+  .oy-btn, .oy-btn--ghost { white-space: nowrap; }
+  .oy-btn svg, .oy-btn--ghost svg { width: 16px; height: 16px; flex: none; }
+
+  .oy-btn--ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--oy-ink);
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    padding: 14px 34px;
+    font-family: var(--oy-font-body);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease), background 200ms var(--oy-ease);
+  }
+  .oy-btn--ghost:hover { color: var(--oy-red); border-color: var(--oy-red); }
+
+  .oy-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: transparent;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-pill);
+    font-family: var(--oy-font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--oy-ink);
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .oy-pill:hover { background: var(--oy-ink); color: var(--oy-cream); }
+
+  .oy-btn-small {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 36px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1.5px solid var(--oy-ink);
+    font-family: var(--oy-font-body);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+    color: var(--oy-ink);
+  }
+  .oy-btn-small svg { width: 14px; height: 14px; flex: none; }
+  .oy-btn-small:hover { background: var(--oy-ink); color: var(--oy-cream); }
+  .oy-btn-small.on { background: var(--oy-red); border-color: var(--oy-red); color: var(--oy-cream); }
+
+  .oy-link {
+    background: none;
+    border: none;
+    border-bottom: 1.5px solid var(--oy-red);
+    padding: 2px 0;
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-ink-soft);
+    cursor: pointer;
+    transition: color .2s var(--oy-ease);
+  }
+  .oy-link:hover { color: var(--oy-red); }
+
+  /* ============ Nav ============ */
+  .oy-nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 4px 12px 0;
+  }
+  .oy-logo {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+  .oy-logo img {
+    display: block;
+    height: clamp(28px, 2.8vw, 40px);
+    width: auto;
+  }
+  .oy-nav-links {
+    display: flex;
+    gap: 44px;
+    list-style: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .oy-nav-links a {
+    color: var(--oy-ink-soft);
+    text-decoration: none;
+    padding: 4px 0;
+    transition: color .2s var(--oy-ease);
+  }
+  .oy-nav-links a:hover { color: var(--oy-red); }
+
+  /* ============ Hero (lock screen + intro) ============ */
+  .oy-hero {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 24px 12px 16px;
+  }
+  #gate { flex: 1; }
+  #intro { padding-top: 40px; }
+  .oy-hero-headline { font-size: clamp(34px, 4.5vw, 48px); line-height: 1.05; }
+  .oy-hero-headline .accent { color: var(--oy-red); display: block; }
+  .oy-cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
+  .oy-art-wrap {
+    position: relative;
+    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 480px;
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+  }
+  .oy-scene { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .oy-wavy { margin: 14px 0 18px; color: var(--oy-ink); display: block; }
+
+  .boot {
+    display: none;
+    flex: 1;
+    place-items: center;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .is-returning #gate { display: none; }
+  .is-returning .boot { display: grid; }
+
+  /* Password field: same underline field as the registration form */
+  .gate-form { margin-top: 28px; max-width: 420px; }
+  .reg-field label {
+    display: block;
+    font-family: var(--oy-font-mono);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    margin-bottom: 6px;
+  }
+  .reg-field input {
+    width: 100%;
+    padding: 10px 0 8px;
+    border: none;
+    border-bottom: 1.5px solid var(--oy-ink);
+    background: transparent;
+    font-family: var(--oy-font-body);
+    font-size: 16px;
+    color: var(--oy-ink);
+    outline: none;
+  }
+  .reg-field input:focus, .reg-field.err input { border-color: var(--oy-red); }
+  .reg-field .err-msg {
+    display: none;
+    color: var(--oy-red);
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .reg-field.err .err-msg { display: block; }
+
+  /* ============ Stats ============ */
+  .oy-stats {
+    margin: 28px 12px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    border-top: 1.5px solid var(--oy-red);
+    padding-top: 28px;
+  }
+  .oy-stat-num {
+    font-family: var(--oy-font-display);
+    font-size: clamp(34px, 4.2vw, 56px);
+    line-height: 1;
+    color: var(--oy-red);
+    margin-bottom: 8px;
+  }
+
+  /* ============ Recordings (the program grid, three days) ============ */
+  .oy-menu { padding: 56px 12px 24px; scroll-margin-top: 12px; }
+  .oy-section-head { margin-bottom: 32px; }
+  .oy-day-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  .oy-day-col { display: flex; flex-direction: column; gap: 14px; }
+  .oy-day-head {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+    padding: 18px 14px 14px;
+    text-align: center;
+  }
+  .oy-day-num {
+    font-family: var(--oy-font-display);
+    font-size: 64px;
+    line-height: 0.9;
+    color: var(--oy-red);
+    letter-spacing: -2px;
+  }
+  .oy-day-meta {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .oy-day-meta .dow {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    font-weight: 700;
+  }
+  .oy-day-meta .jp {
+    font-family: var(--oy-font-jp);
+    font-weight: 700;
+    color: var(--oy-red);
+    font-size: 14px;
+  }
+  .oy-day-sub {
+    margin-top: 10px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .ep-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .oy-menu-card {
+    padding: 18px;
+    background: var(--oy-cream-warm);
+    border: 1.5px solid var(--oy-ink);
+    position: relative;
+    transition: border-color .2s var(--oy-ease);
+  }
+  .oy-menu-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .oy-price {
+    font-family: var(--oy-font-display);
+    font-size: 18px;
+    line-height: 1;
+    color: var(--oy-red);
+    letter-spacing: 0.5px;
+  }
+  .oy-menu-bot {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ep-code {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--oy-red);
+    line-height: 1.8;
+  }
+  .oy-menu-card.ep { display: flex; flex-direction: column; }
+  .ep-title { flex: 1; margin-top: 6px; font-size: 18px; }   /* grows, so bar + button line up across a row */
+  .ep-bar { position: relative; height: 3px; margin-top: 16px; background: var(--oy-hairline); }
+  .ep-bar span { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--oy-red); }
+  .ep-state {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .oy-menu-card.is-current { border-color: var(--oy-red); }
+  .oy-menu-card.is-current::before {
+    content: "";
+    position: absolute;
+    left: -1.5px; top: -1.5px; bottom: -1.5px;
+    width: 6px;
+    background: var(--oy-red);
+  }
+  .eq { display: none; align-items: flex-end; gap: 2px; height: 11px; }
+  .eq i { width: 2px; height: 100%; background: var(--oy-red); transform-origin: bottom; animation: eq 900ms ease-in-out infinite; }
+  .eq i:nth-child(2) { animation-delay: -300ms; }
+  .eq i:nth-child(3) { animation-delay: -600ms; }
+  .is-playing .eq { display: inline-flex; }
+  @keyframes eq { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
+
+  /* ============ Player dock ============ */
+  .oy-dock {
+    position: fixed;
+    z-index: 40;
+    left: 50%;
+    bottom: 18px;
+    width: min(1272px, calc(100vw - 48px));
+    transform: translateX(-50%);
+    background: var(--oy-cream-warm);
+    border: 1.5px solid var(--oy-ink);
+    padding: 12px 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) auto minmax(0, 1.2fr) auto;
+    align-items: center;
+    column-gap: 24px;
+    animation: dockIn .35s var(--oy-ease);
+  }
+  @keyframes dockIn { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  .dk-now { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .dk-art { width: 44px; height: 44px; flex: none; border: 1.5px solid var(--oy-ink); background: var(--oy-cream); object-fit: contain; }
+  .dk-text { min-width: 0; }
+  .dk-meta {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--oy-red);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dk-title {
+    margin-top: 2px;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dk-transport, .dk-opts { display: flex; align-items: center; gap: 4px; }
+  .dk-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 40px; height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--oy-ink);
+    cursor: pointer;
+    transition: color .2s var(--oy-ease);
+  }
+  .dk-btn svg { width: 20px; height: 20px; }
+  .dk-btn:hover { color: var(--oy-red); }
+  .dk-btn:disabled { opacity: .3; cursor: default; color: var(--oy-ink); }
+  .dk-skip { font-family: var(--oy-font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0; width: 44px; }
+  .oy-btn.dk-play { width: 46px; height: 46px; padding: 0; margin: 0 8px; }
+  .dk-play svg { width: 22px; height: 22px; }
+  .dk-seek { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .dk-time {
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    color: var(--oy-mute);
+    min-width: 4.6ch;
+    font-variant-numeric: tabular-nums;
+  }
+  #tDur { text-align: right; }
+  .dk-chip {
+    padding: 6px 10px;
+    background: var(--oy-cream);
+    border: 1.5px solid var(--oy-ink);
+    font-family: var(--oy-font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--oy-ink);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .dk-chip:hover { border-color: var(--oy-red); color: var(--oy-red); }
+  .dk-chip[aria-pressed="true"] { background: var(--oy-red); border-color: var(--oy-red); color: var(--oy-cream); }
+  .dk-opts { gap: 8px; }
+
+  .oy-seek {
+    --pct: 0%;
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    min-width: 0;
+    height: 22px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .oy-seek::-webkit-slider-runnable-track {
+    height: 4px;
+    background: linear-gradient(to right, var(--oy-red) var(--pct), var(--oy-hairline) var(--pct));
+  }
+  .oy-seek::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    width: 14px; height: 14px;
+    margin-top: -5px;
+    background: var(--oy-cream);
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+  }
+  .oy-seek::-moz-range-track { height: 4px; background: var(--oy-hairline); border: 0; }
+  .oy-seek::-moz-range-progress { height: 4px; background: var(--oy-red); }
+  .oy-seek::-moz-range-thumb {
+    box-sizing: border-box;
+    width: 14px; height: 14px;
+    background: var(--oy-cream);
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+  }
+
+  /* ============ Footer ============ */
+  .oy-footer {
+    position: relative; z-index: 2;
+    margin-top: 28px;
+    padding: 0 12px 4px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 30px;
+  }
+  .oy-footer .rule { height: 1px; background: var(--oy-red); opacity: 0.8; }
+  .oy-secret-link {
+    grid-column: 2;
+    justify-self: end;
+    margin-top: 4px;
+    font-family: var(--oy-font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity .2s, color .2s;
+  }
+  .oy-secret-link:hover { opacity: 1; color: var(--oy-red); }
+
+  @media (max-width: 1100px) {
+    .oy-day-grid { grid-template-columns: 1fr; gap: 28px; }
+    .ep-list { display: grid; grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 1099px) {
+    .oy-dock {
+      grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
+      row-gap: 8px;
+      column-gap: 4px;
+      padding: 10px 14px 12px;
+    }
+    .dk-transport, .dk-opts { display: contents; }
+    .dk-now  { grid-column: 1 / 4; grid-row: 1; }
+    .dk-prev { grid-column: 4; grid-row: 1; }
+    .oy-btn.dk-play { grid-column: 5; grid-row: 1; margin: 0 6px; }
+    .dk-next { grid-column: 6; grid-row: 1; }
+    .dk-seek { grid-column: 1 / -1; grid-row: 2; }
+    .dk-back { grid-column: 1; grid-row: 3; }
+    .dk-fwd  { grid-column: 2; grid-row: 3; }
+    .dk-rate { grid-column: 4; grid-row: 3; justify-self: end; margin-right: 6px; }
+    .dk-mode { grid-column: 5 / 7; grid-row: 3; justify-self: end; }
+  }
+  @media (max-width: 1024px) {
+    .oy-hero { grid-template-columns: 1fr; gap: 32px; }
+    .oy-art-wrap { margin: 0 auto; max-width: 420px; }
+  }
+  @media (max-width: 800px) {
+    .oy-stats { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  }
+  @media (max-width: 640px) {
+    body { padding: 12px 12px calc(12px + var(--dock-h)); }
+    .oy-frame { padding: 20px 24px 20px; }
+    .oy-nav { flex-wrap: wrap; gap: 16px; }
+    .oy-nav-links { gap: 20px; flex-wrap: wrap; order: 3; width: 100%; }
+    .oy-h1 { font-size: 36px; }
+    .oy-hero-headline { font-size: clamp(24px, 8.2vw, 36px); }
+    .stamp { font-size: 9px; letter-spacing: 1px; }
+    #intro { padding-top: 24px; }
+    .oy-menu { padding-top: 40px; }
+    .ep-list { grid-template-columns: 1fr; }
+    .oy-dock { bottom: 12px; width: calc(100vw - 24px); }
+    .dk-art { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .oy-dock { animation: none; }
+    .eq i { animation: none; transform: scaleY(.6); }
+  }
+</style>
+</head>
+<body>
+
+<main class="oy-frame">
+  <!-- ============ NAV ============ -->
+  <nav class="oy-nav">
+    <a class="oy-logo" href="https://tramokyo.vercel.app" aria-label="Tramokyo home">
+      <img src="/assets/logo.png" alt="Tramokyo" width="270" height="40">
+    </a>
+    <ul class="oy-nav-links">
+      <li data-auth hidden><a href="#recordings">Recordings</a></li>
+      <li><a href="https://tramokyo.vercel.app">Main site</a></li>
+    </ul>
+    <button class="oy-pill" id="lockBtn" type="button" hidden>Lock</button>
+  </nav>
+
+  <div class="boot" id="boot">Loading</div>
+
+  <!-- ============ LOCK SCREEN ============ -->
+  <section class="oy-hero" id="gate">
+    <div class="oy-hero-copy">
+      <span class="stamp">Listening Edition 01 · Invitation only</span>
+      <div class="oy-kana" style="font-size:38px" lang="ja">合言葉</div>
+      <svg class="oy-wavy" width="90" height="10" viewBox="0 0 90 10" fill="none" aria-hidden="true">
+        <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <h1 class="oy-h1 oy-hero-headline">Say the <span class="accent">word.</span></h1>
+      <p class="oy-lede" style="margin-top:20px; max-width:440px">
+        Twelve recordings from the campout. Invitation only, like the rest of it.
+      </p>
+      <form class="gate-form" id="gateForm" autocomplete="off" novalidate>
+        <div class="reg-field" id="gateField">
+          <label for="gateInput">Password</label>
+          <input id="gateInput" type="password" name="tmko-listen-word" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" autofocus>
+          <div class="err-msg" id="gateErr" role="alert"></div>
+        </div>
+        <div class="oy-cta-row">
+          <button class="oy-btn" id="gateBtn" type="submit">Unlock</button>
+        </div>
+      </form>
+    </div>
+    <div class="oy-art-wrap">
+      <img class="oy-scene" src="/assets/hero-bg.webp" alt="Joshua tree at dusk" width="1000" height="750">
+    </div>
+  </section>
+
+  <!-- ============ INTRO (after unlock) ============ -->
+  <section class="oy-hero" id="intro" hidden>
+    <div class="oy-hero-copy">
+      <span class="stamp" id="introStamp"></span>
+      <div class="oy-kana" style="font-size:38px" id="introKana"></div>
+      <svg class="oy-wavy" width="90" height="10" viewBox="0 0 90 10" fill="none" aria-hidden="true">
+        <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <h1 class="oy-h1 oy-hero-headline" id="introTitle"></h1>
+      <p class="oy-lede" style="margin-top:20px; max-width:440px" id="introLede"></p>
+      <div class="oy-cta-row">
+        <button class="oy-btn" id="btnPlayAll" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          Play all
+        </button>
+        <button class="oy-btn--ghost" id="btnShuffle" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+          Shuffle
+        </button>
+      </div>
+      <div style="margin-top:22px"><button class="oy-link" id="btnContinue" type="button" hidden></button></div>
+    </div>
+    <div class="oy-art-wrap">
+      <img class="oy-scene" src="/assets/hero-bg.webp" alt="Joshua tree at dusk" width="1000" height="750">
+    </div>
+  </section>
+
+  <div class="oy-stats" id="stats" hidden></div>
+
+  <!-- ============ RECORDINGS ============ -->
+  <section class="oy-menu" id="recordings" hidden>
+    <div class="oy-section-head">
+      <div class="oy-kana" style="font-size:28px" lang="ja">録音</div>
+      <h2 class="oy-h1" style="margin-top:8px">The Recordings</h2>
+      <p class="oy-lede" style="max-width:520px; margin-top:12px">Numbered in the order they happened. Pick one, or press Play all and let it run.</p>
+    </div>
+    <div class="oy-day-grid" id="dayGrid"></div>
+  </section>
+
+  <noscript><p class="oy-lede" style="padding:24px 12px">This page needs JavaScript to unlock.</p></noscript>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="oy-footer">
+    <div class="rule"></div>
+    <div class="oy-meta">EST · 2026 · <span lang="ja">山中湖</span></div>
+    <a class="oy-secret-link" href="https://tramokyo.vercel.app">main site</a>
+  </footer>
+</main>
+
+<!-- ============ PLAYER ============ -->
+<div class="oy-dock" id="dock" role="region" aria-label="Player" hidden>
+  <div class="dk-now">
+    <img class="dk-art" src="/assets/cover-512.png" alt="" width="44" height="44">
+    <div class="dk-text">
+      <div class="dk-meta" id="dkMeta"></div>
+      <div class="dk-title" id="dkTitle" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="dk-transport">
+    <button class="dk-btn dk-skip dk-back" id="btnBack" type="button" aria-label="Back 15 seconds">−15s</button>
+    <button class="dk-btn dk-prev" id="btnPrev" type="button" aria-label="Previous recording"></button>
+    <button class="oy-btn dk-play" id="btnPlay" type="button" aria-label="Play"></button>
+    <button class="dk-btn dk-next" id="btnNext" type="button" aria-label="Next recording"></button>
+    <button class="dk-btn dk-skip dk-fwd" id="btnFwd" type="button" aria-label="Forward 30 seconds">+30s</button>
+  </div>
+  <div class="dk-seek">
+    <span class="dk-time" id="tCur">0:00</span>
+    <input class="oy-seek" id="seek" type="range" min="0" max="100" step="1" value="0" aria-label="Seek">
+    <span class="dk-time" id="tDur">0:00</span>
+  </div>
+  <div class="dk-opts">
+    <button class="dk-chip dk-rate" id="btnRate" type="button" aria-label="Playback speed">1×</button>
+    <button class="dk-chip dk-mode" id="btnMode" type="button" aria-pressed="false">Play all</button>
+  </div>
+</div>
+
+<audio id="audio" preload="none"></audio>
+
+<script>
+(() => {
+  'use strict';
+
+  const BASE_TITLE = document.title;
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const pad = (n) => String(n).padStart(2, '0');
+
+  const ICON = {
+    play:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>',
+    prev:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z" fill="currentColor"/></svg>',
+    next:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z" fill="currentColor"/></svg>',
+  };
+  const WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+  const word = (n) => WORDS[n] || String(n);
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const DOW = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const DOW_JP = ['日', '月', '火', '水', '木', '金', '土'];
+  const MONTH_JP = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
+  const RATES = [1, 1.25, 1.5, 2, 0.75];
+
+  // 1:23:45 / 18:01
+  function clock(sec) {
+    sec = Math.max(0, Math.floor(sec || 0));
+    const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+    return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+  }
+  // 7h 13m / 7m 35s
+  function span(sec) {
+    sec = Math.floor(sec);
+    const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+    return h ? `${h}h ${pad(m)}m` : `${m}m ${pad(s)}s`;
+  }
+  function dateParts(d) {
+    const [y, m, day] = d.split('-').map(Number);
+    return { y, m: m - 1, day, dow: new Date(Date.UTC(y, m - 1, day, 12)).getUTCDay() };
+  }
+
+  // ---- saved listening state (per browser; purely a convenience) ----
+  const KEY = 'tmko:v1', HINT = 'tmko:in';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
+  saved.pos = saved.pos || {};
+  saved.done = saved.done || {};
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) {} };
+  const setHint = (on) => { try { on ? localStorage.setItem(HINT, '1') : localStorage.removeItem(HINT); } catch (_) {} };
+
+  // ---- state ----
+  const S = { eps: [], edition: '', i: -1, order: [], playAll: false, shuffle: false,
+              rate: RATES.includes(saved.rate) ? saved.rate : 1, scrubbing: false,
+              buffering: false, note: '', pendingSeek: 0, card: null };
+  const audio = $('#audio');
+  const dock = $('#dock'), seek = $('#seek');
+  const curEp = () => S.eps[S.i];
+  const dur = () => (Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : (curEp() ? curEp().duration : 0));
+
+  // ============ gate ============
+  async function fetchEpisodes() {
+    const res = await fetch('/api/episodes', { credentials: 'same-origin', cache: 'no-store' });
+    if (res.status === 401) return null;
+    if (!res.ok) throw new Error('episodes_' + res.status);
+    return res.json();
+  }
+
+  function showGate() {
+    document.documentElement.classList.remove('is-returning');
+    $('#intro').hidden = $('#stats').hidden = $('#recordings').hidden = true;
+    $('#lockBtn').hidden = true;
+    $$('[data-auth]').forEach((el) => { el.hidden = true; });
+    $('#gate').hidden = false;
+    document.title = BASE_TITLE;
+  }
+
+  function gateError(msg) {
+    $('#gateErr').textContent = msg;
+    $('#gateField').classList.toggle('err', !!msg);
+  }
+
+  $('#gateForm').addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const input = $('#gateInput'), btn = $('#gateBtn');
+    if (!input.value.trim()) { gateError('Type the word first.'); input.focus(); return; }
+    gateError('');
+    btn.disabled = true;
+    btn.textContent = 'Checking…';
+    try {
+      const res = await fetch('/api/unlock', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: input.value }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (res.ok && body.ok) {
+        const data = await fetchEpisodes();
+        if (!data) throw new Error('cookie_not_kept');
+        input.value = '';
+        enter(data);
+        window.scrollTo({ top: 0 });
+        return;
+      }
+      if (res.status === 429) gateError(`Slow down. Try again in ${body.retryAfter || 60}s.`);
+      else gateError('Not that one. Try again.');
+      input.select();
+    } catch (_) {
+      gateError("Can't reach the server. Try again.");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Unlock';
+    }
+  });
+
+  async function lock() {
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    S.i = -1; S.card = null; S.playAll = false; S.shuffle = false;
+    dock.hidden = true;
+    document.documentElement.style.setProperty('--dock-h', '0px');
+    if ('mediaSession' in navigator) { navigator.mediaSession.metadata = null; navigator.mediaSession.playbackState = 'none'; }
+    setHint(false);
+    try { await fetch('/api/unlock', { method: 'DELETE', credentials: 'same-origin' }); } catch (_) {}
+    S.eps = [];
+    $('#dayGrid').innerHTML = '';
+    showGate();
+    gateError('');
+    $('#gateInput').focus();
+    window.scrollTo({ top: 0 });
+  }
+  $('#lockBtn').addEventListener('click', lock);
+
+  // ============ render ============
+  function enter(data) {
+    document.documentElement.classList.remove('is-returning');
+    S.eps = data.episodes.slice().sort((a, b) => a.number - b.number);
+    S.edition = data.edition || 'Listening Edition';
+    S.i = -1;
+    buildOrder(null);
+    renderIntro();
+    renderGrid();
+    $('#gate').hidden = true;
+    $('#intro').hidden = $('#stats').hidden = $('#recordings').hidden = false;
+    $('#lockBtn').hidden = false;
+    $$('[data-auth]').forEach((el) => { el.hidden = false; });
+    setHint(true);
+    applyRate();
+  }
+
+  function renderIntro() {
+    const eps = S.eps;
+    const total = eps.reduce((a, e) => a + e.duration, 0);
+    const dates = [...new Set(eps.map((e) => e.date))];
+    const longest = eps.reduce((a, e) => (e.duration > a.duration ? e : a));
+    const shortest = eps.reduce((a, e) => (e.duration < a.duration ? e : a));
+    const first = dateParts(dates[0]), last = dateParts(dates[dates.length - 1]);
+    const month = new Date(Date.UTC(first.y, first.m, 1)).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+    const range = first.day === last.day ? `${first.day}` : `${first.day}-${last.day}`;
+
+    $('#introStamp').textContent = `${S.edition} · ${month} ${first.y}`;
+    $('#introKana').textContent = `${MONTH_JP[first.m]}月 ${range}`;
+    $('#introTitle').innerHTML =
+      `${cap(word(eps.length))} recording${eps.length === 1 ? '' : 's'}.<br>` +
+      `<span class="accent">${cap(word(dates.length))} day${dates.length === 1 ? '' : 's'}.</span>Nothing cut.`;
+    $('#introLede').textContent = `Recorded ${month} ${range} and kept in the order it happened. Levels balanced, edges faded.`;
+
+    $('#stats').innerHTML = [
+      [span(total), 'total runtime'],
+      [String(dates.length), dates.length === 1 ? 'day recorded' : 'days recorded'],
+      [span(longest.duration), 'longest'],
+      [span(shortest.duration), 'shortest'],
+    ].map(([n, l]) => `<div><div class="oy-stat-num">${n}</div><div class="oy-eyebrow">${l}</div></div>`).join('');
+
+    const lastEp = eps.find((e) => e.id === saved.last);
+    const p = lastEp && saved.pos[lastEp.id];
+    const cont = $('#btnContinue');
+    cont.hidden = !(lastEp && p > 10 && !saved.done[lastEp.id] && p < lastEp.duration - 15);
+    if (!cont.hidden) cont.textContent = `Pick up ${lastEp.code} at ${clock(p)} →`;
+  }
+
+  function cardHTML(i) {
+    const e = S.eps[i];
+    return `
+      <li class="oy-menu-card ep" data-id="${esc(e.id)}">
+        <div class="oy-menu-top">
+          <div class="ep-code">${esc(e.code)}<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="oy-price">${clock(e.duration)}</div>
+        </div>
+        <h3 class="oy-h3 ep-title">${esc(e.title)}</h3>
+        <div class="ep-bar" aria-hidden="true"><span></span></div>
+        <div class="oy-menu-bot">
+          <div class="ep-state"></div>
+          <button class="oy-btn-small ep-btn" type="button" data-play="${esc(e.id)}"></button>
+        </div>
+      </li>`;
+  }
+
+  function renderGrid() {
+    const days = new Map();
+    S.eps.forEach((e, i) => { if (!days.has(e.date)) days.set(e.date, []); days.get(e.date).push(i); });
+    $('#dayGrid').innerHTML = [...days].map(([date, idxs]) => {
+      const p = dateParts(date);
+      const run = idxs.reduce((a, i) => a + S.eps[i].duration, 0);
+      const longName = new Date(Date.UTC(p.y, p.m, p.day, 12)).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+      return `
+        <div class="oy-day-col" role="group" aria-label="${esc(longName)}">
+          <div class="oy-day-head">
+            <div class="oy-day-num">${p.day}</div>
+            <div class="oy-day-meta"><span class="dow">${DOW[p.dow]}</span><span class="jp" lang="ja">${DOW_JP[p.dow]}</span></div>
+            <div class="oy-day-sub">${idxs.length} recording${idxs.length === 1 ? '' : 's'} · ${span(run)}</div>
+          </div>
+          <ol class="ep-list">${idxs.map(cardHTML).join('')}</ol>
+        </div>`;
+    }).join('');
+    refreshCards();
+  }
+
+  function refreshCard(card) {
+    const e = S.eps.find((x) => x.id === card.dataset.id);
+    const i = S.eps.indexOf(e);
+    const cur = i === S.i;
+    const playing = cur && !audio.paused;
+    card.classList.toggle('is-current', cur);
+    card.classList.toggle('is-playing', playing);
+
+    const btn = $('.ep-btn', card);
+    btn.classList.toggle('on', playing);
+    btn.innerHTML = `${playing ? ICON.pause : ICON.play}<span>${playing ? 'Pause' : 'Play'}</span>`;
+    btn.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${e.title}`);
+
+    let frac = 0, state = '';
+    if (cur && audio.ended) { frac = 1; state = 'Played'; }
+    else if (cur) { frac = audio.currentTime / dur(); state = !playing && audio.currentTime > 10 ? `Paused at ${clock(audio.currentTime)}` : ''; }
+    else if (saved.done[e.id]) { frac = 1; state = 'Played'; }
+    else if (saved.pos[e.id] > 10) { frac = saved.pos[e.id] / e.duration; state = `Resume at ${clock(saved.pos[e.id])}`; }
+    $('.ep-state', card).textContent = state;
+    $('.ep-bar span', card).style.width = `${Math.min(1, frac) * 100}%`;
+  }
+  const refreshCards = () => $$('.ep').forEach(refreshCard);
+
+  // ============ queue ============
+  function buildOrder(first) {
+    const idx = S.eps.map((_, i) => i);
+    if (!S.shuffle) { S.order = idx; return; }
+    const rest = idx.filter((x) => x !== first);
+    for (let k = rest.length - 1; k > 0; k--) {
+      const j = Math.floor(Math.random() * (k + 1));
+      [rest[k], rest[j]] = [rest[j], rest[k]];
+    }
+    S.order = first == null ? rest : [first, ...rest];
+  }
+  const nextIndex = () => { const p = S.order.indexOf(S.i); return p >= 0 && p < S.order.length - 1 ? S.order[p + 1] : -1; };
+  const prevIndex = () => { const p = S.order.indexOf(S.i); return p > 0 ? S.order[p - 1] : -1; };
+
+  // ============ playback ============
+  function savePos() {
+    const e = curEp();
+    if (!e || audio.readyState < 1 || audio.ended) return;
+    const t = audio.currentTime;
+    if (t < 1 || t > e.duration - 15) return;
+    saved.pos[e.id] = Math.floor(t);
+    persist();
+  }
+
+  function load(i, resume) {
+    savePos();
+    const e = S.eps[i];
+    S.i = i; S.note = ''; S.buffering = true;
+    S.card = $(`.ep[data-id="${e.id}"]`);
+    const p = saved.pos[e.id];
+    S.pendingSeek = resume && !saved.done[e.id] && p > 10 && p < e.duration - 15 ? p : 0;
+    audio.src = e.src;
+    audio.defaultPlaybackRate = S.rate;   // a new src resets playbackRate to this
+    audio.playbackRate = S.rate;
+    saved.last = e.id;
+    persist();
+
+    seek.max = e.duration;
+    seek.value = S.pendingSeek;
+    $('#tCur').textContent = clock(S.pendingSeek);
+    $('#tDur').textContent = clock(e.duration);
+    fill();
+    showDock();
+    renderDock();
+    mediaMeta(e);
+    document.title = `${e.title} · TMKO`;
+    refreshCards();
+  }
+
+  function play() {
+    const p = audio.play();
+    if (p && p.catch) p.catch(onPlayError);
+  }
+
+  function playIndex(i, { resume = true, restart = false } = {}) {
+    if (i !== S.i) load(i, resume);
+    else if (restart) audio.currentTime = 0;
+    play();
+  }
+
+  function togglePlay() {
+    if (S.i < 0) return;
+    if (audio.error) load(S.i, true);   // last load failed: ask for the file again
+    if (audio.paused) play(); else audio.pause();
+  }
+
+  function toggleEpisode(id) {
+    const i = S.eps.findIndex((e) => e.id === id);
+    if (i === S.i) return togglePlay();
+    if (S.playAll && S.shuffle) buildOrder(i);
+    playIndex(i);
+  }
+
+  function startAll(shuffle) {
+    S.playAll = true;
+    S.shuffle = shuffle;
+    buildOrder(null);
+    playIndex(S.order[0], { resume: false, restart: true });
+  }
+
+  function next() { const n = nextIndex(); if (n >= 0) playIndex(n, { resume: !S.playAll }); }
+  function prev() {
+    const p = prevIndex();
+    if (audio.currentTime > 3 || p < 0) { audio.currentTime = 0; return; }
+    playIndex(p, { resume: !S.playAll });
+  }
+  function skip(sec) {
+    if (S.i < 0) return;
+    audio.currentTime = Math.max(0, Math.min(dur(), audio.currentTime + sec));
+  }
+  function toggleMode() {
+    S.playAll = !S.playAll;
+    S.shuffle = false;
+    buildOrder(null);
+    renderDock();
+  }
+  function applyRate() {
+    audio.defaultPlaybackRate = S.rate;
+    audio.playbackRate = S.rate;
+    $('#btnRate').textContent = `${S.rate}×`;
+    $('#btnRate').setAttribute('aria-label', `Playback speed ${S.rate} times, change`);
+  }
+
+  // ============ dock ============
+  function showDock() {
+    if (!dock.hidden) return;
+    dock.hidden = false;
+    measureDock();
+  }
+  function measureDock() { document.documentElement.style.setProperty('--dock-h', `${dock.offsetHeight + 24}px`); }
+  if ('ResizeObserver' in window) new ResizeObserver(() => { if (!dock.hidden) measureDock(); }).observe(dock);
+
+  function fill() { seek.style.setProperty('--pct', `${seek.max > 0 ? (seek.value / seek.max) * 100 : 0}%`); }
+
+  function renderMeta() {
+    const e = curEp();
+    if (!e) return;
+    const parts = [e.code];
+    if (S.note) parts.push(S.note);
+    else if (S.buffering && !audio.paused) parts.push('Buffering');
+    else if (S.playAll) parts.push(`${S.shuffle ? 'Shuffle' : 'Play all'} ${S.order.indexOf(S.i) + 1}/${S.eps.length}`);
+    $('#dkMeta').textContent = parts.join(' · ');
+  }
+  function renderDock() {
+    const e = curEp();
+    if (!e) return;
+    $('#dkTitle').textContent = e.title;
+    $('#btnNext').disabled = nextIndex() < 0;
+    const mode = $('#btnMode');
+    mode.setAttribute('aria-pressed', String(S.playAll));
+    mode.textContent = S.playAll && S.shuffle ? 'Shuffle' : 'Play all';
+    renderMeta();
+  }
+  function syncPlayState() {
+    const playing = !audio.paused;
+    $('#btnPlay').innerHTML = playing ? ICON.pause : ICON.play;
+    $('#btnPlay').setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    refreshCards();
+    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+  }
+  function note(msg) {
+    S.note = msg;
+    renderMeta();
+    clearTimeout(note.t);
+    note.t = setTimeout(() => { S.note = ''; renderMeta(); }, 6000);
+  }
+
+  // ============ audio events ============
+  let lastSave = 0, lastPos = 0;
+  audio.addEventListener('loadedmetadata', () => {
+    if (!curEp()) return;
+    seek.max = dur();
+    $('#tDur').textContent = clock(dur());
+    if (S.pendingSeek) { audio.currentTime = S.pendingSeek; S.pendingSeek = 0; }
+    fill();
+  });
+  audio.addEventListener('timeupdate', () => {
+    const e = curEp();
+    if (!e) return;
+    const t = audio.currentTime;
+    if (!S.scrubbing) { seek.value = t; fill(); $('#tCur').textContent = clock(t); }
+    if (S.card) $('.ep-bar span', S.card).style.width = `${Math.min(1, t / dur()) * 100}%`;
+    const now = Date.now();
+    if (now - lastSave > 5000) { lastSave = now; savePos(); }
+    if (now - lastPos > 1000) { lastPos = now; positionState(); }
+  });
+  audio.addEventListener('play', syncPlayState);
+  audio.addEventListener('pause', () => { savePos(); syncPlayState(); });
+  audio.addEventListener('playing', () => { S.buffering = false; renderMeta(); syncPlayState(); });
+  audio.addEventListener('waiting', () => { S.buffering = true; renderMeta(); });
+  audio.addEventListener('canplay', () => { S.buffering = false; renderMeta(); });
+  audio.addEventListener('error', () => {
+    if (!curEp()) return;
+    S.buffering = false;
+    note("Couldn't load, try again");
+    syncPlayState();
+  });
+  audio.addEventListener('ended', () => {
+    const e = curEp();
+    if (!e) return;
+    saved.done[e.id] = 1;
+    delete saved.pos[e.id];
+    persist();
+    const n = S.playAll ? nextIndex() : -1;
+    if (n >= 0) playIndex(n, { resume: false });
+    else { refreshCards(); renderDock(); syncPlayState(); }
+  });
+  function onPlayError(err) {
+    if (err && err.name === 'AbortError') return;   // another load took over
+    if (!(err && err.name === 'NotAllowedError')) note("Couldn't play that one");
+    syncPlayState();
+  }
+
+  // ============ lock-screen controls ============
+  function mediaMeta(e) {
+    if (!('mediaSession' in navigator)) return;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: e.title,
+      artist: 'Tramokyo',
+      album: `TMKO · ${S.edition}`,
+      artwork: [{ src: '/assets/cover-512.png', sizes: '512x512', type: 'image/png' }],
+    });
+  }
+  function positionState() {
+    if (!('mediaSession' in navigator) || !curEp()) return;
+    try { navigator.mediaSession.setPositionState({ duration: dur(), playbackRate: audio.playbackRate, position: Math.min(audio.currentTime, dur()) }); } catch (_) {}
+  }
+  if ('mediaSession' in navigator) {
+    const set = (action, fn) => { try { navigator.mediaSession.setActionHandler(action, fn); } catch (_) {} };
+    set('play', play);
+    set('pause', () => audio.pause());
+    set('previoustrack', prev);
+    set('nexttrack', next);
+    set('seekbackward', (d) => skip(-((d && d.seekOffset) || 15)));
+    set('seekforward', (d) => skip((d && d.seekOffset) || 30));
+    set('seekto', (d) => { audio.currentTime = d.seekTime; });
+  }
+
+  // ============ wiring ============
+  $('#dayGrid').addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-play]');
+    if (btn) toggleEpisode(btn.dataset.play);
+  });
+  $('#btnPlayAll').addEventListener('click', () => startAll(false));
+  $('#btnShuffle').addEventListener('click', () => startAll(true));
+  $('#btnContinue').addEventListener('click', () => {
+    const e = S.eps.find((x) => x.id === saved.last);
+    if (!e) return;
+    S.playAll = true; S.shuffle = false; buildOrder(null);
+    playIndex(S.eps.indexOf(e), { resume: true });
+  });
+  $('#btnPlay').addEventListener('click', togglePlay);
+  $('#btnPrev').addEventListener('click', prev);
+  $('#btnNext').addEventListener('click', next);
+  $('#btnBack').addEventListener('click', () => skip(-15));
+  $('#btnFwd').addEventListener('click', () => skip(30));
+  $('#btnMode').addEventListener('click', toggleMode);
+  $('#btnRate').addEventListener('click', () => {
+    S.rate = RATES[(RATES.indexOf(S.rate) + 1) % RATES.length];
+    saved.rate = S.rate;
+    persist();
+    applyRate();
+  });
+  seek.addEventListener('input', () => {
+    S.scrubbing = true;
+    $('#tCur').textContent = clock(seek.value);
+    fill();
+  });
+  seek.addEventListener('change', () => {
+    audio.currentTime = Number(seek.value);
+    S.scrubbing = false;
+  });
+
+  // After a mouse click, drop focus so Space pauses instead of re-pressing the same button.
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('button');
+    if (ev.detail && btn && btn.closest('.oy-dock, #intro, #dayGrid')) btn.blur();
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.altKey || S.i < 0) return;
+    const t = ev.target;
+    if (t.closest('input:not([type="range"]), textarea, select, [contenteditable]')) return;   // typing
+    const onSlider = t.matches('input[type="range"]');
+    const onControl = !!t.closest('button, a');   // Space already activates a focused button
+    if (ev.code === 'Space') { if (onControl) return; ev.preventDefault(); togglePlay(); }
+    else if (ev.code === 'ArrowLeft' && !onSlider) { ev.preventDefault(); skip(-15); }
+    else if (ev.code === 'ArrowRight' && !onSlider) { ev.preventDefault(); skip(30); }
+    else if (ev.key === 'n' || ev.key === 'N') next();
+    else if (ev.key === 'p' || ev.key === 'P') prev();
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) savePos(); });
+  window.addEventListener('pagehide', savePos);
+
+  $('#btnPrev').innerHTML = ICON.prev;
+  $('#btnNext').innerHTML = ICON.next;
+  $('#btnPlay').innerHTML = ICON.play;
+
+  // ============ boot ============
+  (async () => {
+    try {
+      const data = await fetchEpisodes();
+      if (data) enter(data);
+      else { setHint(false); showGate(); }
+    } catch (_) {
+      showGate();
+    }
+  })();
+})();
+</script>
+</body>
+</html>

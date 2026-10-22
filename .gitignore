@@ -5,3 +5,8 @@ node_modules
 .vercel
 *.log
 .DS_Store
+
+# Podcast: audio is hosted on Vercel Blob, not in git. The episode manifest holds
+# the audio URLs, and this repo's static deploy would serve it, so keep it out too.
+podcast/*.m4a
+podcast-site/data/episodes.json
