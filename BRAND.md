@@ -151,7 +151,7 @@ internally consistent.
 | Night tabs | `.tb-tab` in `trubiki.html` | Ink-bordered tabs, the selected one filled ink. Each swaps the player and the song list. |
 | Form section | `.reg-section` (retired) | Letter-coded (`A`/`B`/`C`...) heading on the left, kanji on the right, perforation between sections. Left with the registration form (see git history); the survey keeps the letter + kanji idea. |
 | Stat block | `.oy-stats` / `.oy-stat-num` (retired) | Big-number-plus-eyebrow pattern. Numbers in display font, label in mono caps. Not on any page right now; see git history. |
-| Door card | `.hub-card` in `index.html` | Art panel over a kana tag, title, one sentence and one CTA. The post-event home is four of them; only the survey's CTA is red. |
+| Door card | `.hub-card` in `index.html` | Art panel over a kana tag, title, one sentence and one CTA. The post-event home is four of them; only the survey's CTA is red. The survey door (`.hub-card--survey`) is the highlighted one: red art panel, an offset outline (the offset-box pattern as a box-shadow), an "Open now" stamp that lands on load, and boxes that tick in a loop. All of its motion stops under `prefers-reduced-motion`. |
 | Survey pop-up | `assets/survey-pop.js` | A link with `data-survey-pop` opens the survey in a `<dialog>`, straight to the first question (`/survey/?embed`). |
 
 ---

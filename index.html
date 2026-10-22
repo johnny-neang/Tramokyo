@@ -119,7 +119,8 @@
     border-radius: var(--oy-radius-xs);
     cursor: pointer;
     position: relative;
-    transition: transform 120ms var(--oy-ease), background 200ms var(--oy-ease);
+    top: 0; left: 0;
+    transition: top 120ms var(--oy-ease), left 120ms var(--oy-ease), background 200ms var(--oy-ease);
   }
   .oy-btn::before {
     content: "";
@@ -129,8 +130,10 @@
     border-radius: var(--oy-radius-xs);
     z-index: -1;
   }
-  .oy-btn:hover  { background: var(--oy-red-deep); transform: translate(-1px,-1px); }
-  .oy-btn:active { transform: translate(1px, 1px); }
+  /* Nudge with top/left, not transform: a transform makes the button its own
+     stacking context and the offset outline paints over its face. */
+  .oy-btn:hover  { background: var(--oy-red-deep); top: -1px; left: -1px; }
+  .oy-btn:active { top: 1px; left: 1px; }
   /* cream on red only clears contrast as large text: 19px bold */
   .oy-btn--lg { padding: 14px 28px; font-size: 19px; font-weight: 700; }
   .oy-btn, .oy-btn--ghost { white-space: nowrap; }
@@ -287,6 +290,64 @@
   .art-word  { font-family: var(--oy-font-display); fill: var(--oy-ink); }
   .hub-emblem { display: block; width: min(100%, 360px); height: auto; }
 
+  /* ---- The survey door stands out: red art panel, printed offset outline,
+          a stamp, and a form that keeps filling itself in. ---- */
+  .hub-card--survey {
+    box-shadow: 10px 10px 0 -1.5px var(--oy-cream), 10px 10px 0 0 var(--oy-ink);
+  }
+  .hub-card--survey .hub-art { position: relative; background: var(--oy-red); }
+  .hub-open {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    padding: 5px 11px;
+    border: 1.5px solid var(--oy-cream);
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-cream);
+    transform: rotate(-4deg);
+    animation: stamp-in 520ms 350ms var(--oy-ease) both;
+  }
+  .survey-form .tick { transform-box: fill-box; transform-origin: center; }
+  .survey-form .tick-1 { animation: tick-1 6s infinite; }
+  .survey-form .tick-2 { animation: tick-2 6s infinite; }
+  .survey-form .tick-3 { animation: tick-3 6s infinite; }
+  .cta-arrow { display: inline-block; animation: cta-nudge 6s infinite; }
+
+  @keyframes stamp-in {
+    from { opacity: 0; transform: rotate(-14deg) scale(1.7); }
+    to   { opacity: 1; transform: rotate(-4deg) scale(1); }
+  }
+  /* each box gets ticked in turn, they hold, then the form clears and starts over */
+  @keyframes tick-1 {
+    0%, 6%    { opacity: 0; transform: scale(.3); }
+    12%, 84%  { opacity: 1; transform: scale(1); }
+    92%, 100% { opacity: 0; transform: scale(1); }
+  }
+  @keyframes tick-2 {
+    0%, 26%   { opacity: 0; transform: scale(.3); }
+    32%, 84%  { opacity: 1; transform: scale(1); }
+    92%, 100% { opacity: 0; transform: scale(1); }
+  }
+  @keyframes tick-3 {
+    0%, 46%   { opacity: 0; transform: scale(.3); }
+    52%, 84%  { opacity: 1; transform: scale(1); }
+    92%, 100% { opacity: 0; transform: scale(1); }
+  }
+  /* the arrow taps twice once the last box is ticked */
+  @keyframes cta-nudge {
+    0%, 54%, 62%, 70%, 100% { transform: translateX(0); }
+    58% { transform: translateX(6px); }
+    66% { transform: translateX(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hub-open, .survey-form .tick, .cta-arrow { animation: none; }
+    .survey-form .tick-2, .survey-form .tick-3 { opacity: 0; }
+  }
+
   .polaroids { position: relative; width: 250px; height: 168px; }
   .polaroid {
     position: absolute;
@@ -381,15 +442,19 @@
   <!-- ============ THE FOUR DOORS ============ -->
   <section class="hub-grid" aria-label="What we kept">
 
-    <article class="hub-card">
+    <article class="hub-card hub-card--survey">
       <div class="hub-art" aria-hidden="true">
-        <svg width="192" height="134" viewBox="0 0 120 84">
+        <span class="hub-open">Open now</span>
+        <svg class="survey-form" width="192" height="134" viewBox="0 0 120 84">
           <rect class="art-sheet" x="30" y="6" width="60" height="72"/>
-          <rect class="art-red" x="40" y="18" width="10" height="10"/>
+          <rect class="art-box" x="40" y="18" width="10" height="10"/>
+          <rect class="art-red tick tick-1" x="40" y="18" width="10" height="10"/>
           <path class="art-line" stroke-width="2.5" d="M56 23 H80"/>
           <rect class="art-box" x="40" y="36" width="10" height="10"/>
+          <rect class="art-red tick tick-2" x="40" y="36" width="10" height="10"/>
           <path class="art-line" stroke-width="2.5" d="M56 41 H80"/>
           <rect class="art-box" x="40" y="54" width="10" height="10"/>
+          <rect class="art-red tick tick-3" x="40" y="54" width="10" height="10"/>
           <path class="art-line" stroke-width="2.5" d="M56 59 H72"/>
         </svg>
       </div>
@@ -398,7 +463,7 @@
         <h2>Survey</h2>
         <p>Tell us how it went. 28 questions, five to eight minutes, anonymous unless you sign it. Question 25 is a vote on the 2027 dates.</p>
         <div class="hub-cta">
-          <a class="oy-btn oy-btn--lg" href="/survey/" data-survey-pop>Take the survey <span aria-hidden="true">→</span></a>
+          <a class="oy-btn oy-btn--lg" href="/survey/" data-survey-pop>Take the survey <span class="cta-arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </article>
@@ -485,7 +550,7 @@
       <div class="hub-body">
         <div class="hub-tags"><span class="oy-kana" lang="ja">録音</span><span class="hub-tag">12 recordings</span></div>
         <h2>TMKO Podcast</h2>
-        <p>Twelve recordings from the weekend, in the order they happened. No password needed.</p>
+        <p>Twelve recordings from the weekend. Say the word to get in.</p>
         <div class="hub-cta">
           <a class="oy-btn--ghost" href="https://tmko.johnnyneang.com">Listen <span aria-hidden="true">→</span></a>
         </div>
