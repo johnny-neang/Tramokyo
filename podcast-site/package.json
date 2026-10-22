@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "TMKO Listening Edition: password-gated podcast page for Tramokyo",
+  "description": "TMKO Listening Edition: podcast page for Tramokyo",
   "scripts": {
     "deploy": "vercel deploy --prod",
     "publish:episodes": "node scripts/publish-episodes.mjs"

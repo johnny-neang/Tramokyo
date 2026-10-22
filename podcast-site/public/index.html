@@ -7,11 +7,11 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#E8412A">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Twelve recordings from Tramokyo, October 17-19. Invitation only.">
+<meta name="description" content="Twelve recordings from Tramokyo, October 17-19.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tramokyo">
 <meta property="og:title" content="TMKO · Listening Edition 01">
-<meta property="og:description" content="Twelve recordings from the campout. Invitation only. Say the word.">
+<meta property="og:description" content="Twelve recordings from the campout.">
 <meta property="og:image" content="https://tmko.johnnyneang.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F2E8D5'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23E8412A'/%3E%3C/svg%3E">
@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<script>try{if(localStorage.getItem('tmko:in')==='1')document.documentElement.classList.add('is-returning')}catch(e){}</script>
+<noscript><style>#boot { display: none; }</style></noscript>
 
 <style>
   :root {
@@ -86,24 +86,11 @@
   }
 
   /* ============ Semantic type ============ */
-  .oy-h1 {
-    font-family: var(--oy-font-display);
-    font-size: 44px;
-    line-height: 1.05;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-  }
   .oy-kana {
     font-family: var(--oy-font-jp);
     font-weight: 900;
     letter-spacing: 4px;
     color: var(--oy-red);
-  }
-  .oy-lede {
-    font-family: var(--oy-font-body);
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--oy-ink-soft);
   }
   .oy-meta {
     font-family: var(--oy-font-body);
@@ -112,68 +99,6 @@
     text-transform: uppercase;
     color: var(--oy-mute);
   }
-  .stamp {
-    display: inline-block;
-    border: 1.5px solid var(--oy-ink);
-    padding: 4px 12px;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  /* ============ Primitives ============ */
-  .oy-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 34px;
-    background: var(--oy-red);
-    color: var(--oy-cream);
-    border: none;
-    font-family: var(--oy-font-body);
-    font-weight: 600;
-    font-size: 14px;
-    white-space: nowrap;
-    border-radius: var(--oy-radius-xs);
-    cursor: pointer;
-    position: relative;
-    top: 0; left: 0;
-    transition: top 120ms var(--oy-ease), left 120ms var(--oy-ease), background 200ms var(--oy-ease);
-  }
-  .oy-btn::before {
-    content: "";
-    position: absolute;
-    inset: -6px -6px 6px 6px;
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-xs);
-    z-index: -1;
-  }
-  /* Nudge with top/left, not transform/opacity: those would make the button its own
-     stacking context and the offset outline would paint over its face. */
-  .oy-btn:hover  { background: var(--oy-red-deep); top: -1px; left: -1px; }
-  .oy-btn:active { top: 1px; left: 1px; }
-  .oy-btn:disabled { background: var(--oy-red-deep); cursor: wait; top: 0; left: 0; }
-
-  .oy-btn-small {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    min-height: 36px;
-    padding: 8px 14px;
-    background: transparent;
-    border: 1.5px solid var(--oy-ink);
-    font-family: var(--oy-font-body);
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background .2s, color .2s;
-    color: var(--oy-ink);
-  }
-  .oy-btn-small:hover { background: var(--oy-ink); color: var(--oy-cream); }
-
   /* ============ Nav (same links as the main site) ============ */
   .oy-nav {
     position: relative;
@@ -217,81 +142,22 @@
     height: 1.5px; background: var(--oy-red);
   }
 
-  /* ============ Lock screen ============ */
-  .oy-hero {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 48px;
-    align-items: center;
-    padding: 24px 12px 16px;
-  }
-  #gate { flex: 1; }
-  .oy-hero-headline { font-size: clamp(34px, 4.5vw, 48px); line-height: 1.05; }
-  .oy-hero-headline .accent { color: var(--oy-red); display: block; }
-  .oy-cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
-  .oy-art-wrap {
-    position: relative;
-    aspect-ratio: 1/1;
-    width: 100%;
-    max-width: 480px;
-    margin-left: auto;
-    display: grid;
-    place-items: center;
-  }
-  .oy-scene { width: 100%; height: 100%; object-fit: contain; display: block; }
-  .oy-wavy { margin: 14px 0 18px; color: var(--oy-ink); display: block; }
-
+  /* Shown until the episode list arrives (or if it can't be fetched). */
   .boot {
-    display: none;
+    display: grid;
     flex: 1;
     place-items: center;
+    min-height: 240px;
+    padding: 24px 12px;
     font-family: var(--oy-font-mono);
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
+    text-align: center;
     color: var(--oy-mute);
   }
-  .is-returning #gate { display: none; }
-  .is-returning .boot { display: grid; }
 
-  /* Password field: same underline field as the registration form */
-  .gate-form { margin-top: 28px; max-width: 420px; }
-  .reg-field label {
-    display: block;
-    font-family: var(--oy-font-mono);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-    margin-bottom: 6px;
-  }
-  .reg-field input {
-    width: 100%;
-    padding: 10px 0 8px;
-    border: none;
-    border-bottom: 1.5px solid var(--oy-ink);
-    background: transparent;
-    font-family: var(--oy-font-body);
-    font-size: 16px;
-    color: var(--oy-ink);
-    outline: none;
-  }
-  .reg-field input:focus, .reg-field.err input { border-color: var(--oy-red); }
-  .reg-field .err-msg {
-    display: none;
-    color: var(--oy-red);
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-  .reg-field.err .err-msg { display: block; }
-
-  /* ============ Header (after unlock) ============ */
+  /* ============ Header ============ */
   .pod { flex: 1; padding: 36px 12px 0; }
   .pod-head {
     display: flex;
@@ -313,7 +179,6 @@
     text-transform: uppercase;
   }
   .pod-sub { margin-top: 6px; font-size: 16px; line-height: 1.5; color: var(--oy-ink-soft); }
-  .oy-btn-small.pod-lock { min-height: 44px; padding: 0 18px; font-size: 14px; }
   .pod-main {
     display: flex;
     flex-wrap: wrap;
@@ -621,10 +486,6 @@
     .dk-btn { width: 44px; height: 44px; }
     .dk-play { width: 52px; height: 52px; }
   }
-  @media (max-width: 1024px) {
-    .oy-hero { grid-template-columns: 1fr; gap: 32px; }
-    .oy-art-wrap { margin: 0 auto; max-width: 420px; }
-  }
   /* The logo and four links stop fitting on one line here, so the links get their own row. */
   @media (max-width: 860px) {
     .oy-nav { flex-wrap: wrap; gap: 16px; }
@@ -634,9 +495,6 @@
     body { padding: 12px; }
     .oy-frame { padding: 20px 24px 20px; }
     .oy-nav-links { column-gap: 20px; }
-    .oy-h1 { font-size: 36px; }
-    .oy-hero-headline { font-size: clamp(24px, 8.2vw, 36px); }
-    .stamp { font-size: 9px; letter-spacing: 1px; }
     .pod { padding: 28px 0 0; }
     .pod-main { margin-top: 24px; }
     .ep-btn { grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 12px 10px 14px 14px; }
@@ -690,37 +548,9 @@
     </ul>
   </nav>
 
-  <div class="boot" id="boot">Loading</div>
+  <div class="boot" id="boot" role="status">Loading</div>
 
-  <!-- ============ LOCK SCREEN ============ -->
-  <section class="oy-hero" id="gate">
-    <div class="oy-hero-copy">
-      <span class="stamp">Listening Edition 01 · Invitation only</span>
-      <div class="oy-kana" style="font-size:38px" lang="ja">合言葉</div>
-      <svg class="oy-wavy" width="90" height="10" viewBox="0 0 90 10" fill="none" aria-hidden="true">
-        <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      </svg>
-      <h1 class="oy-h1 oy-hero-headline">Say the <span class="accent">word.</span></h1>
-      <p class="oy-lede" style="margin-top:20px; max-width:440px">
-        Twelve recordings from the campout. Invitation only, like the rest of it.
-      </p>
-      <form class="gate-form" id="gateForm" autocomplete="off" novalidate>
-        <div class="reg-field" id="gateField">
-          <label for="gateInput">Password</label>
-          <input id="gateInput" type="password" name="tmko-listen-word" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" autofocus>
-          <div class="err-msg" id="gateErr" role="alert"></div>
-        </div>
-        <div class="oy-cta-row">
-          <button class="oy-btn" id="gateBtn" type="submit">Unlock</button>
-        </div>
-      </form>
-    </div>
-    <div class="oy-art-wrap">
-      <img class="oy-scene" src="/assets/hero-bg.webp" alt="Joshua tree at dusk" width="1000" height="750">
-    </div>
-  </section>
-
-  <!-- ============ PLAYER + RECORDINGS (after unlock) ============ -->
+  <!-- ============ PLAYER + RECORDINGS ============ -->
   <section class="pod" id="recordings" aria-labelledby="podTitle" hidden>
     <header class="pod-head">
       <div>
@@ -728,7 +558,6 @@
         <h1 class="pod-title" id="podTitle">TMKO Podcast</h1>
         <p class="pod-sub" id="podSub"></p>
       </div>
-      <button class="oy-btn-small pod-lock" id="lockBtn" type="button">Lock</button>
     </header>
 
     <div class="pod-main">
@@ -764,7 +593,7 @@
     </div>
   </section>
 
-  <noscript><p class="oy-lede" style="padding:24px 12px">This page needs JavaScript to unlock.</p></noscript>
+  <noscript><p class="boot">This page needs JavaScript to play the recordings.</p></noscript>
 
   <!-- ============ FOOTER ============ -->
   <footer class="oy-footer">
@@ -779,7 +608,6 @@
 (() => {
   'use strict';
 
-  const BASE_TITLE = document.title;
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -808,13 +636,12 @@
   }
 
   // ---- saved listening state (per browser; purely a convenience) ----
-  const KEY = 'tmko:v1', HINT = 'tmko:in';
+  const KEY = 'tmko:v1';
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (_) {}
   saved.pos = saved.pos || {};
   saved.done = saved.done || {};
   const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) {} };
-  const setHint = (on) => { try { on ? localStorage.setItem(HINT, '1') : localStorage.removeItem(HINT); } catch (_) {} };
 
   // ---- state ----
   const S = { eps: [], edition: '', i: -1, playAll: saved.auto !== false,
@@ -828,88 +655,22 @@
   const hasMeta = () => audio.readyState >= 1;
   const now = () => (hasMeta() ? audio.currentTime : S.pendingSeek);
 
-  // ============ gate ============
+  // ============ episodes ============
   async function fetchEpisodes() {
-    const res = await fetch('/api/episodes', { credentials: 'same-origin', cache: 'no-store' });
-    if (res.status === 401) return null;
+    const res = await fetch('/api/episodes', { cache: 'no-store' });
     if (!res.ok) throw new Error('episodes_' + res.status);
     return res.json();
   }
 
-  function showGate() {
-    document.documentElement.classList.remove('is-returning');
-    $('#recordings').hidden = true;
-    $('#gate').hidden = false;
-    document.title = BASE_TITLE;
-  }
-
-  function gateError(msg) {
-    $('#gateErr').textContent = msg;
-    $('#gateField').classList.toggle('err', !!msg);
-  }
-
-  $('#gateForm').addEventListener('submit', async (ev) => {
-    ev.preventDefault();
-    const input = $('#gateInput'), btn = $('#gateBtn');
-    if (!input.value.trim()) { gateError('Type the word first.'); input.focus(); return; }
-    gateError('');
-    btn.disabled = true;
-    btn.textContent = 'Checking…';
-    try {
-      const res = await fetch('/api/unlock', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: input.value }),
-      });
-      const body = await res.json().catch(() => ({}));
-      if (res.ok && body.ok) {
-        const data = await fetchEpisodes();
-        if (!data) throw new Error('cookie_not_kept');
-        input.value = '';
-        enter(data);
-        window.scrollTo({ top: 0 });
-        return;
-      }
-      if (res.status === 429) gateError(`Slow down. Try again in ${body.retryAfter || 60}s.`);
-      else gateError('Not that one. Try again.');
-      input.select();
-    } catch (_) {
-      gateError("Can't reach the server. Try again.");
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Unlock';
-    }
-  });
-
-  async function lock() {
-    savePos();
-    audio.pause();
-    audio.removeAttribute('src');
-    audio.load();
-    S.i = -1; S.row = null; S.pendingSeek = 0;
-    if ('mediaSession' in navigator) { navigator.mediaSession.metadata = null; navigator.mediaSession.playbackState = 'none'; }
-    setHint(false);
-    try { await fetch('/api/unlock', { method: 'DELETE', credentials: 'same-origin' }); } catch (_) {}
-    S.eps = [];
-    $('#epList').innerHTML = '';
-    showGate();
-    gateError('');
-    $('#gateInput').focus();
-    window.scrollTo({ top: 0 });
-  }
-
   // ============ render ============
   function enter(data) {
-    document.documentElement.classList.remove('is-returning');
     S.eps = data.episodes.slice().sort((a, b) => a.number - b.number);
     S.edition = data.edition || 'Listening Edition';
     S.i = -1;
     renderHead();
     renderList();
-    $('#gate').hidden = true;
+    $('#boot').hidden = true;
     $('#recordings').hidden = false;
-    setHint(true);
     applyRate();
     renderMode();
     if (S.eps.length) load(startIndex(), true);   // ready to go; preload="none" keeps it from downloading
@@ -1204,7 +965,6 @@
     const btn = ev.target.closest('[data-play]');
     if (btn) toggleEpisode(btn.dataset.play);
   });
-  $('#lockBtn').addEventListener('click', lock);
   $('#btnPlay').addEventListener('click', togglePlay);
   $('#btnPrev').addEventListener('click', prev);
   $('#btnNext').addEventListener('click', next);
@@ -1255,11 +1015,9 @@
   // ============ boot ============
   (async () => {
     try {
-      const data = await fetchEpisodes();
-      if (data) enter(data);
-      else { setHint(false); showGate(); }
+      enter(await fetchEpisodes());
     } catch (_) {
-      showGate();
+      $('#boot').textContent = "Couldn't load the recordings. Refresh to try again.";
     }
   })();
 })();
