@@ -159,7 +159,9 @@ internally consistent.
 ## 7. Imagery rules
 
 - **Allowed:** flat hand-drawn illustrations using only ink, red, and the cream
-  family; the existing site map (`assets/map.jpg`); the logo (`assets/logo.png`).
+  family; the existing site map (`assets/map.jpg`); the logo (`assets/logo.png`);
+  photos of the event's own paperwork, framed like a print. The Trubiki nights
+  use their sign-up sheets as covers (`assets/trubiki-night-N.webp`, `.tb-cover`).
 - **Avoid:** photo stock, Unsplash desert photography, drone shots, glossy
   product imagery, gradient meshes, neon, AI-renders that look "rendered." If
   it would look out of place clipped onto a paper field guide, it doesn't

@@ -230,7 +230,7 @@
     border: 1.5px solid var(--oy-ink);
     z-index: -1;
   }
-  .tb-player-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .tb-player-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 10px; }
   .tb-player-head .oy-kana { font-size: 20px; letter-spacing: 3px; }
   .tb-when, .tb-count {
     font-family: var(--oy-font-mono);
@@ -248,6 +248,61 @@
     text-transform: uppercase;
   }
   .tb-count { margin-top: 6px; }
+
+  /* The night's cover: a photo of that night's sign-up sheet, clipped on like a
+     print. Tap it for the full sheet. Nights without a photo skip it. */
+  .tb-player-top { display: flex; align-items: flex-start; gap: 18px; }
+  .tb-player-id { flex: 1; min-width: 0; }
+  .tb-cover {
+    flex: none;
+    width: 108px;
+    margin: 2px 0 0 2px;
+    padding: 5px 5px 16px;
+    background: var(--oy-cream-warm);
+    border: none;
+    font: inherit;
+    cursor: zoom-in;
+    transform: rotate(-3deg);
+    transition: transform .25s var(--oy-ease);
+  }
+  .tb-cover[hidden] { display: none; }
+  .tb-cover:hover, .tb-cover:focus-visible { transform: rotate(0deg) scale(1.04); }
+  .tb-cover:focus-visible { outline: 2px solid var(--oy-red-soft); outline-offset: 3px; }
+  .tb-cover img { display: block; width: 100%; height: auto; }
+
+  .tb-lightbox {
+    max-width: min(92vw, 600px);
+    max-height: 94vh;
+    margin: auto;
+    padding: 12px 12px 10px;
+    background: var(--oy-cream-warm);
+    border: 1.5px solid var(--oy-ink);
+    color: var(--oy-ink);
+  }
+  .tb-lightbox::backdrop { background: rgba(28, 25, 23, 0.72); }
+  .tb-lightbox img { display: block; max-width: 100%; max-height: calc(94vh - 90px); width: auto; height: auto; margin: 0 auto; }
+  .tb-lightbox-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+  .tb-lightbox-cap {
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+  .tb-lightbox-close {
+    min-height: 44px;
+    padding: 0 18px;
+    background: transparent;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    font-family: var(--oy-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--oy-ink);
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+  }
+  .tb-lightbox-close:hover { color: var(--oy-red); border-color: var(--oy-red); }
   .tb-embed {
     margin-top: 20px;
     border-radius: var(--oy-radius-lg);
@@ -395,9 +450,14 @@
     .tb-tab { min-width: 0; flex: 1; padding: 10px 12px; }
     .tb-tab b { white-space: nowrap; }
     .tb-player { padding: 20px; }
+    .tb-player-top { gap: 14px; }
+    .tb-cover { width: 88px; }
     .oy-footer { grid-template-columns: 1fr; }
     .oy-footer .rule { grid-column: 1; }
     .tb-back { grid-column: 1; justify-self: start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tb-cover { transition: none; }
   }
 </style>
 </head>
@@ -487,9 +547,16 @@
   <!-- ============ PLAYER + SONGS ============ -->
   <section class="tb-main" id="night-panel" role="tabpanel">
     <div class="tb-player">
-      <div class="tb-player-head"><span class="oy-kana" lang="ja" id="nightKana"></span><span class="tb-when" id="nightWhen"></span></div>
-      <h2 id="nightTitle"></h2>
-      <div class="tb-count" id="nightCount"></div>
+      <div class="tb-player-top">
+        <button class="tb-cover" id="nightCover" type="button" hidden>
+          <img id="nightCoverImg" alt="" width="562" height="780">
+        </button>
+        <div class="tb-player-id">
+          <div class="tb-player-head"><span class="oy-kana" lang="ja" id="nightKana"></span><span class="tb-when" id="nightWhen"></span></div>
+          <h2 id="nightTitle"></h2>
+          <div class="tb-count" id="nightCount"></div>
+        </div>
+      </div>
       <div class="tb-embed">
         <iframe id="player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </div>
@@ -512,6 +579,15 @@
     </div>
   </section>
 
+  <!-- the night's sign-up sheet, full size -->
+  <dialog class="tb-lightbox" id="sheetBox" aria-labelledby="sheetCap">
+    <img id="sheetImg" alt="" width="562" height="780">
+    <div class="tb-lightbox-bar">
+      <span class="tb-lightbox-cap" id="sheetCap"></span>
+      <button class="tb-lightbox-close" id="sheetClose" type="button">Close</button>
+    </div>
+  </dialog>
+
   <!-- ============ FOOTER ============ -->
   <footer class="oy-footer">
     <div class="rule"></div>
@@ -526,10 +602,12 @@
   // `url` is Spotify's share link. The player embeds the playlist by its ID,
   // which only plays while the playlist is public on Spotify; the link's pt=
   // token lets people open it even while it's private, so keep the query string.
+  // `cover` is the photo of that night's sign-up sheet, shown beside the title.
   const NIGHTS = [
     {
       n: 1, short: 'Fri 16', when: 'Fri · Oct 16', label: '第一夜',
       url: 'https://open.spotify.com/playlist/3ZF8YaL5F9ssRxSLEXwAiW?si=96e2c35b7cb3413d&pt=52249e9915fdd8e178c4a7f008fce2ca',
+      cover: { src: '/assets/trubiki-night-1.webp', caption: 'Friday’s sign-up sheet' },
       tracks: [
         { by: 'Truman',   title: 'An Ending (Ascent)',     artist: 'Brian Eno', note: 'Remastered 2005' },
         { by: 'Karel',    title: 'Music for 18 Musicians', artist: 'Steve Reich, Steve Reich Ensemble' },
@@ -547,6 +625,7 @@
     {
       n: 2, short: 'Sat 17', when: 'Sat · Oct 17', label: '第二夜',
       url: 'https://open.spotify.com/playlist/7bz3segmXWLkBwIqqZlMaS?si=757dc815b0eb4504&pt=2bb39530c9f818c0df59c82fdafcb689',
+      cover: { src: '/assets/trubiki-night-2.webp', caption: 'Saturday’s sign-up sheet' },
       tracks: [
         { by: 'Truman',   title: 'Time',                              artist: 'Pink Floyd' },
         { by: 'Evelina',  title: 'Entangled',                         artist: 'Klur' },
@@ -588,9 +667,11 @@
       <b>Night ${night.n}</b><span>${night.short}</span>
     </button>`).join('');
   const tabEls = [...tabs.querySelectorAll('[role="tab"]')];
+  let current = 0;
 
   function select(i, { focus = false, initial = false } = {}) {
     const night = NIGHTS[i];
+    current = i;
     tabEls.forEach((tab, j) => {
       tab.setAttribute('aria-selected', String(j === i));
       tab.tabIndex = j === i ? 0 : -1;
@@ -603,6 +684,13 @@
     $('nightWhen').textContent = night.when;
     $('nightTitle').textContent = `Night ${night.n}`;
     $('nightCount').textContent = `TruBiki Playlist · ${night.tracks.length} songs · ${names} names`;
+
+    const coverBtn = $('nightCover');
+    coverBtn.hidden = !night.cover;
+    if (night.cover) {
+      $('nightCoverImg').src = night.cover.src;
+      coverBtn.setAttribute('aria-label', `${night.cover.caption}, full size`);
+    }
 
     const player = $('player');
     player.title = `Night ${night.n} playlist on Spotify`;
@@ -628,6 +716,22 @@
   tabs.addEventListener('click', (e) => {
     const tab = e.target.closest('[role="tab"]');
     if (tab) select(Number(tab.dataset.i));
+  });
+
+  // the cover opens the whole sign-up sheet; Escape, Close or a click outside shuts it
+  const sheetBox = $('sheetBox');
+  $('nightCover').addEventListener('click', () => {
+    const { cover } = NIGHTS[current];
+    if (!cover) return;
+    $('sheetImg').src = cover.src;
+    $('sheetImg').alt = `${cover.caption}: the names and songs, handwritten`;
+    $('sheetCap').textContent = cover.caption;
+    sheetBox.showModal();
+  });
+  $('sheetClose').addEventListener('click', () => sheetBox.close());
+  sheetBox.addEventListener('click', (e) => {
+    const r = sheetBox.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) sheetBox.close();
   });
   // arrow keys move between nights, as tabs do
   tabs.addEventListener('keydown', (e) => {
