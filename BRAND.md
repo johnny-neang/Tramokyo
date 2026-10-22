@@ -147,10 +147,12 @@ internally consistent.
 | Pill | `.oy-pill`, `.oy-pill--cta` | Used in nav-style filters; rounded; less weight than CTA. |
 | Chip | `.oy-chip` | Small uppercase label, ink border on cream — used as inline tags. |
 | Stamp | `.stamp` (in admin) / `.reg-hero-head .stamp` | The mono-font ink-bordered date marker. |
-| Day card | `.oy-day-head` in `trubiki.html` | Giant red day number over the kanji weekday, one per night. The Program page's `.oy-day-col` retired with the registration site. |
+| Day card | `.oy-day-col` / `.oy-day-head` (retired) | Giant red day number over the kanji weekday. Left with the Program page; Trubiki now picks nights with tabs. |
+| Night tabs | `.tb-tab` in `trubiki.html` | Ink-bordered tabs, the selected one filled ink. Each swaps the player and the song list. |
 | Form section | `.reg-section` (retired) | Letter-coded (`A`/`B`/`C`...) heading on the left, kanji on the right, perforation between sections. Left with the registration form (see git history); the survey keeps the letter + kanji idea. |
-| Stat block | `.oy-stats` / `.oy-stat-num` in `trubiki.html` | Big-number-plus-eyebrow pattern. Numbers in display font, label in mono caps. |
+| Stat block | `.oy-stats` / `.oy-stat-num` (retired) | Big-number-plus-eyebrow pattern. Numbers in display font, label in mono caps. Not on any page right now; see git history. |
 | Door card | `.hub-card` in `index.html` | Art panel over a kana tag, title, one sentence and one CTA. The post-event home is four of them; only the survey's CTA is red. |
+| Survey pop-up | `assets/survey-pop.js` | A link with `data-survey-pop` opens the survey in a `<dialog>`, straight to the first question (`/survey/?embed`). |
 
 ---
 
@@ -190,6 +192,7 @@ internally consistent.
   logo.png              brand wordmark
   hero-bg.png           Joshua tree + red sun scene (the old home hero)
   hero-bg-480.webp      small copy of it, for the photo-album card
+  survey-pop.js         the survey pop-up for data-survey-pop links
   map.jpg               site map illustration
 /index.html             thank-you hub, four doors — :root is the canonical token list
 /admin.html             admin dashboard — same tokens, restated locally

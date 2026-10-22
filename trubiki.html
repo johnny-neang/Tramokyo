@@ -43,7 +43,6 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
   body {
     background: var(--oy-red);
     color: var(--oy-ink);
@@ -88,32 +87,11 @@
   }
 
   /* ============ Semantic type ============ */
-  .oy-h1 {
-    font-family: var(--oy-font-display);
-    font-size: 44px;
-    line-height: 1.05;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-  }
   .oy-kana {
     font-family: var(--oy-font-jp);
     font-weight: 900;
     letter-spacing: 4px;
     color: var(--oy-red);
-  }
-  .oy-lede {
-    font-family: var(--oy-font-body);
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--oy-ink-soft);
-  }
-  .oy-eyebrow {
-    font-family: var(--oy-font-body);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
   }
   .oy-meta {
     font-family: var(--oy-font-body);
@@ -122,66 +100,6 @@
     text-transform: uppercase;
     color: var(--oy-mute);
   }
-  .stamp {
-    display: inline-block;
-    border: 1.5px solid var(--oy-ink);
-    padding: 4px 12px;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  /* ============ Primitives ============ */
-  .oy-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 34px;
-    background: var(--oy-red);
-    color: var(--oy-cream);
-    border: none;
-    font-family: var(--oy-font-body);
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    border-radius: var(--oy-radius-xs);
-    cursor: pointer;
-    position: relative;
-    transition: transform 120ms var(--oy-ease), background 200ms var(--oy-ease);
-  }
-  .oy-btn::before {
-    content: "";
-    position: absolute;
-    inset: -6px -6px 6px 6px;
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-xs);
-    z-index: -1;
-  }
-  .oy-btn:hover  { background: var(--oy-red-deep); transform: translate(-1px,-1px); }
-  .oy-btn:active { transform: translate(1px, 1px); }
-  .oy-btn, .oy-btn--ghost { white-space: nowrap; }
-
-  .oy-btn--ghost {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--oy-ink);
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-xs);
-    padding: 14px 34px;
-    font-family: var(--oy-font-body);
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease), background 200ms var(--oy-ease);
-  }
-  .oy-btn--ghost:hover { color: var(--oy-red); border-color: var(--oy-red); }
 
   /* ============ Nav ============ */
   .oy-nav {
@@ -195,10 +113,6 @@
   .oy-logo {
     display: inline-flex;
     align-items: center;
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
     line-height: 1;
   }
   .oy-logo img {
@@ -227,79 +141,219 @@
     height: 1.5px; background: var(--oy-red);
   }
 
-  /* ============ Hero ============ */
-  .oy-hero {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 48px;
-    align-items: center;
-    padding: 24px 12px 16px;
-    flex: 1;
-  }
-  .oy-hero-headline { font-size: clamp(34px, 4.5vw, 48px); line-height: 1.05; }
-  .oy-hero-headline .accent { color: var(--oy-red); display: block; }
-  .oy-cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
-  .oy-wavy { margin: 14px 0 18px; color: var(--oy-ink); }
-
-  /* ============ Stats ============ */
-  .oy-stats {
-    margin-top: 44px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    border-top: 1.5px solid var(--oy-red);
-    padding-top: 28px;
-  }
-  .oy-stat-num {
-    font-family: var(--oy-font-display);
-    font-size: 56px;
-    line-height: 1;
-    color: var(--oy-red);
-  }
-
-  /* ============ Day card ============ */
-  .oy-section-head { margin-bottom: 32px; }
-  .oy-day-head {
-    border: 1.5px solid var(--oy-ink);
-    background: var(--oy-cream-warm);
-    padding: 18px 14px 14px;
-    text-align: center;
-  }
-  .oy-day-num {
-    font-family: var(--oy-font-display);
-    font-size: 64px;
-    line-height: 0.9;
-    color: var(--oy-red);
-    letter-spacing: -2px;
-  }
-  .oy-day-meta {
-    margin-top: 6px;
+  /* ============ Header + night tabs ============ */
+  .tb-head {
     display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px 32px;
+    margin: 36px 12px 0;
+    padding-bottom: 22px;
+    border-bottom: 1.5px solid var(--oy-red);
   }
-  .oy-day-meta .dow {
+  .tb-id { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+  .tb-id .oy-kana { font-size: 22px; line-height: 1.2; }
+  .tb-title {
+    margin-top: 4px;
+    font-family: var(--oy-font-display);
+    font-weight: 400;
+    font-size: clamp(30px, 3vw, 42px);
+    line-height: 1.04;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .tb-sub { margin-top: 6px; font-size: 16px; line-height: 1.5; color: var(--oy-ink-soft); }
+
+  .tb-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tb-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    min-width: 120px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    font-family: var(--oy-font-body);
+    color: var(--oy-ink);
+    text-align: left;
+    cursor: pointer;
+    transition: background .2s var(--oy-ease), color .2s var(--oy-ease);
+  }
+  .tb-tab:hover { color: var(--oy-red); border-color: var(--oy-red); }
+  .tb-tab[aria-selected="true"] { background: var(--oy-ink); border-color: var(--oy-ink); color: var(--oy-cream); }
+  .tb-tab b { font-size: 15px; font-weight: 700; }
+  .tb-tab span {
     font-family: var(--oy-font-mono);
     font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--oy-mute);
-    font-weight: 700;
   }
-  .oy-day-meta .jp {
-    font-family: var(--oy-font-jp);
-    font-weight: 700;
-    color: var(--oy-red);
+
+  /* ============ Emblem ============ */
+  .tb-emblem { display: block; width: 150px; height: auto; overflow: visible; }
+  /* single-class selectors, so the shapes stay styled wherever they're reused */
+  .tb-ink   { fill: var(--oy-ink); }
+  .tb-red   { fill: var(--oy-red); }
+  .tb-paper { fill: var(--oy-cream); }
+  .tb-line  { fill: none; stroke: var(--oy-ink); stroke-linecap: round; stroke-linejoin: round; }
+  .tb-peak  { stroke: var(--oy-ink); stroke-width: 6; stroke-linejoin: round; }
+  .tb-word  { font-family: var(--oy-font-display); fill: var(--oy-ink); }
+
+  /* ============ Player + song list ============ */
+  /* a stacking context, so the player's offset box draws above the frame */
+  .tb-main {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 28px;
+    margin: 32px 12px 0;
+  }
+  .tb-player {
+    position: relative;
+    flex: 1 1 340px;
+    max-width: 460px;
+    padding: 24px;
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+  }
+  .tb-player::before {
+    content: "";
+    position: absolute;
+    inset: 8px -8px -8px 8px;
+    border: 1.5px solid var(--oy-ink);
+    z-index: -1;
+  }
+  .tb-player-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .tb-player-head .oy-kana { font-size: 20px; letter-spacing: 3px; }
+  .tb-when, .tb-count {
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-hairline);
+  }
+  .tb-player h2 {
+    margin-top: 12px;
+    font-family: var(--oy-font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1.08;
+    text-transform: uppercase;
+  }
+  .tb-count { margin-top: 6px; }
+  .tb-embed {
+    margin-top: 20px;
+    border-radius: var(--oy-radius-lg);
+    overflow: hidden;
+    background: var(--oy-ink-soft);
+  }
+  .tb-embed iframe { display: block; width: 100%; height: 352px; border: 0; }
+  .tb-player-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--oy-hairline);
+  }
+  .tb-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: var(--oy-cream);
     font-size: 14px;
+    font-weight: 600;
+    transition: color .2s;
+  }
+  .tb-open:hover { color: var(--oy-red-soft); }
+
+  .tb-list { flex: 999 1 520px; min-width: 0; }
+  .tb-sheet {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+  }
+  .tb-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .tb-table .col-name { width: 118px; }
+  .tb-table th {
+    padding: 10px 12px 9px;
+    text-align: left;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    border-bottom: 1.5px solid var(--oy-ink);
+  }
+  .tb-table td {
+    padding: 11px 12px 12px;
+    vertical-align: baseline;
+    border-bottom: 1px solid var(--oy-hairline);
+  }
+  .tb-table th + th,
+  .tb-table td + td { border-left: 1.5px solid var(--oy-ink); }
+  .tb-table tbody tr:last-child td { border-bottom: none; }
+
+  .tb-n {
+    display: inline-block;
+    width: 24px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--oy-mute);
+  }
+  .tb-name {
+    font-family: var(--oy-font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--oy-ink);
+    overflow-wrap: anywhere;
+  }
+  .tb-name--unknown {
+    color: var(--oy-red-deep);
+    border-bottom: 1.5px dashed var(--oy-red-deep);
+    padding: 0 4px;
+  }
+  .tb-song {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--oy-ink);
+  }
+  .tb-artist {
+    display: block;
+    margin-top: 2px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: var(--oy-mute);
+  }
+  .tb-note {
+    margin-top: 12px;
+    text-align: right;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
   }
 
   /* ============ Footer ============ */
   .oy-footer {
     position: relative; z-index: 2;
-    margin-top: 28px;
+    margin-top: 40px;
     padding: 0 12px 4px;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -321,174 +375,20 @@
   }
   .tb-back:hover { color: var(--oy-red); }
 
-  /* ============ Trubiki emblem ============ */
-  .tb-art { width: 100%; max-width: 600px; margin-left: auto; }
-  .tb-emblem { display: block; width: 100%; height: auto; overflow: visible; }
-  /* single-class selectors on purpose: shapes pulled in through <use> don't match a .tb-emblem ancestor */
-  .tb-ink   { fill: var(--oy-ink); }
-  .tb-red   { fill: var(--oy-red); }
-  .tb-paper { fill: var(--oy-cream); }
-  .tb-line  { fill: none; stroke: var(--oy-ink); stroke-linecap: round; stroke-linejoin: round; }
-  .tb-peak  { stroke: var(--oy-ink); stroke-width: 6; stroke-linejoin: round; }
-  .tb-word  { font-family: var(--oy-font-display); fill: var(--oy-ink); }
-
-  /* ============ Playlists ============ */
-  .tb-stats { margin: 28px 12px 0; grid-template-columns: repeat(3, 1fr); }
-  .tb-playlists { padding: 44px 12px 12px; }
-  .tb-nights {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
-  .tb-night {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    scroll-margin-top: 24px;
-  }
-  .tb-night-label {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-  }
-  .tb-night-label .oy-kana { font-size: 14px; letter-spacing: 3px; }
-  .tb-night-label h3 { font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; }
-  .tb-count {
-    margin-top: 12px;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-  }
-  .tb-actions {
-    display: flex;
-    justify-content: center;
-    padding: 6px 6px 0 0;  /* room for the button's offset box */
-  }
-  .tb-actions .oy-btn { padding: 12px 24px; font-size: 13px; }
-
-  /* the sign-up sheet */
-  .tb-sheet {
-    flex: 1 1 auto;
-    border: 1.5px solid var(--oy-ink);
-    background: var(--oy-cream-warm);
-  }
-  .tb-table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; }
-  .tb-blank td { height: 61px; }  /* unused lines, so every night's sheet ends level */
-  .tb-note {
-    grid-column: 1 / -1;
-    margin-top: -8px;
-    text-align: right;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-  }
-  .tb-table .col-name { width: 118px; }
-  .tb-table th {
-    padding: 10px 12px 9px;
-    text-align: left;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-    border-bottom: 1.5px solid var(--oy-ink);
-  }
-  .tb-table td {
-    padding: 11px 12px 12px;
-    vertical-align: baseline;
-    border-bottom: 1px solid var(--oy-hairline);
-    transition: background .15s;
-  }
-  .tb-table th + th,
-  .tb-table td + td { border-left: 1.5px solid var(--oy-ink); }
-  .tb-table tbody tr:last-child td { border-bottom: none; }
-  .tb-table tbody tr:hover td { background: var(--oy-cream); }
-
-  .tb-n {
-    display: inline-block;
-    width: 24px;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--oy-red);
-  }
-  .tb-name {
-    font-family: var(--oy-font-mono);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--oy-ink);
-    overflow-wrap: anywhere;
-  }
-  .tb-name--unknown {
-    color: var(--oy-red);
-    border-bottom: 1.5px dashed var(--oy-red);
-    padding: 0 4px;
-  }
-  .tb-title {
-    display: block;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 1.3;
-    color: var(--oy-ink);
-  }
-  .tb-artist {
-    display: block;
-    margin-top: 2px;
-    font-size: 12.5px;
-    line-height: 1.35;
-    color: var(--oy-mute);
-  }
-
-  /* ============ Motion ============ */
-  @keyframes tbRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-  @keyframes tbWave { 0%, 100% { opacity: 1; } 50% { opacity: .22; } }
-  @media (prefers-reduced-motion: no-preference) {
-    .tb-rise { animation: tbRise .7s var(--oy-ease) both; animation-delay: calc(var(--d, 0) * 90ms); }
-    .tb-wave { animation: tbWave 2.6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 0.22s); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-  }
-
-  @media (min-width: 1025px) and (max-width: 1367px) {
-    .oy-hero-headline { font-size: 3.4vw; }  /* keeps "one song at a time." on one line in the two-column hero */
-  }
-  @media (max-width: 1179px) {
-    .tb-nights { grid-template-columns: 1fr; max-width: 640px; margin: 0 auto; gap: 40px; }
-    .tb-blank { display: none; }
-    .tb-note { margin-top: -28px; }
-  }
-  @media (max-width: 1024px) {
-    .oy-hero { grid-template-columns: 1fr; gap: 32px; }
-    .tb-art { margin: 0 auto; max-width: 520px; }
+  @media (max-width: 900px) {
+    .tb-player { max-width: none; }
   }
   @media (max-width: 640px) {
     body { padding: 12px; }
     .oy-frame { padding: 20px 24px 20px; }
     .oy-nav { flex-wrap: wrap; gap: 16px; }
     .oy-nav-links { gap: 20px; flex-wrap: wrap; order: 3; width: 100%; }
-    .oy-h1 { font-size: 36px; }
-    .oy-stat-num { font-size: 44px; }
-    .tb-stats { margin-left: 0; margin-right: 0; gap: 16px; }
-    .tb-playlists { padding-left: 0; padding-right: 0; }
+    .tb-head, .tb-main { margin-left: 0; margin-right: 0; }
+    .tb-head { margin-top: 28px; }
+    .tb-emblem { width: 120px; }
+    .tb-tab { min-width: 0; flex: 1; padding: 10px 12px; }
+    .tb-tab b { white-space: nowrap; }
+    .tb-player { padding: 20px; }
     .oy-footer { grid-template-columns: 1fr; }
     .oy-footer .rule { grid-column: 1; }
     .tb-back { grid-column: 1; justify-self: start; }
@@ -499,68 +399,45 @@
 
 <main class="oy-frame">
   <!-- ============ NAV ============ -->
-  <nav class="oy-nav">
+  <nav class="oy-nav" aria-label="Main">
     <a class="oy-logo" href="/" aria-label="Tramokyo home">
       <img src="/assets/logo.png" alt="Tramokyo" />
     </a>
     <ul class="oy-nav-links">
-      <li><a href="/survey/">Survey</a></li>
+      <li><a href="/survey/" data-survey-pop>Survey</a></li>
       <li class="on"><a href="/trubiki" aria-current="page">Trubiki</a></li>
       <li><a href="https://tmko.johnnyneang.com">TMKO Podcast</a></li>
       <li><a href="https://photos.app.goo.gl/8gWpv26gCsv7nc1y8" target="_blank" rel="noopener noreferrer">Photo album <span aria-hidden="true">↗</span></a></li>
     </ul>
   </nav>
 
-  <!-- ============ HERO ============ -->
-  <section class="oy-hero" aria-labelledby="tb-title">
-    <div class="oy-hero-copy">
-      <div class="stamp tb-rise" style="--d:0">Sound Session · 2026</div>
-      <div class="oy-kana tb-rise" style="font-size:38px; --d:1">十月 16–18</div>
-      <svg class="oy-wavy tb-rise" style="--d:1" width="90" height="10" viewBox="0 0 90 10" fill="none" aria-hidden="true">
-        <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      </svg>
-      <h1 class="oy-h1 oy-hero-headline tb-rise" id="tb-title" style="--d:2">
-        Trubiki,<br>
-        <span class="accent">three nights,</span>
-        one song at a time.
-      </h1>
-      <p class="oy-lede tb-rise" style="margin-top:20px; max-width:440px; --d:3">
-        A sign-up sheet, a name next to a song, one playlist a night. All three are below.
-      </p>
-      <div class="oy-cta-row tb-rise" style="--d:4">
-        <a class="oy-btn" href="#playlists">Hear the playlists <span aria-hidden="true">↓</span></a>
-        <a class="oy-btn--ghost" href="/"><span aria-hidden="true">←</span> Thank-you page</a>
-      </div>
-    </div>
-
-    <div class="tb-art tb-rise" style="--d:3">
+  <!-- ============ HEADER ============ -->
+  <header class="tb-head">
+    <div class="tb-id">
       <svg class="tb-emblem" viewBox="0 0 720 430" role="img" aria-labelledby="tb-emblem-title">
         <title id="tb-emblem-title">Trubiki: a torii gate over a rising sun, between two mountains, with sound waves on either side of the name</title>
         <defs>
-          <!-- left-hand mountain + clouds; mirrored for the right -->
-          <clipPath id="tb-cap">
-            <path d="M100 150 H230 V218 L188 218 L180 228 L172 216 L164 230 L156 217 L148 227 L140 218 H100 Z"/>
-          </clipPath>
-          <g id="tb-mtn" transform="translate(0 -3)">
-            <path class="tb-ink tb-peak" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
-            <path class="tb-paper tb-peak" clip-path="url(#tb-cap)" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
-          </g>
-          <g id="tb-kumo" stroke-width="6">
+          <clipPath id="tb-cap"><path d="M100 150 H230 V218 L188 218 L180 228 L172 216 L164 230 L156 217 L148 227 L140 218 H100 Z"/></clipPath>
+        </defs>
+        <path class="tb-line" stroke-width="5" d="M236 62 H56 A34 34 0 0 0 22 96 V380 A34 34 0 0 0 56 414 H664 A34 34 0 0 0 698 380 V96 A34 34 0 0 0 664 62 H484"/>
+        <g stroke-width="6">
+          <path class="tb-line" d="M92 104 H156 a7 7 0 0 1 7 7"/>
+          <path class="tb-line" d="M60 122 H130 a7 7 0 0 0 7 -7"/>
+          <path class="tb-line" d="M94 140 H158"/>
+          <g transform="translate(720 0) scale(-1 1)">
             <path class="tb-line" d="M92 104 H156 a7 7 0 0 1 7 7"/>
             <path class="tb-line" d="M60 122 H130 a7 7 0 0 0 7 -7"/>
             <path class="tb-line" d="M94 140 H158"/>
           </g>
-        </defs>
-
-        <!-- frame, open at the top for the gate -->
-        <path class="tb-line" stroke-width="5" d="M236 62 H56 A34 34 0 0 0 22 96 V380 A34 34 0 0 0 56 414 H664 A34 34 0 0 0 698 380 V96 A34 34 0 0 0 664 62 H484"/>
-
-        <use href="#tb-kumo"/>
-        <use href="#tb-kumo" transform="translate(720 0) scale(-1 1)"/>
-        <use href="#tb-mtn"/>
-        <use href="#tb-mtn" transform="translate(720 0) scale(-1 1)"/>
-
-        <!-- sun + rays -->
+        </g>
+        <g transform="translate(0 -3)">
+          <path class="tb-ink tb-peak" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+          <path class="tb-paper tb-peak" clip-path="url(#tb-cap)" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+        </g>
+        <g transform="translate(720 -3) scale(-1 1)">
+          <path class="tb-ink tb-peak" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+          <path class="tb-paper tb-peak" clip-path="url(#tb-cap)" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+        </g>
         <path class="tb-red" d="M306 262 A54 54 0 0 1 414 262 Z"/>
         <g class="tb-red">
           <path d="M300.9 232.7 L277.8 225.4 L287.2 209.1 L305.0 225.5 Z"/>
@@ -571,8 +448,6 @@
           <path d="M399.2 208.9 L422.6 169.1 L440.6 184.2 L405.5 214.2 Z"/>
           <path d="M415.0 225.5 L432.8 209.1 L442.2 225.4 L419.1 232.7 Z"/>
         </g>
-
-        <!-- torii -->
         <g class="tb-ink">
           <path d="M172 20 Q360 54 548 20 L534 50 Q360 68 186 50 Z"/>
           <rect x="202" y="62" width="316" height="9"/>
@@ -580,44 +455,61 @@
           <rect x="352" y="71" width="16" height="31"/>
           <polygon points="244,60 266,60 270,262 240,262"/>
           <polygon points="476,60 454,60 450,262 480,262"/>
+          <circle cx="140" cy="322" r="9"/>
+          <circle cx="580" cy="322" r="9"/>
         </g>
-
-        <!-- sound waves -->
-        <circle class="tb-ink" cx="140" cy="322" r="9"/>
-        <circle class="tb-ink" cx="580" cy="322" r="9"/>
-        <path class="tb-line tb-wave" style="--i:0" stroke-width="6"  d="M121.2 302.6 A27 27 0 0 0 121.2 341.4"/>
-        <path class="tb-line tb-wave" style="--i:1" stroke-width="6"  d="M108.6 287.1 A47 47 0 0 0 108.6 356.9"/>
-        <path class="tb-line tb-wave" style="--i:2" stroke-width="6"  d="M96.9 270.7 A67 67 0 0 0 96.9 373.3"/>
-        <path class="tb-line tb-wave" style="--i:3" stroke-width="10" d="M82.2 253.1 A90 90 0 0 0 82.2 390.9"/>
-        <path class="tb-line tb-wave" style="--i:0" stroke-width="6"  d="M598.8 302.6 A27 27 0 0 1 598.8 341.4"/>
-        <path class="tb-line tb-wave" style="--i:1" stroke-width="6"  d="M611.4 287.1 A47 47 0 0 1 611.4 356.9"/>
-        <path class="tb-line tb-wave" style="--i:2" stroke-width="6"  d="M623.1 270.7 A67 67 0 0 1 623.1 373.3"/>
-        <path class="tb-line tb-wave" style="--i:3" stroke-width="10" d="M637.8 253.1 A90 90 0 0 1 637.8 390.9"/>
-
-        <!-- wordmark -->
+        <path class="tb-line" stroke-width="6"  d="M121.2 302.6 A27 27 0 0 0 121.2 341.4"/>
+        <path class="tb-line" stroke-width="6"  d="M108.6 287.1 A47 47 0 0 0 108.6 356.9"/>
+        <path class="tb-line" stroke-width="6"  d="M96.9 270.7 A67 67 0 0 0 96.9 373.3"/>
+        <path class="tb-line" stroke-width="10" d="M82.2 253.1 A90 90 0 0 0 82.2 390.9"/>
+        <path class="tb-line" stroke-width="6"  d="M598.8 302.6 A27 27 0 0 1 598.8 341.4"/>
+        <path class="tb-line" stroke-width="6"  d="M611.4 287.1 A47 47 0 0 1 611.4 356.9"/>
+        <path class="tb-line" stroke-width="6"  d="M623.1 270.7 A67 67 0 0 1 623.1 373.3"/>
+        <path class="tb-line" stroke-width="10" d="M637.8 253.1 A90 90 0 0 1 637.8 390.9"/>
         <text class="tb-word" x="360" y="352" text-anchor="middle" font-size="86" textLength="374" lengthAdjust="spacingAndGlyphs">TRUBIKI</text>
         <rect class="tb-ink" x="166" y="366" width="388" height="6"/>
       </svg>
+      <div>
+        <div class="oy-kana" lang="ja">曲目</div>
+        <h1 class="tb-title">Trubiki</h1>
+        <p class="tb-sub">Three nights of the sound session. Pick a night.</p>
+      </div>
     </div>
-  </section>
+    <div class="tb-tabs" id="tabs" role="tablist" aria-label="Nights"></div>
+  </header>
 
-  <!-- ============ NUMBERS ============ -->
-  <section class="oy-stats tb-stats tb-rise" id="stats" style="--d:5" aria-label="By the numbers"></section>
-
-  <!-- ============ PLAYLISTS ============ -->
-  <section class="tb-playlists" id="playlists" aria-labelledby="tb-playlists-title">
-    <div class="oy-section-head">
-      <div class="oy-kana" style="font-size:28px">曲目</div>
-      <h2 class="oy-h1" id="tb-playlists-title" style="margin-top:8px">The playlists</h2>
-      <p class="oy-lede" style="max-width:520px; margin-top:12px">One per night, in playlist order. The name is whoever picked it. They&rsquo;re private playlists, so Spotify asks you to log in first.</p>
+  <!-- ============ PLAYER + SONGS ============ -->
+  <section class="tb-main" id="night-panel" role="tabpanel">
+    <div class="tb-player">
+      <div class="tb-player-head"><span class="oy-kana" lang="ja" id="nightKana"></span><span class="tb-when" id="nightWhen"></span></div>
+      <h2 id="nightTitle"></h2>
+      <div class="tb-count" id="nightCount"></div>
+      <div class="tb-embed">
+        <iframe id="player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+      </div>
+      <div class="tb-player-foot">
+        <span>Plays through Spotify. Log in there for full songs.</span>
+        <a class="tb-open" id="openSpotify" target="_blank" rel="noopener noreferrer">Open in Spotify <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
-    <div class="tb-nights" id="nights"></div>
+
+    <div class="tb-list">
+      <div class="tb-sheet">
+        <table class="tb-table">
+          <caption class="sr-only" id="listCaption"></caption>
+          <colgroup><col class="col-name"><col></colgroup>
+          <thead><tr><th scope="col">Name</th><th scope="col">Song</th></tr></thead>
+          <tbody id="songs"></tbody>
+        </table>
+      </div>
+      <p class="tb-note" id="unclaimed" hidden><span class="tb-name tb-name--unknown">?</span> = nobody’s claimed it yet</p>
+    </div>
   </section>
 
   <!-- ============ FOOTER ============ -->
   <footer class="oy-footer">
     <div class="rule"></div>
-    <div class="oy-meta">EST · 2026 · 山中湖</div>
+    <div class="oy-meta">EST · 2026 · <span lang="ja">山中湖</span></div>
     <a class="tb-back" href="/">← Tramokyo</a>
   </footer>
 </main>
@@ -625,11 +517,12 @@
 <script>
   // One entry per night, tracks in playlist order. `by` is who picked the song
   // (null = nobody has claimed it yet). `note` is a version tag from Spotify.
-  // `url` is Spotify's share link. These playlists are private: the `pt=` token
-  // is what lets other people open them, so don't trim the query string.
+  // `url` is Spotify's share link. The player embeds the playlist by its ID,
+  // which only plays while the playlist is public on Spotify; the link's pt=
+  // token lets people open it even while it's private, so keep the query string.
   const NIGHTS = [
     {
-      n: 1, day: 16, dow: 'FRI', jp: '金', label: '第一夜',
+      n: 1, short: 'Fri 16', when: 'Fri · Oct 16', label: '第一夜',
       url: 'https://open.spotify.com/playlist/3ZF8YaL5F9ssRxSLEXwAiW?si=96e2c35b7cb3413d&pt=52249e9915fdd8e178c4a7f008fce2ca',
       tracks: [
         { by: 'Truman',   title: 'An Ending (Ascent)',     artist: 'Brian Eno', note: 'Remastered 2005' },
@@ -646,7 +539,7 @@
       ],
     },
     {
-      n: 2, day: 17, dow: 'SAT', jp: '土', label: '第二夜',
+      n: 2, short: 'Sat 17', when: 'Sat · Oct 17', label: '第二夜',
       url: 'https://open.spotify.com/playlist/7bz3segmXWLkBwIqqZlMaS?si=757dc815b0eb4504&pt=2bb39530c9f818c0df59c82fdafcb689',
       tracks: [
         { by: 'Truman',   title: 'Time',                              artist: 'Pink Floyd' },
@@ -662,7 +555,7 @@
       ],
     },
     {
-      n: 3, day: 18, dow: 'SUN', jp: '日', label: '第三夜',
+      n: 3, short: 'Sun 18', when: 'Sun · Oct 18', label: '第三夜',
       url: 'https://open.spotify.com/playlist/29NnEbh37pRSSu1mav7Cx2?si=1ce6cc698d2f4153&pt=aea2b2d6f65ed94bdff7713c94418109',
       tracks: [
         { by: null,      title: 'In Your Bones (Chiefs Remix)', artist: 'Crooked Colours' },
@@ -676,72 +569,80 @@
     },
   ];
 
+  const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
-  const pickers = (tracks) => new Set(tracks.map((t) => t.by).filter(Boolean));
+  const playlistId = (url) => new URL(url).pathname.split('/').pop();
 
-  function renderStats() {
-    const songs = NIGHTS.reduce((sum, night) => sum + night.tracks.length, 0);
-    const names = new Set(NIGHTS.flatMap((night) => [...pickers(night.tracks)])).size;
-    document.getElementById('stats').innerHTML = [
-      [NIGHTS.length, 'nights'],
-      [songs, 'songs'],
-      [names, 'names'],
-    ].map(([num, label]) => `
-      <div><div class="oy-stat-num">${num}</div><div class="oy-eyebrow">${label}</div></div>
-    `).join('');
+  const tabs = $('tabs');
+  tabs.innerHTML = NIGHTS.map((night, i) => `
+    <button class="tb-tab" type="button" role="tab" id="tab-${night.n}" data-i="${i}"
+      aria-controls="night-panel" aria-selected="false" tabindex="-1">
+      <b>Night ${night.n}</b><span>${night.short}</span>
+    </button>`).join('');
+  const tabEls = [...tabs.querySelectorAll('[role="tab"]')];
+
+  function select(i, { focus = false, initial = false } = {}) {
+    const night = NIGHTS[i];
+    tabEls.forEach((tab, j) => {
+      tab.setAttribute('aria-selected', String(j === i));
+      tab.tabIndex = j === i ? 0 : -1;
+    });
+    if (focus) tabEls[i].focus();
+    $('night-panel').setAttribute('aria-labelledby', tabEls[i].id);
+
+    const names = new Set(night.tracks.map((t) => t.by).filter(Boolean)).size;
+    $('nightKana').textContent = night.label;
+    $('nightWhen').textContent = night.when;
+    $('nightTitle').textContent = `Night ${night.n}`;
+    $('nightCount').textContent = `TruBiki Playlist · ${night.tracks.length} songs · ${names} names`;
+
+    const player = $('player');
+    player.title = `Night ${night.n} playlist on Spotify`;
+    player.src = `https://open.spotify.com/embed/playlist/${playlistId(night.url)}?utm_source=generator&theme=0`;
+    $('openSpotify').href = night.url;
+
+    $('listCaption').textContent = `Night ${night.n} playlist: who picked which song`;
+    $('songs').innerHTML = night.tracks.map((t, k) => `
+      <tr>
+        <td><span class="tb-n">${String(k + 1).padStart(2, '0')}</span>${t.by
+          ? `<span class="tb-name">${esc(t.by)}</span>`
+          : `<span class="tb-name tb-name--unknown" title="Nobody has claimed this one">?</span>`}</td>
+        <td>
+          <span class="tb-song">${esc(t.title)}</span>
+          <span class="tb-artist"${t.lang ? ` lang="${t.lang}"` : ''}>${esc(t.artist)}${t.note ? ` · ${esc(t.note)}` : ''}</span>
+        </td>
+      </tr>`).join('');
+    $('unclaimed').hidden = night.tracks.every((t) => t.by);
+
+    if (!initial) history.replaceState(null, '', `#night-${night.n}`);
   }
 
-  function renderNights() {
-    const longest = Math.max(...NIGHTS.map((night) => night.tracks.length));
-    document.getElementById('nights').innerHTML = NIGHTS.map((night) => {
-      const rows = night.tracks.map((t, i) => `
-        <tr>
-          <td>
-            <span class="tb-n">${String(i + 1).padStart(2, '0')}</span>${t.by
-              ? `<span class="tb-name">${esc(t.by)}</span>`
-              : `<span class="tb-name tb-name--unknown" title="Nobody has claimed this one">?</span>`}
-          </td>
-          <td>
-            <span class="tb-title">${esc(t.title)}</span>
-            <span class="tb-artist"${t.lang ? ` lang="${t.lang}"` : ''}>${esc(t.artist)}${t.note ? ` · ${esc(t.note)}` : ''}</span>
-          </td>
-        </tr>`).join('');
+  tabs.addEventListener('click', (e) => {
+    const tab = e.target.closest('[role="tab"]');
+    if (tab) select(Number(tab.dataset.i));
+  });
+  // arrow keys move between nights, as tabs do
+  tabs.addEventListener('keydown', (e) => {
+    const at = tabEls.indexOf(document.activeElement);
+    if (at < 0) return;
+    const last = NIGHTS.length - 1;
+    const to = { ArrowRight: at + 1, ArrowDown: at + 1, ArrowLeft: at - 1, ArrowUp: at - 1, Home: 0, End: last }[e.key];
+    if (to === undefined) return;
+    e.preventDefault();
+    select((to + NIGHTS.length) % NIGHTS.length, { focus: true });
+  });
 
-      // unused lines, like the paper sheet: keeps the three columns the same height
-      const blanks = '<tr class="tb-blank" aria-hidden="true"><td></td><td></td></tr>'.repeat(longest - night.tracks.length);
-
-      return `
-        <article class="tb-night tb-rise" id="night-${night.n}" aria-labelledby="night-${night.n}-title" style="--d:${night.n + 5}">
-          <header class="oy-day-head">
-            <div class="tb-night-label"><span class="oy-kana">${night.label}</span><h3 id="night-${night.n}-title">Night ${night.n}</h3></div>
-            <div class="oy-day-num"><span class="sr-only">October </span>${night.day}</div>
-            <div class="oy-day-meta"><span class="dow">${night.dow}</span><span class="jp">${night.jp}</span></div>
-            <div class="tb-count">${night.tracks.length} songs · ${pickers(night.tracks).size} names</div>
-          </header>
-
-          <div class="tb-actions">
-            <a class="oy-btn" href="${esc(night.url)}" target="_blank" rel="noopener noreferrer">Open in Spotify <span aria-hidden="true">↗</span></a>
-          </div>
-
-          <div class="tb-sheet">
-            <table class="tb-table">
-              <caption class="sr-only">Night ${night.n} playlist: who picked which song</caption>
-              <colgroup><col class="col-name"><col></colgroup>
-              <thead><tr><th scope="col">Name</th><th scope="col">Song</th></tr></thead>
-              <tbody>${rows}${blanks}</tbody>
-            </table>
-          </div>
-        </article>`;
-    }).join('') + (NIGHTS.some((night) => night.tracks.some((t) => !t.by))
-      ? `<p class="tb-note"><span class="tb-name tb-name--unknown">?</span> = nobody&rsquo;s claimed it yet</p>`
-      : '');
-  }
-
-  renderStats();
-  renderNights();
+  // #night-2 opens straight onto that night, on load or when the hash changes
+  const fromHash = () => {
+    const i = Number((location.hash.match(/^#night-(\d+)$/) || [])[1]) - 1;
+    return i >= 0 && i < NIGHTS.length ? i : -1;
+  };
+  addEventListener('hashchange', () => { if (fromHash() >= 0) select(fromHash(), { initial: true }); });
+  select(Math.max(fromHash(), 0), { initial: true });
 </script>
+<script type="module" src="/assets/survey-pop.js"></script>
 
 </body>
 </html>
