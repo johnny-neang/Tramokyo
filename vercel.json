@@ -7,15 +7,9 @@
     }
   },
   "routes": [
-    {
-      "src": "^/$",
-      "has": [{ "type": "host", "value": "tramokyo.johnnyneang.com" }],
-      "dest": "/survey-site/index.html"
-    },
-    {
-      "src": "^/(.*)$",
-      "has": [{ "type": "host", "value": "tramokyo.johnnyneang.com" }],
-      "dest": "/survey-site/$1"
-    }
+    { "src": "^/survey$", "status": 308, "headers": { "Location": "/survey/" } },
+    { "src": "^/survey/$", "dest": "/survey-site/index.html" },
+    { "src": "^/survey/(.+)$", "dest": "/survey-site/$1" },
+    { "src": "^/trubiki/?$", "dest": "/trubiki.html" }
   ]
 }

@@ -14,6 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="modulepreload" href="survey-schema.js">
+<!-- ?embed = shown inside the hub's survey pop-up (assets/survey-pop.js) -->
+<script>if (new URLSearchParams(location.search).has('embed')) document.documentElement.classList.add('embedded');</script>
 
 <style>
   /* Brand tokens — mirror the main site's :root (BRAND.md §2). */
@@ -70,6 +72,11 @@
     border: 1.5px solid var(--oy-red); border-radius: 6px;
     pointer-events: none; z-index: 5;
   }
+  /* Inside the hub's pop-up: it brings its own bar and backdrop, so drop the
+     red margin and the logo (which would load the hub inside the pop-up). */
+  .embedded body { padding: 0; }
+  .embedded .frame { max-width: none; height: 100vh; height: 100dvh; min-height: 0; border-radius: 0; box-shadow: none; }
+  .embedded .logo { visibility: hidden; }
 
   /* ============ Top bar ============ */
   .top {
@@ -393,6 +400,7 @@
   import { SURVEY_SECTIONS, SURVEY_QUESTIONS, isVisible, validateSurvey, surveyColumns, SURVEY_VERSION, MAX_TEXT } from './survey-schema.js';
   import { SUBMIT_URL, MAIN_SITE_URL, PHOTO_ALBUM_URL } from './config.js';
 
+  const EMBEDDED = document.documentElement.classList.contains('embedded');
   const DRAFT_KEY = 'tramokyo-survey:draft:v1';
   const DONE_KEY = 'tramokyo-survey:done:v1';
   const LETTERS = 'ABCDEFGHIJ';
@@ -610,6 +618,7 @@
     els.progress.hidden = key === 'intro' || key === 'done';
     els.next.hidden = key === 'review';
     els.keyhint.hidden = key === 'review';
+    els.back.hidden = EMBEDDED && list.indexOf(key) === 1; // no welcome screen to go back to
 
     if (inQ) {
       const { q } = parseKey(key);
@@ -804,7 +813,7 @@
     clearTimeout(advanceTimer);
     const list = steps();
     const i = list.indexOf(cur);
-    if (i > 0) show(list[i - 1], 'prev');
+    if (i > (EMBEDDED ? 1 : 0)) show(list[i - 1], 'prev');
   }
 
   els.next.addEventListener('click', next);
@@ -887,7 +896,9 @@
     answers = draft.answers;
     responseId = draft.responseId || null;
   }
-  show(done && !draft ? 'done' : 'intro');
+  if (done && !draft) show('done');
+  else if (EMBEDDED) start(); // the pop-up opens straight onto a question (or the saved one)
+  else show('intro');
 </script>
 </body>
 </html>

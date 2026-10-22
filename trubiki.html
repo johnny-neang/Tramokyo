@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Trubiki · Three nights of sound · Tramokyo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Three nights, three playlists. Who brought which song to Trubiki, October 16–18, 2026.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Trubiki · Three nights of sound">
+<meta property="og:description" content="Three nights, three playlists. Who brought which song.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --oy-red:        #E8412A;
+    --oy-red-deep:   #C8341F;
+    --oy-red-soft:   #F4B8AC;
+
+    --oy-cream:      #F2E8D5;
+    --oy-cream-soft: #EADFC8;
+    --oy-cream-warm: #F7F0E0;
+
+    --oy-ink:        #1C1917;
+    --oy-ink-soft:   #3B3430;
+    --oy-mute:       #6B625B;
+    --oy-hairline:   #C8BCA3;
+
+    --oy-font-display: 'Archivo Black', 'Impact', sans-serif;
+    --oy-font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+    --oy-font-jp:      'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    --oy-font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    --oy-radius-xs: 2px;
+    --oy-radius-sm: 4px;
+    --oy-radius-md: 6px;
+    --oy-radius-lg: 10px;
+    --oy-radius-pill: 999px;
+
+    --oy-ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--oy-red);
+    color: var(--oy-ink);
+    font-family: var(--oy-font-body);
+    -webkit-font-smoothing: antialiased;
+    padding: 24px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--oy-red);
+    outline-offset: 4px;
+  }
+
+  .oy-frame {
+    position: relative;
+    width: 100%;
+    max-width: 1320px;
+    background: var(--oy-cream);
+    border-radius: 10px;
+    padding: 32px 52px 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.35);
+  }
+  .oy-frame::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1.5px solid var(--oy-red);
+    border-radius: 6px;
+    pointer-events: none;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ============ Semantic type ============ */
+  .oy-kana {
+    font-family: var(--oy-font-jp);
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--oy-red);
+  }
+  .oy-meta {
+    font-family: var(--oy-font-body);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+
+  /* ============ Nav ============ */
+  .oy-nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 12px 0;
+  }
+  .oy-logo {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+  .oy-logo img {
+    display: block;
+    height: clamp(28px, 2.8vw, 40px);
+    width: auto;
+  }
+  .oy-nav-links {
+    display: flex;
+    gap: 44px;
+    list-style: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .oy-nav-links a {
+    color: var(--oy-ink-soft);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 4px 0;
+    position: relative;
+    transition: color .2s var(--oy-ease);
+  }
+  .oy-nav-links a:hover { color: var(--oy-red); }
+  .oy-nav-links li.on a { color: var(--oy-ink); }
+  .oy-nav-links li.on a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1.5px; background: var(--oy-red);
+  }
+
+  /* ============ Header + night tabs ============ */
+  .tb-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px 32px;
+    margin: 36px 12px 0;
+    padding-bottom: 22px;
+    border-bottom: 1.5px solid var(--oy-red);
+  }
+  .tb-id { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+  .tb-id .oy-kana { font-size: 22px; line-height: 1.2; }
+  .tb-title {
+    margin-top: 4px;
+    font-family: var(--oy-font-display);
+    font-weight: 400;
+    font-size: clamp(30px, 3vw, 42px);
+    line-height: 1.04;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .tb-sub { margin-top: 6px; font-size: 16px; line-height: 1.5; color: var(--oy-ink-soft); }
+
+  .tb-tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tb-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    min-width: 120px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1.5px solid var(--oy-ink);
+    border-radius: var(--oy-radius-xs);
+    font-family: var(--oy-font-body);
+    color: var(--oy-ink);
+    text-align: left;
+    cursor: pointer;
+    transition: background .2s var(--oy-ease), color .2s var(--oy-ease);
+  }
+  .tb-tab:hover { color: var(--oy-red); border-color: var(--oy-red); }
+  .tb-tab[aria-selected="true"] { background: var(--oy-ink); border-color: var(--oy-ink); color: var(--oy-cream); }
+  .tb-tab b { font-size: 15px; font-weight: 700; }
+  .tb-tab span {
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ============ Emblem ============ */
+  .tb-emblem { display: block; width: 150px; height: auto; overflow: visible; }
+  /* single-class selectors, so the shapes stay styled wherever they're reused */
+  .tb-ink   { fill: var(--oy-ink); }
+  .tb-red   { fill: var(--oy-red); }
+  .tb-paper { fill: var(--oy-cream); }
+  .tb-line  { fill: none; stroke: var(--oy-ink); stroke-linecap: round; stroke-linejoin: round; }
+  .tb-peak  { stroke: var(--oy-ink); stroke-width: 6; stroke-linejoin: round; }
+  .tb-word  { font-family: var(--oy-font-display); fill: var(--oy-ink); }
+
+  /* ============ Player + song list ============ */
+  /* a stacking context, so the player's offset box draws above the frame */
+  .tb-main {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 28px;
+    margin: 32px 12px 0;
+  }
+  .tb-player {
+    position: relative;
+    flex: 1 1 340px;
+    max-width: 460px;
+    padding: 24px;
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+  }
+  .tb-player::before {
+    content: "";
+    position: absolute;
+    inset: 8px -8px -8px 8px;
+    border: 1.5px solid var(--oy-ink);
+    z-index: -1;
+  }
+  .tb-player-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .tb-player-head .oy-kana { font-size: 20px; letter-spacing: 3px; }
+  .tb-when, .tb-count {
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-hairline);
+  }
+  .tb-player h2 {
+    margin-top: 12px;
+    font-family: var(--oy-font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 28px);
+    line-height: 1.08;
+    text-transform: uppercase;
+  }
+  .tb-count { margin-top: 6px; }
+  .tb-embed {
+    margin-top: 20px;
+    border-radius: var(--oy-radius-lg);
+    overflow: hidden;
+    background: var(--oy-ink-soft);
+  }
+  .tb-embed iframe { display: block; width: 100%; height: 352px; border: 0; }
+  .tb-player-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--oy-hairline);
+  }
+  .tb-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: var(--oy-cream);
+    font-size: 14px;
+    font-weight: 600;
+    transition: color .2s;
+  }
+  .tb-open:hover { color: var(--oy-red-soft); }
+
+  .tb-list { flex: 999 1 520px; min-width: 0; }
+  .tb-sheet {
+    border: 1.5px solid var(--oy-ink);
+    background: var(--oy-cream-warm);
+  }
+  .tb-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .tb-table .col-name { width: 118px; }
+  .tb-table th {
+    padding: 10px 12px 9px;
+    text-align: left;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    border-bottom: 1.5px solid var(--oy-ink);
+  }
+  .tb-table td {
+    padding: 11px 12px 12px;
+    vertical-align: baseline;
+    border-bottom: 1px solid var(--oy-hairline);
+  }
+  .tb-table th + th,
+  .tb-table td + td { border-left: 1.5px solid var(--oy-ink); }
+  .tb-table tbody tr:last-child td { border-bottom: none; }
+
+  .tb-n {
+    display: inline-block;
+    width: 24px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--oy-mute);
+  }
+  .tb-name {
+    font-family: var(--oy-font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--oy-ink);
+    overflow-wrap: anywhere;
+  }
+  .tb-name--unknown {
+    color: var(--oy-red-deep);
+    border-bottom: 1.5px dashed var(--oy-red-deep);
+    padding: 0 4px;
+  }
+  .tb-song {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--oy-ink);
+  }
+  .tb-artist {
+    display: block;
+    margin-top: 2px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: var(--oy-mute);
+  }
+  .tb-note {
+    margin-top: 12px;
+    text-align: right;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+  }
+
+  /* ============ Footer ============ */
+  .oy-footer {
+    position: relative; z-index: 2;
+    margin-top: 40px;
+    padding: 0 12px 4px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 30px;
+  }
+  .oy-footer .rule { height: 1px; background: var(--oy-red); opacity: 0.8; }
+  .tb-back {
+    grid-column: 2;
+    justify-self: end;
+    margin-top: 4px;
+    font-family: var(--oy-font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--oy-mute);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .tb-back:hover { color: var(--oy-red); }
+
+  @media (max-width: 900px) {
+    .tb-player { max-width: none; }
+  }
+  /* The logo and four links stop fitting on one line here, so the links get their own row. */
+  @media (max-width: 860px) {
+    .oy-nav { flex-wrap: wrap; gap: 16px; }
+    .oy-nav-links { gap: 12px 28px; flex-wrap: wrap; order: 3; width: 100%; }
+  }
+  @media (max-width: 640px) {
+    body { padding: 12px; }
+    .oy-frame { padding: 20px 24px 20px; }
+    .oy-nav-links { column-gap: 20px; }
+    .tb-head, .tb-main { margin-left: 0; margin-right: 0; }
+    .tb-head { margin-top: 28px; }
+    .tb-emblem { width: 120px; }
+    .tb-tab { min-width: 0; flex: 1; padding: 10px 12px; }
+    .tb-tab b { white-space: nowrap; }
+    .tb-player { padding: 20px; }
+    .oy-footer { grid-template-columns: 1fr; }
+    .oy-footer .rule { grid-column: 1; }
+    .tb-back { grid-column: 1; justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<main class="oy-frame">
+  <!-- ============ NAV ============ -->
+  <nav class="oy-nav" aria-label="Main">
+    <a class="oy-logo" href="/" aria-label="Tramokyo home">
+      <img src="/assets/logo.png" alt="Tramokyo" />
+    </a>
+    <ul class="oy-nav-links">
+      <li><a href="/survey/" data-survey-pop>Survey</a></li>
+      <li class="on"><a href="/trubiki" aria-current="page">Trubiki</a></li>
+      <li><a href="https://tmko.johnnyneang.com">TMKO Podcast</a></li>
+      <li><a href="https://photos.app.goo.gl/8gWpv26gCsv7nc1y8" target="_blank" rel="noopener noreferrer">Photo album <span aria-hidden="true">↗</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HEADER ============ -->
+  <header class="tb-head">
+    <div class="tb-id">
+      <svg class="tb-emblem" viewBox="0 0 720 430" role="img" aria-labelledby="tb-emblem-title">
+        <title id="tb-emblem-title">Trubiki: a torii gate over a rising sun, between two mountains, with sound waves on either side of the name</title>
+        <defs>
+          <clipPath id="tb-cap"><path d="M100 150 H230 V218 L188 218 L180 228 L172 216 L164 230 L156 217 L148 227 L140 218 H100 Z"/></clipPath>
+        </defs>
+        <path class="tb-line" stroke-width="5" d="M236 62 H56 A34 34 0 0 0 22 96 V380 A34 34 0 0 0 56 414 H664 A34 34 0 0 0 698 380 V96 A34 34 0 0 0 664 62 H484"/>
+        <g stroke-width="6">
+          <path class="tb-line" d="M92 104 H156 a7 7 0 0 1 7 7"/>
+          <path class="tb-line" d="M60 122 H130 a7 7 0 0 0 7 -7"/>
+          <path class="tb-line" d="M94 140 H158"/>
+          <g transform="translate(720 0) scale(-1 1)">
+            <path class="tb-line" d="M92 104 H156 a7 7 0 0 1 7 7"/>
+            <path class="tb-line" d="M60 122 H130 a7 7 0 0 0 7 -7"/>
+            <path class="tb-line" d="M94 140 H158"/>
+          </g>
+        </g>
+        <g transform="translate(0 -3)">
+          <path class="tb-ink tb-peak" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+          <path class="tb-paper tb-peak" clip-path="url(#tb-cap)" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+        </g>
+        <g transform="translate(720 -3) scale(-1 1)">
+          <path class="tb-ink tb-peak" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+          <path class="tb-paper tb-peak" clip-path="url(#tb-cap)" d="M104 262 Q138 254 152 192 L158 186 H172 L178 192 Q190 254 252 262 Z"/>
+        </g>
+        <path class="tb-red" d="M306 262 A54 54 0 0 1 414 262 Z"/>
+        <g class="tb-red">
+          <path d="M300.9 232.7 L277.8 225.4 L287.2 209.1 L305.0 225.5 Z"/>
+          <path d="M314.5 214.2 L279.4 184.2 L297.4 169.1 L320.8 208.9 Z"/>
+          <path d="M333.6 201.5 L301.3 141.6 L327.6 132.0 L341.4 198.7 Z"/>
+          <path d="M355.9 196.1 L345.4 122.8 L374.6 122.8 L364.1 196.1 Z"/>
+          <path d="M378.6 198.7 L392.4 132.0 L418.7 141.6 L386.4 201.5 Z"/>
+          <path d="M399.2 208.9 L422.6 169.1 L440.6 184.2 L405.5 214.2 Z"/>
+          <path d="M415.0 225.5 L432.8 209.1 L442.2 225.4 L419.1 232.7 Z"/>
+        </g>
+        <g class="tb-ink">
+          <path d="M172 20 Q360 54 548 20 L534 50 Q360 68 186 50 Z"/>
+          <rect x="202" y="62" width="316" height="9"/>
+          <rect x="216" y="102" width="288" height="12"/>
+          <rect x="352" y="71" width="16" height="31"/>
+          <polygon points="244,60 266,60 270,262 240,262"/>
+          <polygon points="476,60 454,60 450,262 480,262"/>
+          <circle cx="140" cy="322" r="9"/>
+          <circle cx="580" cy="322" r="9"/>
+        </g>
+        <path class="tb-line" stroke-width="6"  d="M121.2 302.6 A27 27 0 0 0 121.2 341.4"/>
+        <path class="tb-line" stroke-width="6"  d="M108.6 287.1 A47 47 0 0 0 108.6 356.9"/>
+        <path class="tb-line" stroke-width="6"  d="M96.9 270.7 A67 67 0 0 0 96.9 373.3"/>
+        <path class="tb-line" stroke-width="10" d="M82.2 253.1 A90 90 0 0 0 82.2 390.9"/>
+        <path class="tb-line" stroke-width="6"  d="M598.8 302.6 A27 27 0 0 1 598.8 341.4"/>
+        <path class="tb-line" stroke-width="6"  d="M611.4 287.1 A47 47 0 0 1 611.4 356.9"/>
+        <path class="tb-line" stroke-width="6"  d="M623.1 270.7 A67 67 0 0 1 623.1 373.3"/>
+        <path class="tb-line" stroke-width="10" d="M637.8 253.1 A90 90 0 0 1 637.8 390.9"/>
+        <text class="tb-word" x="360" y="352" text-anchor="middle" font-size="86" textLength="374" lengthAdjust="spacingAndGlyphs">TRUBIKI</text>
+        <rect class="tb-ink" x="166" y="366" width="388" height="6"/>
+      </svg>
+      <div>
+        <div class="oy-kana" lang="ja">曲目</div>
+        <h1 class="tb-title">Trubiki</h1>
+        <p class="tb-sub">Three nights of the sound session. Pick a night.</p>
+      </div>
+    </div>
+    <div class="tb-tabs" id="tabs" role="tablist" aria-label="Nights"></div>
+  </header>
+
+  <!-- ============ PLAYER + SONGS ============ -->
+  <section class="tb-main" id="night-panel" role="tabpanel">
+    <div class="tb-player">
+      <div class="tb-player-head"><span class="oy-kana" lang="ja" id="nightKana"></span><span class="tb-when" id="nightWhen"></span></div>
+      <h2 id="nightTitle"></h2>
+      <div class="tb-count" id="nightCount"></div>
+      <div class="tb-embed">
+        <iframe id="player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+      </div>
+      <div class="tb-player-foot">
+        <span>Plays through Spotify. Log in there for full songs.</span>
+        <a class="tb-open" id="openSpotify" target="_blank" rel="noopener noreferrer">Open in Spotify <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+
+    <div class="tb-list">
+      <div class="tb-sheet">
+        <table class="tb-table">
+          <caption class="sr-only" id="listCaption"></caption>
+          <colgroup><col class="col-name"><col></colgroup>
+          <thead><tr><th scope="col">Name</th><th scope="col">Song</th></tr></thead>
+          <tbody id="songs"></tbody>
+        </table>
+      </div>
+      <p class="tb-note" id="unclaimed" hidden><span class="tb-name tb-name--unknown">?</span> = nobody’s claimed it yet</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="oy-footer">
+    <div class="rule"></div>
+    <div class="oy-meta">EST · 2026 · <span lang="ja">山中湖</span></div>
+    <a class="tb-back" href="/">← Tramokyo</a>
+  </footer>
+</main>
+
+<script>
+  // One entry per night, tracks in playlist order. `by` is who picked the song
+  // (null = nobody has claimed it yet). `note` is a version tag from Spotify.
+  // `url` is Spotify's share link. The player embeds the playlist by its ID,
+  // which only plays while the playlist is public on Spotify; the link's pt=
+  // token lets people open it even while it's private, so keep the query string.
+  const NIGHTS = [
+    {
+      n: 1, short: 'Fri 16', when: 'Fri · Oct 16', label: '第一夜',
+      url: 'https://open.spotify.com/playlist/3ZF8YaL5F9ssRxSLEXwAiW?si=96e2c35b7cb3413d&pt=52249e9915fdd8e178c4a7f008fce2ca',
+      tracks: [
+        { by: 'Truman',   title: 'An Ending (Ascent)',     artist: 'Brian Eno', note: 'Remastered 2005' },
+        { by: 'Karel',    title: 'Music for 18 Musicians', artist: 'Steve Reich, Steve Reich Ensemble' },
+        { by: 'Chi',      title: 'Ghost Voices',           artist: 'Lane 8, Virtual Self', note: 'Lane 8 Remix' },
+        { by: 'Dennis',   title: 'Do Better',              artist: 'Stormzy' },
+        { by: 'JP',       title: 'Hooked On A Feeling',    artist: 'Blue Swede, Björn Skifs' },
+        { by: 'Michelle', title: 'Praying',                artist: 'Kesha' },
+        { by: 'Tram',     title: 'Vida Bendita',           artist: 'Rulo Soul' },
+        { by: 'Tram',     title: 'A Poca Luz',             artist: 'Rulo Soul' },
+        { by: 'Laura',    title: 'Sun & Moon (1111 Hz)',   artist: 'Malte Marten, Luna Mando' },
+        { by: 'Flips',    title: 'Angel',                  artist: 'Massive Attack, Horace Andy' },
+        { by: 'Truman',   title: 'Bohemian Rhapsody',      artist: 'Angelina Jordan' },
+      ],
+    },
+    {
+      n: 2, short: 'Sat 17', when: 'Sat · Oct 17', label: '第二夜',
+      url: 'https://open.spotify.com/playlist/7bz3segmXWLkBwIqqZlMaS?si=757dc815b0eb4504&pt=2bb39530c9f818c0df59c82fdafcb689',
+      tracks: [
+        { by: 'Truman',   title: 'Time',                              artist: 'Pink Floyd' },
+        { by: 'Evelina',  title: 'Entangled',                         artist: 'Klur' },
+        { by: 'Poundcake', title: 'Las Parañas',                      artist: 'Mees Dierdorp' },
+        { by: 'Nova',     title: 'Golden',                            artist: 'K-Pop Demon Hunter' },
+        { by: 'Karimeh',  title: 'Superposition (feat. John Mayer)',  artist: 'Daniel Caesar, John Mayer' },
+        { by: 'Alexis',   title: 'Song for Zula',                     artist: 'Phosphorescent' },
+        { by: 'Berto',    title: 'Ode To The Mets',                   artist: 'The Strokes' },
+        { by: 'Sam',      title: 'Sunrise',                           artist: 'Cellomano' },
+        { by: 'Niko',     title: 'Lace',                              artist: 'Random Rab' },
+        { by: 'Truman',   title: 'Sad in Pali',                       artist: 'Elyanna' },
+      ],
+    },
+    {
+      n: 3, short: 'Sun 18', when: 'Sun · Oct 18', label: '第三夜',
+      url: 'https://open.spotify.com/playlist/29NnEbh37pRSSu1mav7Cx2?si=1ce6cc698d2f4153&pt=aea2b2d6f65ed94bdff7713c94418109',
+      tracks: [
+        { by: null,      title: 'In Your Bones (Chiefs Remix)', artist: 'Crooked Colours' },
+        { by: null,      title: 'Intensity',                    artist: 'SOFI TUKKER, Liniker' },
+        { by: 'Chris',   title: 'If It Makes You Happy',        artist: 'Sheryl Crow' },
+        { by: 'Rudy',    title: 'Sometime',                     artist: 'Me and My Friends' },
+        { by: 'Laura',   title: 'Ya Svoboden',                  artist: 'Кипелов', lang: 'ru' },
+        { by: 'Karimeh', title: 'Coloratura',                   artist: 'Coldplay' },
+        { by: 'Truman',  title: 'Runaway',                      artist: 'Yeah Yeah Yeahs' },
+      ],
+    },
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+  const playlistId = (url) => new URL(url).pathname.split('/').pop();
+
+  const tabs = $('tabs');
+  tabs.innerHTML = NIGHTS.map((night, i) => `
+    <button class="tb-tab" type="button" role="tab" id="tab-${night.n}" data-i="${i}"
+      aria-controls="night-panel" aria-selected="false" tabindex="-1">
+      <b>Night ${night.n}</b><span>${night.short}</span>
+    </button>`).join('');
+  const tabEls = [...tabs.querySelectorAll('[role="tab"]')];
+
+  function select(i, { focus = false, initial = false } = {}) {
+    const night = NIGHTS[i];
+    tabEls.forEach((tab, j) => {
+      tab.setAttribute('aria-selected', String(j === i));
+      tab.tabIndex = j === i ? 0 : -1;
+    });
+    if (focus) tabEls[i].focus();
+    $('night-panel').setAttribute('aria-labelledby', tabEls[i].id);
+
+    const names = new Set(night.tracks.map((t) => t.by).filter(Boolean)).size;
+    $('nightKana').textContent = night.label;
+    $('nightWhen').textContent = night.when;
+    $('nightTitle').textContent = `Night ${night.n}`;
+    $('nightCount').textContent = `TruBiki Playlist · ${night.tracks.length} songs · ${names} names`;
+
+    const player = $('player');
+    player.title = `Night ${night.n} playlist on Spotify`;
+    player.src = `https://open.spotify.com/embed/playlist/${playlistId(night.url)}?utm_source=generator&theme=0`;
+    $('openSpotify').href = night.url;
+
+    $('listCaption').textContent = `Night ${night.n} playlist: who picked which song`;
+    $('songs').innerHTML = night.tracks.map((t, k) => `
+      <tr>
+        <td><span class="tb-n">${String(k + 1).padStart(2, '0')}</span>${t.by
+          ? `<span class="tb-name">${esc(t.by)}</span>`
+          : `<span class="tb-name tb-name--unknown" title="Nobody has claimed this one">?</span>`}</td>
+        <td>
+          <span class="tb-song">${esc(t.title)}</span>
+          <span class="tb-artist"${t.lang ? ` lang="${t.lang}"` : ''}>${esc(t.artist)}${t.note ? ` · ${esc(t.note)}` : ''}</span>
+        </td>
+      </tr>`).join('');
+    $('unclaimed').hidden = night.tracks.every((t) => t.by);
+
+    if (!initial) history.replaceState(null, '', `#night-${night.n}`);
+  }
+
+  tabs.addEventListener('click', (e) => {
+    const tab = e.target.closest('[role="tab"]');
+    if (tab) select(Number(tab.dataset.i));
+  });
+  // arrow keys move between nights, as tabs do
+  tabs.addEventListener('keydown', (e) => {
+    const at = tabEls.indexOf(document.activeElement);
+    if (at < 0) return;
+    const last = NIGHTS.length - 1;
+    const to = { ArrowRight: at + 1, ArrowDown: at + 1, ArrowLeft: at - 1, ArrowUp: at - 1, Home: 0, End: last }[e.key];
+    if (to === undefined) return;
+    e.preventDefault();
+    select((to + NIGHTS.length) % NIGHTS.length, { focus: true });
+  });
+
+  // #night-2 opens straight onto that night, on load or when the hash changes
+  const fromHash = () => {
+    const i = Number((location.hash.match(/^#night-(\d+)$/) || [])[1]) - 1;
+    return i >= 0 && i < NIGHTS.length ? i : -1;
+  };
+  addEventListener('hashchange', () => { if (fromHash() >= 0) select(fromHash(), { initial: true }); });
+  select(Math.max(fromHash(), 0), { initial: true });
+</script>
+<script type="module" src="/assets/survey-pop.js"></script>
+
+</body>
+</html>
