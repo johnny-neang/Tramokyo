@@ -221,6 +221,11 @@
     transition: color .2s var(--oy-ease);
   }
   .oy-nav-links a:hover { color: var(--oy-red); }
+  .oy-nav-links li.on a { color: var(--oy-ink); }
+  .oy-nav-links li.on a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1.5px; background: var(--oy-red);
+  }
 
   /* ============ Hero ============ */
   .oy-hero {
@@ -495,13 +500,14 @@
 <main class="oy-frame">
   <!-- ============ NAV ============ -->
   <nav class="oy-nav">
-    <a class="oy-logo" href="index.html" aria-label="Tramokyo home">
-      <img src="assets/logo.png" alt="Tramokyo" />
+    <a class="oy-logo" href="/" aria-label="Tramokyo home">
+      <img src="/assets/logo.png" alt="Tramokyo" />
     </a>
     <ul class="oy-nav-links">
-      <li><a href="#night-1">Night 1</a></li>
-      <li><a href="#night-2">Night 2</a></li>
-      <li><a href="#night-3">Night 3</a></li>
+      <li><a href="/survey/">Survey</a></li>
+      <li class="on"><a href="/trubiki" aria-current="page">Trubiki</a></li>
+      <li><a href="https://tmko.johnnyneang.com">TMKO Podcast</a></li>
+      <li><a href="https://photos.app.goo.gl/8gWpv26gCsv7nc1y8" target="_blank" rel="noopener noreferrer">Photo album <span aria-hidden="true">↗</span></a></li>
     </ul>
   </nav>
 
@@ -523,7 +529,7 @@
       </p>
       <div class="oy-cta-row tb-rise" style="--d:4">
         <a class="oy-btn" href="#playlists">Hear the playlists <span aria-hidden="true">↓</span></a>
-        <a class="oy-btn--ghost" href="index.html"><span aria-hidden="true">←</span> Tramokyo</a>
+        <a class="oy-btn--ghost" href="/"><span aria-hidden="true">←</span> Thank-you page</a>
       </div>
     </div>
 
@@ -612,7 +618,7 @@
   <footer class="oy-footer">
     <div class="rule"></div>
     <div class="oy-meta">EST · 2026 · 山中湖</div>
-    <a class="tb-back" href="index.html">← Tramokyo</a>
+    <a class="tb-back" href="/">← Tramokyo</a>
   </footer>
 </main>
 
