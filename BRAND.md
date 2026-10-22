@@ -191,6 +191,7 @@ internally consistent.
   map.jpg               site map illustration
 /index.html             public site — :root is the canonical token list
 /admin.html             admin dashboard — same tokens, restated locally
+/trubiki.html           Trubiki playlists — same tokens, restated locally; emblem is inline SVG
 /BRAND.md               this file
 ```
 
