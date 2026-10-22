@@ -98,7 +98,7 @@ export const SURVEY_SECTIONS = [
         ],
         columns: ['Far too few', 'Slightly too few', 'Just right', 'More than enough', "Didn't use"] },
       { n: 19, id: 'improveFacilities', short: 'Improve for 2027', type: 'multi',
-        label: 'Which facilities or essential services would you most like us to improve for Tramokyo 2027?',
+        label: 'Which facilities or essential services would you most like us to improve for Hotel Tramsylvania 2027?',
         hint: 'Select all that apply.',
         options: ['More bathrooms', 'More showers', 'More drinking water stations',
           'More electricity and charging access', 'More lounges and communal spaces',
@@ -122,17 +122,17 @@ export const SURVEY_SECTIONS = [
     ]
   },
   {
-    id: 'next', letter: 'F', title: 'Tramokyo 2027', jp: '来年',
+    id: 'next', letter: 'F', title: 'Hotel Tramsylvania 2027', jp: '来年',
     questions: [
-      { n: 24, id: 'return', short: 'Return in 2027?', type: 'single', label: 'Would you attend Tramokyo again in 2027?',
+      { n: 24, id: 'return', short: 'Return in 2027?', type: 'single', label: 'Would you come back for Hotel Tramsylvania 2027?',
         options: ['Definitely', 'Probably', 'Maybe', 'Probably not', 'Definitely not'] },
-      { n: 25, id: 'dates2027', short: '2027 dates', type: 'multi', label: 'Which dates would work best for Tramokyo 2027?',
+      { n: 25, id: 'dates2027', short: '2027 dates', type: 'multi', label: 'Which dates would work best for Hotel Tramsylvania 2027?',
         hint: 'Select all that apply. Each option is a five-day Thursday–Monday.',
         options: ['September 9–13', 'September 16–20', 'October 7–11', 'October 14–18',
           'No preference', 'None of these dates work'],
         exclusive: ['No preference', 'None of these dates work'] },
       { n: 26, id: 'excitement', short: 'Excited to return if…', type: 'paragraph', optional: true,
-        label: 'What would make you more excited to return to Tramokyo in 2027?' }
+        label: 'What would make you more excited to come back for Hotel Tramsylvania 2027?' }
     ]
   },
   {
