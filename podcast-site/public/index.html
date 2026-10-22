@@ -48,8 +48,6 @@
     --oy-radius-pill: 999px;
 
     --oy-ease: cubic-bezier(.2,.7,.2,1);
-
-    --dock-h: 0px;   /* set from JS while the player dock is showing */
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,7 +58,7 @@
     color: var(--oy-ink);
     font-family: var(--oy-font-body);
     -webkit-font-smoothing: antialiased;
-    padding: 24px 24px calc(24px + var(--dock-h));
+    padding: 24px;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -95,12 +93,6 @@
     letter-spacing: -0.5px;
     text-transform: uppercase;
   }
-  .oy-h3 {
-    font-family: var(--oy-font-body);
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 1.2;
-  }
   .oy-kana {
     font-family: var(--oy-font-jp);
     font-weight: 900;
@@ -112,14 +104,6 @@
     font-size: 17px;
     line-height: 1.55;
     color: var(--oy-ink-soft);
-  }
-  .oy-eyebrow {
-    font-family: var(--oy-font-body);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
   }
   .oy-meta {
     font-family: var(--oy-font-body);
@@ -152,6 +136,7 @@
     font-family: var(--oy-font-body);
     font-weight: 600;
     font-size: 14px;
+    white-space: nowrap;
     border-radius: var(--oy-radius-xs);
     cursor: pointer;
     position: relative;
@@ -171,43 +156,6 @@
   .oy-btn:hover  { background: var(--oy-red-deep); top: -1px; left: -1px; }
   .oy-btn:active { top: 1px; left: 1px; }
   .oy-btn:disabled { background: var(--oy-red-deep); cursor: wait; top: 0; left: 0; }
-  .oy-btn, .oy-btn--ghost { white-space: nowrap; }
-  .oy-btn svg, .oy-btn--ghost svg { width: 16px; height: 16px; flex: none; }
-
-  .oy-btn--ghost {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--oy-ink);
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-xs);
-    padding: 14px 34px;
-    font-family: var(--oy-font-body);
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: color 200ms var(--oy-ease), border-color 200ms var(--oy-ease), background 200ms var(--oy-ease);
-  }
-  .oy-btn--ghost:hover { color: var(--oy-red); border-color: var(--oy-red); }
-
-  .oy-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    background: transparent;
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-pill);
-    font-family: var(--oy-font-body);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--oy-ink);
-    cursor: pointer;
-    transition: background .2s, color .2s, border-color .2s;
-  }
-  .oy-pill:hover { background: var(--oy-ink); color: var(--oy-cream); }
 
   .oy-btn-small {
     display: inline-flex;
@@ -224,26 +172,9 @@
     transition: background .2s, color .2s;
     color: var(--oy-ink);
   }
-  .oy-btn-small svg { width: 14px; height: 14px; flex: none; }
   .oy-btn-small:hover { background: var(--oy-ink); color: var(--oy-cream); }
-  .oy-btn-small.on { background: var(--oy-red); border-color: var(--oy-red); color: var(--oy-cream); }
 
-  .oy-link {
-    background: none;
-    border: none;
-    border-bottom: 1.5px solid var(--oy-red);
-    padding: 2px 0;
-    font-family: var(--oy-font-mono);
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-ink-soft);
-    cursor: pointer;
-    transition: color .2s var(--oy-ease);
-  }
-  .oy-link:hover { color: var(--oy-red); }
-
-  /* ============ Nav ============ */
+  /* ============ Nav (same links as the main site) ============ */
   .oy-nav {
     position: relative;
     z-index: 2;
@@ -254,6 +185,7 @@
     padding: 4px 12px 0;
   }
   .oy-logo {
+    flex: none;
     display: inline-flex;
     align-items: center;
     line-height: 1;
@@ -271,14 +203,21 @@
     font-weight: 500;
   }
   .oy-nav-links a {
+    position: relative;
     color: var(--oy-ink-soft);
     text-decoration: none;
+    white-space: nowrap;
     padding: 4px 0;
     transition: color .2s var(--oy-ease);
   }
   .oy-nav-links a:hover { color: var(--oy-red); }
+  .oy-nav-links li.on a { color: var(--oy-ink); }
+  .oy-nav-links li.on a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1.5px; background: var(--oy-red);
+  }
 
-  /* ============ Hero (lock screen + intro) ============ */
+  /* ============ Lock screen ============ */
   .oy-hero {
     position: relative;
     z-index: 1;
@@ -289,7 +228,6 @@
     padding: 24px 12px 16px;
   }
   #gate { flex: 1; }
-  #intro { padding-top: 40px; }
   .oy-hero-headline { font-size: clamp(34px, 4.5vw, 48px); line-height: 1.05; }
   .oy-hero-headline .accent { color: var(--oy-red); display: block; }
   .oy-cta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 28px; }
@@ -353,130 +291,100 @@
   }
   .reg-field.err .err-msg { display: block; }
 
-  /* ============ Stats ============ */
-  .oy-stats {
-    margin: 28px 12px 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    border-top: 1.5px solid var(--oy-red);
-    padding-top: 28px;
-  }
-  .oy-stat-num {
-    font-family: var(--oy-font-display);
-    font-size: clamp(34px, 4.2vw, 56px);
-    line-height: 1;
-    color: var(--oy-red);
-    margin-bottom: 8px;
-  }
-
-  /* ============ Recordings (the program grid, three days) ============ */
-  .oy-menu { padding: 56px 12px 24px; scroll-margin-top: 12px; }
-  .oy-section-head { margin-bottom: 32px; }
-  .oy-day-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    align-items: start;
-  }
-  .oy-day-col { display: flex; flex-direction: column; gap: 14px; }
-  .oy-day-head {
-    border: 1.5px solid var(--oy-ink);
-    background: var(--oy-cream-warm);
-    padding: 18px 14px 14px;
-    text-align: center;
-  }
-  .oy-day-num {
-    font-family: var(--oy-font-display);
-    font-size: 64px;
-    line-height: 0.9;
-    color: var(--oy-red);
-    letter-spacing: -2px;
-  }
-  .oy-day-meta {
-    margin-top: 6px;
+  /* ============ Header (after unlock) ============ */
+  .pod { flex: 1; padding: 36px 12px 0; }
+  .pod-head {
     display: flex;
-    justify-content: center;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .oy-day-meta .dow {
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-    font-weight: 700;
-  }
-  .oy-day-meta .jp {
-    font-family: var(--oy-font-jp);
-    font-weight: 700;
-    color: var(--oy-red);
-    font-size: 14px;
-  }
-  .oy-day-sub {
-    margin-top: 10px;
-    font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-  }
-  .ep-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-  .oy-menu-card {
-    padding: 18px;
-    background: var(--oy-cream-warm);
-    border: 1.5px solid var(--oy-ink);
-    position: relative;
-    transition: border-color .2s var(--oy-ease);
-  }
-  .oy-menu-top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .oy-price {
-    font-family: var(--oy-font-display);
-    font-size: 18px;
-    line-height: 1;
-    color: var(--oy-red);
-    letter-spacing: 0.5px;
-  }
-  .oy-menu-bot {
-    margin-top: 14px;
-    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
     justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+    gap: 14px 24px;
+    padding-bottom: 22px;
+    border-bottom: 1.5px solid var(--oy-red);
+  }
+  .pod-head .oy-kana { font-size: 22px; line-height: 1.2; }
+  .pod-title {
+    margin-top: 4px;
+    font-family: var(--oy-font-display);
+    font-weight: 400;
+    font-size: clamp(30px, 3vw, 42px);
+    line-height: 1.04;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+  .pod-sub { margin-top: 6px; font-size: 16px; line-height: 1.5; color: var(--oy-ink-soft); }
+  .oy-btn-small.pod-lock { min-height: 44px; padding: 0 18px; font-size: 14px; }
+  .pod-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 28px;
+    margin-top: 32px;
   }
 
+  /* ============ Recordings: one list, R01 down ============ */
+  .ep-list {
+    flex: 1 1 0;
+    min-width: 0;
+    list-style: none;
+    background: var(--oy-cream-warm);
+    border: 1.5px solid var(--oy-ink);
+  }
+  .ep { position: relative; border-bottom: 1px solid var(--oy-hairline); }
+  .ep:last-child { border-bottom: none; }
+  .ep.is-current { background: var(--oy-cream); }
+  .ep-btn {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    min-height: 72px;
+    padding: 12px 18px 14px;
+    background: transparent;
+    border: none;
+    font-family: var(--oy-font-body);
+    color: var(--oy-ink);
+    text-align: left;
+    cursor: pointer;
+  }
+  .ep-btn:focus-visible { outline-offset: -4px; }
+  .ep-icon {
+    display: grid;
+    place-items: center;
+    width: 44px; height: 44px;
+    border-radius: var(--oy-radius-pill);
+    background: var(--oy-ink);
+    color: var(--oy-cream);
+    transition: background .2s var(--oy-ease);
+  }
+  .ep-icon svg { width: 18px; height: 18px; }
+  .ep-btn:hover .ep-icon, .ep.is-current .ep-icon { background: var(--oy-red); }
+  .ep-text { display: block; min-width: 0; }
   .ep-code {
     display: flex;
     align-items: center;
     gap: 10px;
     font-family: var(--oy-font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--oy-red);
-    line-height: 1.8;
+    letter-spacing: 2px;
+    color: var(--oy-mute);
   }
-  .oy-menu-card.ep { display: flex; flex-direction: column; }
-  .ep-title { flex: 1; margin-top: 6px; font-size: 18px; }   /* grows, so bar + button line up across a row */
-  .ep-bar { position: relative; height: 3px; margin-top: 16px; background: var(--oy-hairline); }
-  .ep-bar span { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--oy-red); }
+  .ep-title { display: block; margin-top: 2px; font-size: 17px; font-weight: 700; line-height: 1.3; }
   .ep-state {
+    display: block;
+    margin-top: 4px;
     font-family: var(--oy-font-mono);
     font-size: 10px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--oy-mute);
   }
-  .oy-menu-card.is-current { border-color: var(--oy-red); }
-  .oy-menu-card.is-current::before {
-    content: "";
-    position: absolute;
-    left: -1.5px; top: -1.5px; bottom: -1.5px;
-    width: 6px;
-    background: var(--oy-red);
-  }
+  .ep-state:empty { display: none; }
+  .ep-dur { font-family: var(--oy-font-mono); font-size: 12px; color: var(--oy-mute); font-variant-numeric: tabular-nums; }
+  .ep-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; pointer-events: none; }
+  .ep-bar span { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--oy-red); }
   .eq { display: none; align-items: flex-end; gap: 2px; height: 11px; }
   .eq i { width: 2px; height: 100%; background: var(--oy-red); transform-origin: bottom; animation: eq 900ms ease-in-out infinite; }
   .eq i:nth-child(2) { animation-delay: -300ms; }
@@ -484,125 +392,160 @@
   .is-playing .eq { display: inline-flex; }
   @keyframes eq { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
 
-  /* ============ Player dock ============ */
+  /* ============ Player ============ */
+  /* An ink panel beside the list that stays in view while the list scrolls.
+     Below 1100px it docks to the bottom of the screen instead (see the media queries). */
   .oy-dock {
-    position: fixed;
-    z-index: 40;
-    left: 50%;
-    bottom: 18px;
-    width: min(1272px, calc(100vw - 48px));
-    transform: translateX(-50%);
-    background: var(--oy-cream-warm);
-    border: 1.5px solid var(--oy-ink);
-    padding: 12px 18px;
-    display: grid;
-    grid-template-columns: minmax(0, 1.6fr) auto minmax(0, 1.2fr) auto;
-    align-items: center;
-    column-gap: 24px;
-    animation: dockIn .35s var(--oy-ease);
+    position: sticky;
+    top: 24px;
+    z-index: 3;
+    flex: 0 0 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 26px 24px 22px;
+    background: var(--oy-ink);
+    color: var(--oy-cream);
   }
-  @keyframes dockIn { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
-  .dk-now { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .dk-art { width: 44px; height: 44px; flex: none; border: 1.5px solid var(--oy-ink); background: var(--oy-cream); object-fit: contain; }
+  .oy-dock::before {   /* offset outline, as on the Trubiki player */
+    content: "";
+    position: absolute;
+    inset: 8px -8px -8px 8px;
+    border: 1.5px solid var(--oy-ink);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .oy-dock :focus-visible { outline-color: var(--oy-red-soft); }
   .dk-text { min-width: 0; }
-  .dk-meta {
+  .dk-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
     font-family: var(--oy-font-mono);
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
+    color: var(--oy-hairline);
+  }
+  .dk-meta {
+    margin-top: 16px;
+    font-family: var(--oy-font-mono);
+    font-size: 12px;
     font-weight: 700;
-    color: var(--oy-red);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    letter-spacing: 2px;
+    color: var(--oy-red-soft);
   }
   .dk-title {
-    margin-top: 2px;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 1.25;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-top: 6px;
+    font-family: var(--oy-font-display);
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.08;
+    text-transform: uppercase;
   }
-  .dk-transport, .dk-opts { display: flex; align-items: center; gap: 4px; }
+
+  /* The waveform is the seek bar: an invisible range input sits on top of it. */
+  .dk-seek {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "wave wave wave" "cur . dur";
+    row-gap: 8px;
+  }
+  .dk-time {
+    min-width: 4.6ch;
+    font-family: var(--oy-font-mono);
+    font-size: 11px;
+    color: var(--oy-hairline);
+    font-variant-numeric: tabular-nums;
+  }
+  #tCur { grid-area: cur; }
+  #tDur { grid-area: dur; text-align: right; }
+  .dk-scrub { --pct: 0%; grid-area: wave; position: relative; height: 60px; }
+  .dk-wave {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    pointer-events: none;
+  }
+  .dk-wave i { flex: 1; min-width: 0; background: var(--oy-ink-soft); }
+  .dk-wave--on { clip-path: inset(0 calc(100% - var(--pct)) 0 0); }
+  .dk-wave--on i { background: var(--oy-red); }
+  .dk-scrub::after {   /* playhead */
+    content: "";
+    position: absolute;
+    top: -4px; bottom: -4px;
+    left: var(--pct);
+    width: 2px;
+    margin-left: -1px;
+    background: var(--oy-cream);
+    pointer-events: none;
+  }
+  .oy-seek {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  /* A thin thumb keeps clicks landing where the playhead is drawn. */
+  .oy-seek::-webkit-slider-runnable-track { height: 100%; }
+  .oy-seek::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 2px; height: 100%; }
+  .oy-seek::-moz-range-thumb { width: 2px; height: 100%; border: 0; }
+  .dk-scrub:has(.oy-seek:focus-visible) { outline: 2px solid var(--oy-red-soft); outline-offset: 6px; }
+
+  .dk-transport { display: flex; align-items: center; justify-content: center; gap: 12px; }
   .dk-btn {
     display: inline-grid;
     place-items: center;
-    width: 40px; height: 40px;
+    flex: none;
+    width: 48px; height: 48px;
+    padding: 0;
     background: transparent;
     border: none;
-    color: var(--oy-ink);
+    border-radius: var(--oy-radius-pill);
+    color: var(--oy-cream);
     cursor: pointer;
-    transition: color .2s var(--oy-ease);
+    transition: color .2s var(--oy-ease), border-color .2s var(--oy-ease), background .2s var(--oy-ease);
   }
-  .dk-btn svg { width: 20px; height: 20px; }
-  .dk-btn:hover { color: var(--oy-red); }
-  .dk-btn:disabled { opacity: .3; cursor: default; color: var(--oy-ink); }
-  .dk-skip { font-family: var(--oy-font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0; width: 44px; }
-  .oy-btn.dk-play { width: 46px; height: 46px; padding: 0; margin: 0 8px; }
-  .dk-play svg { width: 22px; height: 22px; }
-  .dk-seek { display: flex; align-items: center; gap: 10px; min-width: 0; }
-  .dk-time {
-    font-family: var(--oy-font-mono);
-    font-size: 11px;
-    color: var(--oy-mute);
-    min-width: 4.6ch;
-    font-variant-numeric: tabular-nums;
+  .dk-btn svg { width: 18px; height: 18px; }
+  .dk-btn:hover { color: var(--oy-red-soft); }
+  .dk-btn:disabled { opacity: .3; cursor: default; color: var(--oy-cream); }
+  .dk-round { border: 1.5px solid var(--oy-hairline); }
+  .dk-round:hover:not(:disabled) { border-color: var(--oy-red-soft); }
+  .dk-skip { font-family: var(--oy-font-mono); font-size: 12px; font-weight: 700; }
+  .dk-play { width: 68px; height: 68px; background: var(--oy-red); }
+  .dk-play:hover { background: var(--oy-red-deep); color: var(--oy-cream); }
+  .dk-play svg { width: 24px; height: 24px; }
+
+  .dk-opts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 18px;
+    border-top: 1px solid var(--oy-ink-soft);
   }
-  #tDur { text-align: right; }
   .dk-chip {
-    padding: 6px 10px;
-    background: var(--oy-cream);
-    border: 1.5px solid var(--oy-ink);
+    padding: 7px 12px;
+    background: transparent;
+    border: 1.5px solid var(--oy-hairline);
     font-family: var(--oy-font-body);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--oy-ink);
+    color: var(--oy-cream);
     cursor: pointer;
     white-space: nowrap;
     transition: background .2s, color .2s, border-color .2s;
   }
-  .dk-chip:hover { border-color: var(--oy-red); color: var(--oy-red); }
+  .dk-chip:hover { border-color: var(--oy-red-soft); color: var(--oy-red-soft); }
   .dk-chip[aria-pressed="true"] { background: var(--oy-red); border-color: var(--oy-red); color: var(--oy-cream); }
-  .dk-opts { gap: 8px; }
-
-  .oy-seek {
-    --pct: 0%;
-    -webkit-appearance: none;
-    appearance: none;
-    flex: 1;
-    min-width: 0;
-    height: 22px;
-    margin: 0;
-    background: transparent;
-    cursor: pointer;
-  }
-  .oy-seek::-webkit-slider-runnable-track {
-    height: 4px;
-    background: linear-gradient(to right, var(--oy-red) var(--pct), var(--oy-hairline) var(--pct));
-  }
-  .oy-seek::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    box-sizing: border-box;
-    width: 14px; height: 14px;
-    margin-top: -5px;
-    background: var(--oy-cream);
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-xs);
-  }
-  .oy-seek::-moz-range-track { height: 4px; background: var(--oy-hairline); border: 0; }
-  .oy-seek::-moz-range-progress { height: 4px; background: var(--oy-red); }
-  .oy-seek::-moz-range-thumb {
-    box-sizing: border-box;
-    width: 14px; height: 14px;
-    background: var(--oy-cream);
-    border: 1.5px solid var(--oy-ink);
-    border-radius: var(--oy-radius-xs);
-  }
 
   /* ============ Footer ============ */
   .oy-footer {
@@ -615,67 +558,99 @@
     gap: 30px;
   }
   .oy-footer .rule { height: 1px; background: var(--oy-red); opacity: 0.8; }
-  .oy-secret-link {
-    grid-column: 2;
-    justify-self: end;
-    margin-top: 4px;
-    font-family: var(--oy-font-mono);
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--oy-mute);
-    opacity: 0.6;
-    text-decoration: none;
-    transition: opacity .2s, color .2s;
-  }
-  .oy-secret-link:hover { opacity: 1; color: var(--oy-red); }
 
+  /* Below 1100px the list comes first and the player docks to the bottom of
+     the screen as three short rows: now playing, the waveform, the extras. */
   @media (max-width: 1100px) {
-    .oy-day-grid { grid-template-columns: 1fr; gap: 28px; }
-    .ep-list { display: grid; grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 1099px) {
+    .pod-main { gap: 20px; }
+    .ep-list { order: 1; flex-basis: 100%; }
     .oy-dock {
-      grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
-      row-gap: 8px;
-      column-gap: 4px;
-      padding: 10px 14px 12px;
+      order: 2;
+      flex: 1 1 100%;
+      top: auto;
+      bottom: 12px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 6px;
+      padding: 14px 16px;
+      box-shadow: 0 12px 28px -14px rgba(0,0,0,0.6);
     }
+    .oy-dock::before { display: none; }
     .dk-transport, .dk-opts { display: contents; }
-    .dk-now  { grid-column: 1 / 4; grid-row: 1; }
-    .dk-prev { grid-column: 4; grid-row: 1; }
-    .oy-btn.dk-play { grid-column: 5; grid-row: 1; margin: 0 6px; }
-    .dk-next { grid-column: 6; grid-row: 1; }
-    .dk-seek { grid-column: 1 / -1; grid-row: 2; }
-    .dk-back { grid-column: 1; grid-row: 3; }
-    .dk-fwd  { grid-column: 2; grid-row: 3; }
-    .dk-rate { grid-column: 4; grid-row: 3; justify-self: end; margin-right: 6px; }
-    .dk-mode { grid-column: 5 / 7; grid-row: 3; justify-self: end; }
+    .dk-text { order: 1; flex: 1 1 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+    .dk-meta { order: 1; margin-top: 0; }
+    .dk-top {
+      order: 2;
+      display: block;
+      flex: 1 1 0;
+      min-width: 0;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dk-ed { display: none; }
+    .dk-title { order: 3; flex: 1 1 100%; min-width: 0; margin-top: 0; font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #btnPrev { order: 2; }
+    #btnPlay { order: 3; }
+    #btnNext { order: 4; }
+    .dk-seek { order: 5; flex: 1 1 100%; grid-template-areas: "cur wave dur"; column-gap: 12px; align-items: center; }
+    .dk-scrub { height: 32px; }
+    #btnBack { order: 6; }
+    #btnFwd { order: 7; }
+    #btnRate { order: 8; margin-left: auto; }
+    #btnMode { order: 9; }
+    .dk-btn { width: 44px; height: 44px; }
+    .dk-play { width: 52px; height: 52px; }
   }
   @media (max-width: 1024px) {
     .oy-hero { grid-template-columns: 1fr; gap: 32px; }
     .oy-art-wrap { margin: 0 auto; max-width: 420px; }
   }
-  @media (max-width: 800px) {
-    .oy-stats { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  /* The logo and four links stop fitting on one line here, so the links get their own row. */
+  @media (max-width: 860px) {
+    .oy-nav { flex-wrap: wrap; gap: 16px; }
+    .oy-nav-links { gap: 12px 28px; flex-wrap: wrap; order: 3; width: 100%; }
   }
   @media (max-width: 640px) {
-    body { padding: 12px 12px calc(12px + var(--dock-h)); }
+    body { padding: 12px; }
     .oy-frame { padding: 20px 24px 20px; }
-    .oy-nav { flex-wrap: wrap; gap: 16px; }
-    .oy-nav-links { gap: 20px; flex-wrap: wrap; order: 3; width: 100%; }
+    .oy-nav-links { column-gap: 20px; }
     .oy-h1 { font-size: 36px; }
     .oy-hero-headline { font-size: clamp(24px, 8.2vw, 36px); }
     .stamp { font-size: 9px; letter-spacing: 1px; }
-    #intro { padding-top: 24px; }
-    .oy-menu { padding-top: 40px; }
-    .ep-list { grid-template-columns: 1fr; }
-    .oy-dock { bottom: 12px; width: calc(100vw - 24px); }
-    .dk-art { display: none; }
+    .pod { padding: 28px 0 0; }
+    .pod-main { margin-top: 24px; }
+    .ep-btn { gap: 12px; padding: 12px 14px 14px; }
+    .ep-title { font-size: 16px; }
+    .oy-dock { padding: 12px; gap: 10px 4px; }
+    .dk-text { column-gap: 8px; }
+    .dk-meta { letter-spacing: 1.5px; }
+    .dk-top { letter-spacing: 1px; }
+    .dk-title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      font-family: var(--oy-font-body);
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.25;
+      text-transform: none;
+      white-space: normal;
+    }
+    .dk-btn { width: 38px; height: 38px; }
+    .dk-play { width: 46px; height: 46px; }
+    .dk-scrub { height: 28px; }
+    .dk-wave i:nth-child(even) { display: none; }
+  }
+  /* On the narrowest phones the player drops the code to fit the status; the list still shows it. */
+  @media (max-width: 374px) {
+    .dk-meta { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .oy-dock { animation: none; }
     .eq i { animation: none; transform: scaleY(.6); }
   }
 </style>
@@ -684,15 +659,16 @@
 
 <main class="oy-frame">
   <!-- ============ NAV ============ -->
-  <nav class="oy-nav">
-    <a class="oy-logo" href="https://tramokyo.vercel.app" aria-label="Tramokyo home">
+  <nav class="oy-nav" aria-label="Main">
+    <a class="oy-logo" href="https://tramokyo.johnnyneang.com/" aria-label="Tramokyo home">
       <img src="/assets/logo.png" alt="Tramokyo" width="270" height="40">
     </a>
     <ul class="oy-nav-links">
-      <li data-auth hidden><a href="#recordings">Recordings</a></li>
-      <li><a href="https://tramokyo.vercel.app">Main site</a></li>
+      <li><a href="https://tramokyo.johnnyneang.com/survey/">Survey</a></li>
+      <li><a href="https://tramokyo.johnnyneang.com/trubiki">Trubiki</a></li>
+      <li class="on"><a href="/" aria-current="page">TMKO Podcast</a></li>
+      <li><a href="https://photos.app.goo.gl/8gWpv26gCsv7nc1y8" target="_blank" rel="noopener noreferrer">Photo album <span aria-hidden="true">↗</span></a></li>
     </ul>
-    <button class="oy-pill" id="lockBtn" type="button" hidden>Lock</button>
   </nav>
 
   <div class="boot" id="boot">Loading</div>
@@ -725,43 +701,48 @@
     </div>
   </section>
 
-  <!-- ============ INTRO (after unlock) ============ -->
-  <section class="oy-hero" id="intro" hidden>
-    <div class="oy-hero-copy">
-      <span class="stamp" id="introStamp"></span>
-      <div class="oy-kana" style="font-size:38px" id="introKana"></div>
-      <svg class="oy-wavy" width="90" height="10" viewBox="0 0 90 10" fill="none" aria-hidden="true">
-        <path d="M1 5 Q 7 1, 13 5 T 25 5 T 37 5 T 49 5 T 61 5 T 73 5 T 85 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      </svg>
-      <h1 class="oy-h1 oy-hero-headline" id="introTitle"></h1>
-      <p class="oy-lede" style="margin-top:20px; max-width:440px" id="introLede"></p>
-      <div class="oy-cta-row">
-        <button class="oy-btn" id="btnPlayAll" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
-          Play all
-        </button>
-        <button class="oy-btn--ghost" id="btnShuffle" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-          Shuffle
-        </button>
+  <!-- ============ PLAYER + RECORDINGS (after unlock) ============ -->
+  <section class="pod" id="recordings" aria-labelledby="podTitle" hidden>
+    <header class="pod-head">
+      <div>
+        <div class="oy-kana" lang="ja">録音</div>
+        <h1 class="pod-title" id="podTitle">TMKO Podcast</h1>
+        <p class="pod-sub" id="podSub"></p>
       </div>
-      <div style="margin-top:22px"><button class="oy-link" id="btnContinue" type="button" hidden></button></div>
-    </div>
-    <div class="oy-art-wrap">
-      <img class="oy-scene" src="/assets/hero-bg.webp" alt="Joshua tree at dusk" width="1000" height="750">
-    </div>
-  </section>
+      <button class="oy-btn-small pod-lock" id="lockBtn" type="button">Lock</button>
+    </header>
 
-  <div class="oy-stats" id="stats" hidden></div>
+    <div class="pod-main">
+      <div class="oy-dock" id="dock" role="region" aria-label="Player">
+        <div class="dk-text">
+          <div class="dk-top"><span id="dkState"></span><span class="dk-ed" id="dkEdition"></span></div>
+          <div class="dk-meta" id="dkMeta"></div>
+          <div class="dk-title" id="dkTitle" aria-live="polite"></div>
+        </div>
+        <div class="dk-seek">
+          <span class="dk-time" id="tCur">0:00</span>
+          <div class="dk-scrub" id="scrub">
+            <div class="dk-wave" aria-hidden="true"></div>
+            <div class="dk-wave dk-wave--on" aria-hidden="true"></div>
+            <input class="oy-seek" id="seek" type="range" min="0" max="100" step="1" value="0" aria-label="Seek">
+          </div>
+          <span class="dk-time" id="tDur">0:00</span>
+        </div>
+        <div class="dk-transport">
+          <button class="dk-btn dk-skip" id="btnBack" type="button" aria-label="Back 15 seconds">−15s</button>
+          <button class="dk-btn dk-round" id="btnPrev" type="button" aria-label="Previous recording"></button>
+          <button class="dk-btn dk-play" id="btnPlay" type="button" aria-label="Play"></button>
+          <button class="dk-btn dk-round" id="btnNext" type="button" aria-label="Next recording"></button>
+          <button class="dk-btn dk-skip" id="btnFwd" type="button" aria-label="Forward 30 seconds">+30s</button>
+        </div>
+        <div class="dk-opts">
+          <button class="dk-chip" id="btnRate" type="button" aria-label="Playback speed">1×</button>
+          <button class="dk-chip" id="btnMode" type="button" aria-pressed="true">Autoplay</button>
+        </div>
+      </div>
 
-  <!-- ============ RECORDINGS ============ -->
-  <section class="oy-menu" id="recordings" hidden>
-    <div class="oy-section-head">
-      <div class="oy-kana" style="font-size:28px" lang="ja">録音</div>
-      <h2 class="oy-h1" style="margin-top:8px">The Recordings</h2>
-      <p class="oy-lede" style="max-width:520px; margin-top:12px">Numbered in the order they happened. Pick one, or press Play all and let it run.</p>
+      <ol class="ep-list" id="epList" aria-label="Recordings"></ol>
     </div>
-    <div class="oy-day-grid" id="dayGrid"></div>
   </section>
 
   <noscript><p class="oy-lede" style="padding:24px 12px">This page needs JavaScript to unlock.</p></noscript>
@@ -770,36 +751,8 @@
   <footer class="oy-footer">
     <div class="rule"></div>
     <div class="oy-meta">EST · 2026 · <span lang="ja">山中湖</span></div>
-    <a class="oy-secret-link" href="https://tramokyo.vercel.app">main site</a>
   </footer>
 </main>
-
-<!-- ============ PLAYER ============ -->
-<div class="oy-dock" id="dock" role="region" aria-label="Player" hidden>
-  <div class="dk-now">
-    <img class="dk-art" src="/assets/cover-512.png" alt="" width="44" height="44">
-    <div class="dk-text">
-      <div class="dk-meta" id="dkMeta"></div>
-      <div class="dk-title" id="dkTitle" aria-live="polite"></div>
-    </div>
-  </div>
-  <div class="dk-transport">
-    <button class="dk-btn dk-skip dk-back" id="btnBack" type="button" aria-label="Back 15 seconds">−15s</button>
-    <button class="dk-btn dk-prev" id="btnPrev" type="button" aria-label="Previous recording"></button>
-    <button class="oy-btn dk-play" id="btnPlay" type="button" aria-label="Play"></button>
-    <button class="dk-btn dk-next" id="btnNext" type="button" aria-label="Next recording"></button>
-    <button class="dk-btn dk-skip dk-fwd" id="btnFwd" type="button" aria-label="Forward 30 seconds">+30s</button>
-  </div>
-  <div class="dk-seek">
-    <span class="dk-time" id="tCur">0:00</span>
-    <input class="oy-seek" id="seek" type="range" min="0" max="100" step="1" value="0" aria-label="Seek">
-    <span class="dk-time" id="tDur">0:00</span>
-  </div>
-  <div class="dk-opts">
-    <button class="dk-chip dk-rate" id="btnRate" type="button" aria-label="Playback speed">1×</button>
-    <button class="dk-chip dk-mode" id="btnMode" type="button" aria-pressed="false">Play all</button>
-  </div>
-</div>
 
 <audio id="audio" preload="none"></audio>
 
@@ -822,26 +775,16 @@
   const WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
   const word = (n) => WORDS[n] || String(n);
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-  const DOW = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const DOW_JP = ['日', '月', '火', '水', '木', '金', '土'];
-  const MONTH_JP = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
   const RATES = [1, 1.25, 1.5, 2, 0.75];
+  // Bar heights for the seek bar's waveform. Decorative: not the recording's real levels.
+  const WAVE = [30, 52, 44, 70, 38, 60, 82, 48, 66, 34, 58, 90, 72, 40, 64, 50, 78, 36, 56, 68,
+                46, 84, 62, 42, 74, 54, 88, 38, 60, 70, 44, 80, 52, 66, 36, 58, 76, 48, 62, 40];
 
   // 1:23:45 / 18:01
   function clock(sec) {
     sec = Math.max(0, Math.floor(sec || 0));
     const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
     return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
-  }
-  // 7h 13m / 7m 35s
-  function span(sec) {
-    sec = Math.floor(sec);
-    const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
-    return h ? `${h}h ${pad(m)}m` : `${m}m ${pad(s)}s`;
-  }
-  function dateParts(d) {
-    const [y, m, day] = d.split('-').map(Number);
-    return { y, m: m - 1, day, dow: new Date(Date.UTC(y, m - 1, day, 12)).getUTCDay() };
   }
 
   // ---- saved listening state (per browser; purely a convenience) ----
@@ -854,13 +797,16 @@
   const setHint = (on) => { try { on ? localStorage.setItem(HINT, '1') : localStorage.removeItem(HINT); } catch (_) {} };
 
   // ---- state ----
-  const S = { eps: [], edition: '', i: -1, order: [], playAll: false, shuffle: false,
+  const S = { eps: [], edition: '', i: -1, playAll: saved.auto !== false,
               rate: RATES.includes(saved.rate) ? saved.rate : 1, scrubbing: false,
-              buffering: false, note: '', pendingSeek: 0, card: null };
+              buffering: false, note: '', pendingSeek: 0, row: null };
   const audio = $('#audio');
-  const dock = $('#dock'), seek = $('#seek');
+  const seek = $('#seek'), scrub = $('#scrub');
   const curEp = () => S.eps[S.i];
   const dur = () => (Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : (curEp() ? curEp().duration : 0));
+  // preload="none": nothing downloads until play, so until then the start point lives in S.pendingSeek.
+  const hasMeta = () => audio.readyState >= 1;
+  const now = () => (hasMeta() ? audio.currentTime : S.pendingSeek);
 
   // ============ gate ============
   async function fetchEpisodes() {
@@ -872,9 +818,7 @@
 
   function showGate() {
     document.documentElement.classList.remove('is-returning');
-    $('#intro').hidden = $('#stats').hidden = $('#recordings').hidden = true;
-    $('#lockBtn').hidden = true;
-    $$('[data-auth]').forEach((el) => { el.hidden = true; });
+    $('#recordings').hidden = true;
     $('#gate').hidden = false;
     document.title = BASE_TITLE;
   }
@@ -919,23 +863,21 @@
   });
 
   async function lock() {
+    savePos();
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
-    S.i = -1; S.card = null; S.playAll = false; S.shuffle = false;
-    dock.hidden = true;
-    document.documentElement.style.setProperty('--dock-h', '0px');
+    S.i = -1; S.row = null; S.pendingSeek = 0;
     if ('mediaSession' in navigator) { navigator.mediaSession.metadata = null; navigator.mediaSession.playbackState = 'none'; }
     setHint(false);
     try { await fetch('/api/unlock', { method: 'DELETE', credentials: 'same-origin' }); } catch (_) {}
     S.eps = [];
-    $('#dayGrid').innerHTML = '';
+    $('#epList').innerHTML = '';
     showGate();
     gateError('');
     $('#gateInput').focus();
     window.scrollTo({ top: 0 });
   }
-  $('#lockBtn').addEventListener('click', lock);
 
   // ============ render ============
   function enter(data) {
@@ -943,126 +885,87 @@
     S.eps = data.episodes.slice().sort((a, b) => a.number - b.number);
     S.edition = data.edition || 'Listening Edition';
     S.i = -1;
-    buildOrder(null);
-    renderIntro();
-    renderGrid();
+    renderHead();
+    renderList();
     $('#gate').hidden = true;
-    $('#intro').hidden = $('#stats').hidden = $('#recordings').hidden = false;
-    $('#lockBtn').hidden = false;
-    $$('[data-auth]').forEach((el) => { el.hidden = false; });
+    $('#recordings').hidden = false;
     setHint(true);
     applyRate();
+    renderMode();
+    if (S.eps.length) load(startIndex(), true);   // ready to go; preload="none" keeps it from downloading
   }
 
-  function renderIntro() {
-    const eps = S.eps;
-    const total = eps.reduce((a, e) => a + e.duration, 0);
-    const dates = [...new Set(eps.map((e) => e.date))];
-    const longest = eps.reduce((a, e) => (e.duration > a.duration ? e : a));
-    const shortest = eps.reduce((a, e) => (e.duration < a.duration ? e : a));
-    const first = dateParts(dates[0]), last = dateParts(dates[dates.length - 1]);
-    const month = new Date(Date.UTC(first.y, first.m, 1)).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
-    const range = first.day === last.day ? `${first.day}` : `${first.day}-${last.day}`;
-
-    $('#introStamp').textContent = `${S.edition} · ${month} ${first.y}`;
-    $('#introKana').textContent = `${MONTH_JP[first.m]}月 ${range}`;
-    $('#introTitle').innerHTML =
-      `${cap(word(eps.length))} recording${eps.length === 1 ? '' : 's'}.<br>` +
-      `<span class="accent">${cap(word(dates.length))} day${dates.length === 1 ? '' : 's'}.</span>Nothing cut.`;
-    $('#introLede').textContent = `Recorded ${month} ${range} and kept in the order it happened. Levels balanced, edges faded.`;
-
-    $('#stats').innerHTML = [
-      [span(total), 'total runtime'],
-      [String(dates.length), dates.length === 1 ? 'day recorded' : 'days recorded'],
-      [span(longest.duration), 'longest'],
-      [span(shortest.duration), 'shortest'],
-    ].map(([n, l]) => `<div><div class="oy-stat-num">${n}</div><div class="oy-eyebrow">${l}</div></div>`).join('');
-
-    const lastEp = eps.find((e) => e.id === saved.last);
-    const p = lastEp && saved.pos[lastEp.id];
-    const cont = $('#btnContinue');
-    cont.hidden = !(lastEp && p > 10 && !saved.done[lastEp.id] && p < lastEp.duration - 15);
-    if (!cont.hidden) cont.textContent = `Pick up ${lastEp.code} at ${clock(p)} →`;
+  // Where they left off: the last recording they had on, or the one after it if they finished it.
+  function startIndex() {
+    const i = S.eps.findIndex((e) => e.id === saved.last);
+    if (i < 0) return 0;
+    if (!saved.done[S.eps[i].id]) return i;
+    return i + 1 < S.eps.length ? i + 1 : 0;
   }
 
-  function cardHTML(i) {
-    const e = S.eps[i];
+  function renderHead() {
+    const n = S.eps.length;
+    const year = String((S.eps[0] && S.eps[0].date) || '').slice(0, 4);
+    $('#podSub').textContent = `${cap(word(n))} recording${n === 1 ? '' : 's'} from Tramokyo${year ? ` ${year}` : ''}.`;
+    $('#dkEdition').textContent = S.edition;
+  }
+
+  function rowHTML(e) {
     return `
-      <li class="oy-menu-card ep" data-id="${esc(e.id)}">
-        <div class="oy-menu-top">
-          <div class="ep-code">${esc(e.code)}<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></div>
-          <div class="oy-price">${clock(e.duration)}</div>
-        </div>
-        <h3 class="oy-h3 ep-title">${esc(e.title)}</h3>
-        <div class="ep-bar" aria-hidden="true"><span></span></div>
-        <div class="oy-menu-bot">
-          <div class="ep-state"></div>
-          <button class="oy-btn-small ep-btn" type="button" data-play="${esc(e.id)}"></button>
-        </div>
+      <li class="ep" data-id="${esc(e.id)}">
+        <button class="ep-btn" type="button" data-play="${esc(e.id)}">
+          <span class="ep-icon" aria-hidden="true"></span>
+          <span class="ep-text">
+            <span class="ep-code">${esc(e.code)}<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span></span>
+            <span class="ep-title">${esc(e.title)}</span>
+            <span class="ep-state"></span>
+          </span>
+          <span class="ep-dur">${clock(e.duration)}</span>
+        </button>
+        <span class="ep-bar" aria-hidden="true"><span></span></span>
       </li>`;
   }
 
-  function renderGrid() {
-    const days = new Map();
-    S.eps.forEach((e, i) => { if (!days.has(e.date)) days.set(e.date, []); days.get(e.date).push(i); });
-    $('#dayGrid').innerHTML = [...days].map(([date, idxs]) => {
-      const p = dateParts(date);
-      const run = idxs.reduce((a, i) => a + S.eps[i].duration, 0);
-      const longName = new Date(Date.UTC(p.y, p.m, p.day, 12)).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
-      return `
-        <div class="oy-day-col" role="group" aria-label="${esc(longName)}">
-          <div class="oy-day-head">
-            <div class="oy-day-num">${p.day}</div>
-            <div class="oy-day-meta"><span class="dow">${DOW[p.dow]}</span><span class="jp" lang="ja">${DOW_JP[p.dow]}</span></div>
-            <div class="oy-day-sub">${idxs.length} recording${idxs.length === 1 ? '' : 's'} · ${span(run)}</div>
-          </div>
-          <ol class="ep-list">${idxs.map(cardHTML).join('')}</ol>
-        </div>`;
-    }).join('');
-    refreshCards();
+  function renderList() {
+    $('#epList').innerHTML = S.eps.map(rowHTML).join('');
+    refreshRows();
   }
 
-  function refreshCard(card) {
-    const e = S.eps.find((x) => x.id === card.dataset.id);
-    const i = S.eps.indexOf(e);
+  function refreshRow(row) {
+    const i = S.eps.findIndex((x) => x.id === row.dataset.id);
+    const e = S.eps[i];
+    if (!e) return;
     const cur = i === S.i;
     const playing = cur && !audio.paused;
-    card.classList.toggle('is-current', cur);
-    card.classList.toggle('is-playing', playing);
-
-    const btn = $('.ep-btn', card);
-    btn.classList.toggle('on', playing);
-    btn.innerHTML = `${playing ? ICON.pause : ICON.play}<span>${playing ? 'Pause' : 'Play'}</span>`;
-    btn.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${e.title}`);
+    row.classList.toggle('is-current', cur);
+    row.classList.toggle('is-playing', playing);
+    if (cur) row.setAttribute('aria-current', 'true'); else row.removeAttribute('aria-current');
 
     let frac = 0, state = '';
-    if (cur && audio.ended) { frac = 1; state = 'Played'; }
-    else if (cur) { frac = audio.currentTime / dur(); state = !playing && audio.currentTime > 10 ? `Paused at ${clock(audio.currentTime)}` : ''; }
+    if (cur && (playing || hasMeta())) {
+      if (audio.ended) { frac = 1; state = 'Played'; }
+      else { frac = now() / dur(); if (!playing && now() > 10) state = `Paused at ${clock(now())}`; }
+    }
+    else if (cur && S.pendingSeek > 10) { frac = S.pendingSeek / e.duration; state = `Resume at ${clock(S.pendingSeek)}`; }
     else if (saved.done[e.id]) { frac = 1; state = 'Played'; }
-    else if (saved.pos[e.id] > 10) { frac = saved.pos[e.id] / e.duration; state = `Resume at ${clock(saved.pos[e.id])}`; }
-    $('.ep-state', card).textContent = state;
-    $('.ep-bar span', card).style.width = `${Math.min(1, frac) * 100}%`;
+    else if (!cur && saved.pos[e.id] > 10) { frac = saved.pos[e.id] / e.duration; state = `Resume at ${clock(saved.pos[e.id])}`; }
+
+    $('.ep-icon', row).innerHTML = playing ? ICON.pause : ICON.play;
+    $('.ep-state', row).textContent = state;
+    $('.ep-bar span', row).style.width = `${Math.min(1, frac) * 100}%`;
+    $('.ep-btn', row).setAttribute('aria-label',
+      [`${playing ? 'Pause' : 'Play'} ${e.code}`, e.title, clock(e.duration), state].filter(Boolean).join(', '));
   }
-  const refreshCards = () => $$('.ep').forEach(refreshCard);
+  const refreshRows = () => $$('.ep').forEach(refreshRow);
 
   // ============ queue ============
-  function buildOrder(first) {
-    const idx = S.eps.map((_, i) => i);
-    if (!S.shuffle) { S.order = idx; return; }
-    const rest = idx.filter((x) => x !== first);
-    for (let k = rest.length - 1; k > 0; k--) {
-      const j = Math.floor(Math.random() * (k + 1));
-      [rest[k], rest[j]] = [rest[j], rest[k]];
-    }
-    S.order = first == null ? rest : [first, ...rest];
-  }
-  const nextIndex = () => { const p = S.order.indexOf(S.i); return p >= 0 && p < S.order.length - 1 ? S.order[p + 1] : -1; };
-  const prevIndex = () => { const p = S.order.indexOf(S.i); return p > 0 ? S.order[p - 1] : -1; };
+  const nextIndex = () => (S.i >= 0 && S.i < S.eps.length - 1 ? S.i + 1 : -1);
+  const prevIndex = () => (S.i > 0 ? S.i - 1 : -1);
 
   // ============ playback ============
   function savePos() {
     const e = curEp();
-    if (!e || audio.readyState < 1 || audio.ended) return;
+    if (!e || !hasMeta() || audio.ended) return;
     const t = audio.currentTime;
     if (t < 1 || t > e.duration - 15) return;
     saved.pos[e.id] = Math.floor(t);
@@ -1073,7 +976,7 @@
     savePos();
     const e = S.eps[i];
     S.i = i; S.note = ''; S.buffering = true;
-    S.card = $(`.ep[data-id="${e.id}"]`);
+    S.row = $(`.ep[data-id="${e.id}"]`);
     const p = saved.pos[e.id];
     S.pendingSeek = resume && !saved.done[e.id] && p > 10 && p < e.duration - 15 ? p : 0;
     audio.src = e.src;
@@ -1087,11 +990,9 @@
     $('#tCur').textContent = clock(S.pendingSeek);
     $('#tDur').textContent = clock(e.duration);
     fill();
-    showDock();
     renderDock();
     mediaMeta(e);
-    document.title = `${e.title} · TMKO`;
-    refreshCards();
+    refreshRows();
   }
 
   function play() {
@@ -1099,9 +1000,8 @@
     if (p && p.catch) p.catch(onPlayError);
   }
 
-  function playIndex(i, { resume = true, restart = false } = {}) {
+  function playIndex(i, resume = true) {
     if (i !== S.i) load(i, resume);
-    else if (restart) audio.currentTime = 0;
     play();
   }
 
@@ -1113,34 +1013,38 @@
 
   function toggleEpisode(id) {
     const i = S.eps.findIndex((e) => e.id === id);
-    if (i === S.i) return togglePlay();
-    if (S.playAll && S.shuffle) buildOrder(i);
-    playIndex(i);
+    if (i < 0) return;
+    if (i === S.i) togglePlay(); else playIndex(i);
   }
 
-  function startAll(shuffle) {
-    S.playAll = true;
-    S.shuffle = shuffle;
-    buildOrder(null);
-    playIndex(S.order[0], { resume: false, restart: true });
-  }
-
-  function next() { const n = nextIndex(); if (n >= 0) playIndex(n, { resume: !S.playAll }); }
+  function next() { const n = nextIndex(); if (n >= 0) playIndex(n); }
   function prev() {
     const p = prevIndex();
-    if (audio.currentTime > 3 || p < 0) { audio.currentTime = 0; return; }
-    playIndex(p, { resume: !S.playAll });
+    if (now() > 3 || p < 0) { seekTo(0); return; }
+    playIndex(p);
   }
-  function skip(sec) {
+
+  // Before the file has loaded there's nothing to seek, so move the start point instead.
+  function seekTo(t) {
     if (S.i < 0) return;
-    audio.currentTime = Math.max(0, Math.min(dur(), audio.currentTime + sec));
+    t = Math.max(0, Math.min(dur(), t));
+    if (hasMeta()) { audio.currentTime = t; return; }
+    S.pendingSeek = t;
+    seek.value = t;
+    fill();
+    $('#tCur').textContent = clock(t);
+    renderMeta();
+    if (S.row) refreshRow(S.row);
   }
+  const skip = (sec) => seekTo(now() + sec);
+
   function toggleMode() {
     S.playAll = !S.playAll;
-    S.shuffle = false;
-    buildOrder(null);
-    renderDock();
+    saved.auto = S.playAll;
+    persist();
+    renderMode();
   }
+  function renderMode() { $('#btnMode').setAttribute('aria-pressed', String(S.playAll)); }
   function applyRate() {
     audio.defaultPlaybackRate = S.rate;
     audio.playbackRate = S.rate;
@@ -1148,41 +1052,37 @@
     $('#btnRate').setAttribute('aria-label', `Playback speed ${S.rate} times, change`);
   }
 
-  // ============ dock ============
-  function showDock() {
-    if (!dock.hidden) return;
-    dock.hidden = false;
-    measureDock();
+  // ============ player panel ============
+  function fill() {
+    scrub.style.setProperty('--pct', `${seek.max > 0 ? (seek.value / seek.max) * 100 : 0}%`);
+    seek.setAttribute('aria-valuetext', `${clock(seek.value)} of ${clock(seek.max)}`);
   }
-  function measureDock() { document.documentElement.style.setProperty('--dock-h', `${dock.offsetHeight + 24}px`); }
-  if ('ResizeObserver' in window) new ResizeObserver(() => { if (!dock.hidden) measureDock(); }).observe(dock);
-
-  function fill() { seek.style.setProperty('--pct', `${seek.max > 0 ? (seek.value / seek.max) * 100 : 0}%`); }
 
   function renderMeta() {
     const e = curEp();
     if (!e) return;
-    const parts = [e.code];
-    if (S.note) parts.push(S.note);
-    else if (S.buffering && !audio.paused) parts.push('Buffering');
-    else if (S.playAll) parts.push(`${S.shuffle ? 'Shuffle' : 'Play all'} ${S.order.indexOf(S.i) + 1}/${S.eps.length}`);
-    $('#dkMeta').textContent = parts.join(' · ');
+    let state;
+    if (S.note) state = S.note;
+    else if (!audio.paused) state = S.buffering ? 'Loading' : 'Now playing';
+    else if (audio.ended) state = 'Played';
+    else if (hasMeta()) state = 'Paused';
+    else state = S.pendingSeek > 10 ? `Resume at ${clock(S.pendingSeek)}` : 'Up next';
+    $('#dkMeta').textContent = e.code;
+    $('#dkState').textContent = state;
   }
   function renderDock() {
     const e = curEp();
     if (!e) return;
     $('#dkTitle').textContent = e.title;
     $('#btnNext').disabled = nextIndex() < 0;
-    const mode = $('#btnMode');
-    mode.setAttribute('aria-pressed', String(S.playAll));
-    mode.textContent = S.playAll && S.shuffle ? 'Shuffle' : 'Play all';
     renderMeta();
   }
   function syncPlayState() {
     const playing = !audio.paused;
     $('#btnPlay').innerHTML = playing ? ICON.pause : ICON.play;
     $('#btnPlay').setAttribute('aria-label', playing ? 'Pause' : 'Play');
-    refreshCards();
+    renderMeta();
+    refreshRows();
     if ('mediaSession' in navigator) navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
   }
   function note(msg) {
@@ -1206,16 +1106,21 @@
     if (!e) return;
     const t = audio.currentTime;
     if (!S.scrubbing) { seek.value = t; fill(); $('#tCur').textContent = clock(t); }
-    if (S.card) $('.ep-bar span', S.card).style.width = `${Math.min(1, t / dur()) * 100}%`;
-    const now = Date.now();
-    if (now - lastSave > 5000) { lastSave = now; savePos(); }
-    if (now - lastPos > 1000) { lastPos = now; positionState(); }
+    if (S.row) $('.ep-bar span', S.row).style.width = `${Math.min(1, t / dur()) * 100}%`;
+    const stamp = Date.now();
+    if (stamp - lastSave > 5000) { lastSave = stamp; savePos(); }
+    if (stamp - lastPos > 1000) { lastPos = stamp; positionState(); }
   });
-  audio.addEventListener('play', syncPlayState);
+  audio.addEventListener('play', () => {
+    const e = curEp();
+    if (e) document.title = `${e.title} · TMKO`;
+    syncPlayState();
+  });
   audio.addEventListener('pause', () => { savePos(); syncPlayState(); });
-  audio.addEventListener('playing', () => { S.buffering = false; renderMeta(); syncPlayState(); });
+  audio.addEventListener('playing', () => { S.buffering = false; syncPlayState(); });
   audio.addEventListener('waiting', () => { S.buffering = true; renderMeta(); });
   audio.addEventListener('canplay', () => { S.buffering = false; renderMeta(); });
+  audio.addEventListener('seeked', () => { if (S.row) refreshRow(S.row); });
   audio.addEventListener('error', () => {
     if (!curEp()) return;
     S.buffering = false;
@@ -1229,8 +1134,8 @@
     delete saved.pos[e.id];
     persist();
     const n = S.playAll ? nextIndex() : -1;
-    if (n >= 0) playIndex(n, { resume: false });
-    else { refreshCards(); renderDock(); syncPlayState(); }
+    if (n >= 0) playIndex(n, false);
+    else { renderDock(); syncPlayState(); }
   });
   function onPlayError(err) {
     if (err && err.name === 'AbortError') return;   // another load took over
@@ -1260,22 +1165,15 @@
     set('nexttrack', next);
     set('seekbackward', (d) => skip(-((d && d.seekOffset) || 15)));
     set('seekforward', (d) => skip((d && d.seekOffset) || 30));
-    set('seekto', (d) => { audio.currentTime = d.seekTime; });
+    set('seekto', (d) => seekTo(d.seekTime));
   }
 
   // ============ wiring ============
-  $('#dayGrid').addEventListener('click', (ev) => {
+  $('#epList').addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-play]');
     if (btn) toggleEpisode(btn.dataset.play);
   });
-  $('#btnPlayAll').addEventListener('click', () => startAll(false));
-  $('#btnShuffle').addEventListener('click', () => startAll(true));
-  $('#btnContinue').addEventListener('click', () => {
-    const e = S.eps.find((x) => x.id === saved.last);
-    if (!e) return;
-    S.playAll = true; S.shuffle = false; buildOrder(null);
-    playIndex(S.eps.indexOf(e), { resume: true });
-  });
+  $('#lockBtn').addEventListener('click', lock);
   $('#btnPlay').addEventListener('click', togglePlay);
   $('#btnPrev').addEventListener('click', prev);
   $('#btnNext').addEventListener('click', next);
@@ -1294,14 +1192,14 @@
     fill();
   });
   seek.addEventListener('change', () => {
-    audio.currentTime = Number(seek.value);
     S.scrubbing = false;
+    seekTo(Number(seek.value));
   });
 
   // After a mouse click, drop focus so Space pauses instead of re-pressing the same button.
   document.addEventListener('click', (ev) => {
     const btn = ev.target.closest('button');
-    if (ev.detail && btn && btn.closest('.oy-dock, #intro, #dayGrid')) btn.blur();
+    if (ev.detail && btn && btn.closest('.oy-dock, #epList')) btn.blur();
   });
   document.addEventListener('keydown', (ev) => {
     if (ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.altKey || S.i < 0) return;
@@ -1321,6 +1219,7 @@
   $('#btnPrev').innerHTML = ICON.prev;
   $('#btnNext').innerHTML = ICON.next;
   $('#btnPlay').innerHTML = ICON.play;
+  $$('.dk-wave').forEach((el) => { el.innerHTML = WAVE.map((h) => `<i style="height:${h}%"></i>`).join(''); });
 
   // ============ boot ============
   (async () => {
