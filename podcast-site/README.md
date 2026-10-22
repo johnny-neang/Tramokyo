@@ -1,26 +1,32 @@
 # TMKO Listening Edition
 
-Podcast page for Tramokyo: https://tmko.johnnyneang.com
+Password-gated podcast page for Tramokyo: https://tmko.johnnyneang.com
 Same brand as the main site (see `../BRAND.md`). It is its own Vercel project, `tmko-podcast`, in the
 `johnny-2701s-projects` team next to `tramokyo` and `hunch`, with this folder as the project root.
 Deployed from the CLI, not from git.
 
 ```
 public/          the page (index.html) + assets; the only thing served statically
-api/episodes.js  episode list + audio URLs
-lib/             request helpers
+api/unlock.js    POST {password} sets the cookie, DELETE clears it (the Lock button)
+api/episodes.js  episode list + audio URLs, only for browsers holding the cookie
+lib/             cookie signing, request helpers
 data/            episodes.json: written by the publish script, gitignored (see below)
 scripts/         publish-episodes.mjs
 ```
 
-## Access
+## How the gate works
 
-The page is public: anyone with the link can listen. It stays out of search results (`noindex` meta tag
-and `X-Robots-Tag` header). The page fetches the episode list from `/api/episodes`, and the audio files
-are public Vercel Blob objects.
+The password is checked on the server (`TMKO_PASSWORD`, case and stray spaces ignored). A correct guess
+sets a signed, HttpOnly cookie for 30 days (`TMKO_SESSION_SECRET` signs it). The episode list, with the
+audio URLs, is only returned to a browser holding that cookie, so the links aren't in the page source.
+Five wrong guesses from one address lock it out for a minute (per warm instance, same as the admin login).
 
-Until 2026-10-21 it sat behind a shared password. The `TMKO_PASSWORD` and `TMKO_SESSION_SECRET` env vars
-from that time are no longer read.
+It is a shared-password gate, not per-person accounts: the audio files are public Vercel Blob objects
+with long random URLs. Anyone who has a direct audio link can play that file without the password, so
+treat the password and the links as the same level of secret.
+
+Change the password: edit `TMKO_PASSWORD` in the project's env vars, then `vercel deploy --prod`.
+Change `TMKO_SESSION_SECRET` to sign everyone out.
 
 ## Audio
 
