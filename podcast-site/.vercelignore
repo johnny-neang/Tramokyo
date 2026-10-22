@@ -1,0 +1,2 @@
+# Local secrets (.env.local, .env.blob) must never be uploaded with a deploy.
+.env*
