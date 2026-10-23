@@ -33,9 +33,22 @@ the audio URLs are public.
 
 `vercel.json` only allows `media-src` from `*.public.blob.vercel-storage.com`.
 
-Downloads: each recording's row links to its blob URL with `?download=1`, which makes Blob send the
-file as an attachment instead of playing it. The saved file keeps the upload's random suffix in its
-name.
+No download buttons: the page only streams. (The audio files are still public blob URLs, so this
+keeps casual saving out, not a determined listener.)
+
+## Likes
+
+Each recording has a heart with a count, in the list and in the player. `api/likes.js` stores one
+tiny private blob per like, `likes/<episode>/<voter>`, in the `tmko-podcast-likes` Blob store
+(private, `sfo1`, personal team, connected to this project as `BLOB_READ_WRITE_TOKEN`). The voter is
+a random id the browser keeps in localStorage, so liking twice is idempotent and unliking deletes the
+file. `GET /api/likes` lists the prefix and is CDN-cached for a minute; the page corrects a cached
+count with its own log of like changes, so your own heart never looks un-counted.
+
+That store is on the Hobby plan, where Blob has hard monthly caps (2,000 uploads/lists, 10,000
+reads). If they are hit, likes stop working until the month resets; playback is unaffected because
+the audio is in the Sparkle Muffin store. A like costs one upload plus one list (the response carries
+that recording's fresh count); an unlike costs one list.
 
 ## Adding or changing episodes
 
