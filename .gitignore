@@ -5,3 +5,10 @@ node_modules
 .vercel
 *.log
 .DS_Store
+
+# This repo is public. Any env file (podcast-site/.env.blob holds a Blob token),
+# the podcast audio and its episode list (it holds the audio URLs; the live copy
+# is in Blob, see BACKEND_SETUP.md) stay out of git.
+.env*
+podcast/*.m4a
+podcast-site/data/

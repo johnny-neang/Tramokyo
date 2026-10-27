@@ -121,6 +121,33 @@ If you want to run truly offline (without the API), the public site falls back t
 5. `admin.html`: add a row to the `REG_FIELDS` array so it appears in the table.
 6. `index.html`: add the form input + `name="…"`.
 
+## Site password
+
+`middleware.js` (Vercel Routing Middleware) puts one shared password in front of the whole site:
+hub, survey, Trubiki, podcast, admin and every `/api` route. Without the cookie, pages show the
+"Say the word." lock screen and everything else gets a 401. The lock screen posts to `/api/unlock`;
+the right word sets a signed, HttpOnly cookie for 30 days. Case and stray spaces are ignored. Five
+misses from one address lock it out for a minute. The shared pieces (cookie signing, the check, the
+lock screen's HTML) are in `lib/site-gate.js`.
+
+| Env var | Notes |
+|---|---|
+| `SITE_PASSWORD` | The word everyone types. Keep it out of this repo (it's public). Change it and redeploy. |
+| `SITE_SESSION_SECRET` | Signs the cookie. Change it to sign everyone out. |
+
+## Podcast
+
+The TMKO podcast lives at `/podcast` (`podcast.html`; `tmko.johnnyneang.com` redirects there).
+Its episode list is `podcast/episodes.json` in the private `tmko-podcast-likes` Blob store, not in
+git, because the repo is public and the list holds the audio URLs. Likes live in the same store as
+one tiny blob per like, `likes/<episode>/<voter>`. The store is connected to this project as
+`BLOB_READ_WRITE_TOKEN`; it's on the Hobby plan, so if its monthly caps are hit, likes stop until
+the month resets (playback doesn't, since the audio is in the Sparkle Muffin team's
+`tmko-podcast-audio` store).
+
+To add recordings: name and tag the file like the others, put it in `podcast/` (gitignored), then
+`node scripts/publish-podcast.mjs` (see the header for the two tokens it reads).
+
 ## Project files
 
 ```
@@ -138,6 +165,13 @@ If you want to run truly offline (without the API), the public site falls back t
 /admin.html                 admin dashboard
 /assets/                    images
 /mockups/                   design exploration (not deployed gameplay)
-/package.json               @supabase/supabase-js + jsonwebtoken
-/vercel.json                function config
+/package.json               @supabase/supabase-js + jsonwebtoken + @vercel/blob
+/vercel.json                function config, redirects, rewrites
+/middleware.js              site password gate (see "Site password")
+/api/unlock.js              the lock screen's form: checks the word, sets the cookie
+/lib/site-gate.js           cookie signing, the check, the lock screen's HTML
+/podcast.html               TMKO podcast, served at /podcast
+/api/podcast/               episodes.js (GET), likes.js (GET / POST)
+/lib/podcast.js             reads the episode list from Blob
+/scripts/publish-podcast.mjs  uploads recordings, updates the episode list
 ```
