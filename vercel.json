@@ -6,10 +6,15 @@
       "maxDuration": 10
     }
   },
-  "routes": [
-    { "src": "^/survey$", "status": 308, "headers": { "Location": "/survey/" } },
-    { "src": "^/survey/$", "dest": "/survey-site/index.html" },
-    { "src": "^/survey/(.+)$", "dest": "/survey-site/$1" },
-    { "src": "^/trubiki/?$", "dest": "/trubiki.html" }
+  "redirects": [
+    { "source": "/survey", "destination": "/survey/", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/survey/", "destination": "/survey-site/index.html" },
+    { "source": "/survey/:path+", "destination": "/survey-site/:path+" },
+    { "source": "/trubiki", "destination": "/trubiki.html" },
+    { "source": "/trubiki/", "destination": "/trubiki.html" },
+    { "source": "/podcast", "destination": "/podcast.html" },
+    { "source": "/podcast/", "destination": "/podcast.html" }
   ]
 }

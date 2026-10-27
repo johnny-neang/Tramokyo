@@ -5,7 +5,6 @@
   "type": "module",
   "description": "Tramokyo registration site + admin dashboard",
   "scripts": {
-    "dev": "vercel dev",
     "deploy": "vercel deploy --prod"
   },
   "engines": {
@@ -13,6 +12,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
+    "@vercel/blob": "^2.8.2",
+    "@vercel/functions": "^3.10.4",
     "jsonwebtoken": "^9.0.2"
   }
 }
